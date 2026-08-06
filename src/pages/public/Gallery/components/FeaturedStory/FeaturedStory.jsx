@@ -1,20 +1,7 @@
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
-import {
-  FeaturedStoriesSection,
-  StoriesContainer,
-  SectionHeader,
-  SectionEyebrow,
-  SectionTitle,
-  StoryCard,
-  StoryImageWrapper,
-  StoryImage,
-  StoryContent,
-  StoryTag,
-  StoryTitle,
-  StoryDescription,
-  StoryLink,
-} from './FeaturedStory.styles.js'
+
+import * as S from './FeaturedStory.styles.js'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -23,44 +10,44 @@ const fadeInUp = {
 
 function FeaturedStory({ content }) {
   return (
-    <FeaturedStoriesSection>
-      <StoriesContainer>
-        <SectionHeader>
+    <S.FeaturedStoriesSection>
+      <S.StoriesContainer>
+        <S.SectionHeader>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <SectionEyebrow>{content.eyebrow}</SectionEyebrow>
-            <SectionTitle>{content.title}</SectionTitle>
+            <S.SectionEyebrow>{content.eyebrow}</S.SectionEyebrow>
+            <S.SectionTitle>{content.title}</S.SectionTitle>
           </motion.div>
-        </SectionHeader>
+        </S.SectionHeader>
 
         {content.stories.map((story, index) => (
-          <StoryCard
+          <S.StoryCard
             key={story.id}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: index * 0.15 }}
           >
-            <StoryImageWrapper>
-              <StoryImage src={story.image} alt={story.title} loading="lazy" />
-            </StoryImageWrapper>
-            <StoryContent>
-              <StoryTag>{story.tag}</StoryTag>
-              <StoryTitle>{story.title}</StoryTitle>
-              <StoryDescription>{story.description}</StoryDescription>
-              <StoryLink>
+            <S.StoryImageWrapper>
+              <S.StoryImage src={story.image} alt={story.title} loading="lazy" />
+            </S.StoryImageWrapper>
+            <S.StoryContent>
+              <S.StoryTag>{story.tag}</S.StoryTag>
+              <S.StoryTitle>{story.title}</S.StoryTitle>
+              <S.StoryDescription>{story.description}</S.StoryDescription>
+              <S.StoryLink>
                 View Full Story
                 <FiArrowRight aria-hidden="true" size={16} />
-              </StoryLink>
-            </StoryContent>
-          </StoryCard>
+              </S.StoryLink>
+            </S.StoryContent>
+          </S.StoryCard>
         ))}
-      </StoriesContainer>
-    </FeaturedStoriesSection>
+      </S.StoriesContainer>
+    </S.FeaturedStoriesSection>
   )
 }
 

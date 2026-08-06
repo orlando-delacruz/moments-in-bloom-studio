@@ -1,9 +1,8 @@
-import { motion } from 'framer-motion'
-import { GalleryItem, GalleryImageWrapper, GalleryImage, GalleryOverlay, GalleryCaption, GalleryCaptionTitle, GalleryCaptionSubtitle, GalleryNumber } from './GalleryCard.styles.js'
+import * as S from './GalleryCard.styles.js'
 
 function GalleryCard({ item, index, onClick }) {
   return (
-    <GalleryItem
+    <S.GalleryItem
       $size={item.size}
       layout
       initial={{ opacity: 0, scale: 0.95 }}
@@ -12,23 +11,23 @@ function GalleryCard({ item, index, onClick }) {
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4 }}
     >
-      <GalleryImageWrapper>
-        <GalleryImage
+      <S.GalleryImageWrapper>
+        <S.GalleryImage
           src={item.src}
           alt={item.title}
           loading="lazy"
         />
-        <GalleryOverlay
+        <S.GalleryOverlay
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
         >
-          <GalleryNumber>{String(index + 1).padStart(2, '0')}</GalleryNumber>
-          <GalleryCaption>
-            <GalleryCaptionTitle>{item.title}</GalleryCaptionTitle>
-            <GalleryCaptionSubtitle>{item.subtitle}</GalleryCaptionSubtitle>
-          </GalleryCaption>
-        </GalleryOverlay>
-      </GalleryImageWrapper>
+          <S.GalleryNumber>{String(index + 1).padStart(2, '0')}</S.GalleryNumber>
+          <S.GalleryCaption>
+            <S.GalleryCaptionTitle>{item.title}</S.GalleryCaptionTitle>
+            <S.GalleryCaptionSubtitle>{item.subtitle}</S.GalleryCaptionSubtitle>
+          </S.GalleryCaption>
+        </S.GalleryOverlay>
+      </S.GalleryImageWrapper>
       <button
         onClick={onClick}
         style={{
@@ -43,7 +42,7 @@ function GalleryCard({ item, index, onClick }) {
         }}
         aria-label={`View ${item.title}`}
       />
-    </GalleryItem>
+    </S.GalleryItem>
   )
 }
 

@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect } from 'react'
-import { filterByCategory } from '../utils/galleryHelpers'
+import { useCallback, useMemo, useState } from 'react'
+
+import { filterByCategory } from '../utils/galleryHelpers.js'
 
 /**
  * Custom hook for managing gallery state and filtering logic
@@ -9,13 +10,11 @@ import { filterByCategory } from '../utils/galleryHelpers'
  */
 export const useGallery = (allItems = [], categories = []) => {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [filteredItems, setFilteredItems] = useState(allItems)
 
-  // Filter items when category changes
-  useEffect(() => {
-    const filtered = filterByCategory(allItems, activeCategory)
-    setFilteredItems(filtered)
-  }, [activeCategory, allItems])
+  const filteredItems = useMemo(
+    () => filterByCategory(allItems, activeCategory),
+    [allItems, activeCategory]
+  )
 
   const handleCategoryChange = useCallback((categoryId) => {
     setActiveCategory(categoryId)

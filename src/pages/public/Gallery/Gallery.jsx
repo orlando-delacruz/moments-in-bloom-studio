@@ -1,38 +1,36 @@
-import { pageShellStyles } from '../../pageStyles.js'
-import Container from '../../../components/Container/index.js'
-import Section from '../../../components/Section/index.js'
-import { useGallery } from './hooks/useGallery.js'
-import { useLightbox } from './hooks/useLightbox.js'
+import { useGallery } from './hooks/index.js'
+import { useLightbox } from './hooks/index.js'
+
 import {
+  CTA_CONTENT,
+  FEATURED_STORIES,
+  FEATURED_STORIES_SECTION_CONTENT,
   GALLERY_CATEGORIES,
   GALLERY_ITEMS,
-  FEATURED_STORIES,
-  INSTAGRAM_POSTS,
   HERO_CONTENT,
-  INTRODUCTION_CONTENT,
-  CTA_CONTENT,
   INSTAGRAM_CONTENT,
-  FEATURED_STORIES_SECTION_CONTENT,
-} from './constants/galleryData.js'
+  INSTAGRAM_POSTS,
+  INTRODUCTION_CONTENT,
+} from './constants/index.js'
+
 import {
-  GalleryHero,
-  Introduction,
   CategoryNavigation,
   EditorialGallery,
   FeaturedStory,
-  InstagramPreview,
   GalleryCTA,
+  GalleryHero,
   GalleryLightbox,
+  InstagramPreview,
+  Introduction,
 } from './components/index.js'
-import { GalleryPage } from './Gallery.styles.js'
+
+import * as S from './Gallery.styles.js'
 
 function Gallery() {
-  const {
-    activeCategory,
-    setActiveCategory,
-    filteredItems,
-    categories,
-  } = useGallery(GALLERY_ITEMS, GALLERY_CATEGORIES)
+  const { activeCategory, setActiveCategory, filteredItems, categories } = useGallery(
+    GALLERY_ITEMS,
+    GALLERY_CATEGORIES
+  )
 
   const {
     isOpen,
@@ -45,24 +43,19 @@ function Gallery() {
   } = useLightbox(filteredItems)
 
   return (
-    <GalleryPage>
-      {/* Hero Section */}
+    <S.GalleryPage>
       <GalleryHero content={HERO_CONTENT} />
 
-      {/* Introduction Section */}
       <Introduction content={INTRODUCTION_CONTENT} />
 
-      {/* Category Navigation */}
       <CategoryNavigation
         categories={categories}
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
       />
 
-      {/* Editorial Gallery */}
       <EditorialGallery items={filteredItems} onImageClick={openLightbox} />
 
-      {/* Featured Event Stories */}
       <FeaturedStory
         content={{
           ...FEATURED_STORIES_SECTION_CONTENT,
@@ -70,13 +63,10 @@ function Gallery() {
         }}
       />
 
-      {/* Instagram Section */}
       <InstagramPreview content={INSTAGRAM_CONTENT} posts={INSTAGRAM_POSTS} />
 
-      {/* CTA Section */}
       <GalleryCTA content={CTA_CONTENT} />
 
-      {/* Lightbox */}
       <GalleryLightbox
         isOpen={isOpen}
         currentItem={currentItem}
@@ -85,7 +75,7 @@ function Gallery() {
         onClose={closeLightbox}
         onNavigate={navigateLightbox}
       />
-    </GalleryPage>
+    </S.GalleryPage>
   )
 }
 

@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
+
 import GalleryCard from '../GalleryCard/GalleryCard.jsx'
-import { GallerySection, GalleryContainer, EditorialGrid } from './EditorialGallery.styles.js'
+
+import * as S from './EditorialGallery.styles.js'
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -12,8 +14,8 @@ const staggerContainer = {
 
 function EditorialGallery({ items, onImageClick }) {
   return (
-    <GallerySection>
-      <GalleryContainer>
+    <S.GallerySection>
+      <S.GalleryContainer>
         <motion.div
           layout
           variants={staggerContainer}
@@ -21,7 +23,7 @@ function EditorialGallery({ items, onImageClick }) {
           animate="visible"
           key={items.length}
         >
-          <EditorialGrid>
+          <S.EditorialGrid>
             {items.map((item, index) => (
               <GalleryCard
                 key={item.id}
@@ -30,10 +32,10 @@ function EditorialGallery({ items, onImageClick }) {
                 onClick={() => onImageClick(index)}
               />
             ))}
-          </EditorialGrid>
+          </S.EditorialGrid>
         </motion.div>
-      </GalleryContainer>
-    </GallerySection>
+      </S.GalleryContainer>
+    </S.GallerySection>
   )
 }
 

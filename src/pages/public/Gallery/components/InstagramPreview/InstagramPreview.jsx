@@ -1,17 +1,7 @@
 import { motion } from 'framer-motion'
 import { FiInstagram } from 'react-icons/fi'
-import {
-  InstagramSection,
-  InstagramContainer,
-  SectionHeader,
-  SectionEyebrow,
-  SectionTitle,
-  InstagramGrid,
-  InstagramItem,
-  InstagramImage,
-  InstagramOverlay,
-  InstagramIcon,
-} from './InstagramPreview.styles.js'
+
+import * as S from './InstagramPreview.styles.js'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,23 +10,23 @@ const fadeInUp = {
 
 function InstagramPreview({ content, posts }) {
   return (
-    <InstagramSection>
-      <InstagramContainer>
-        <SectionHeader>
+    <S.InstagramSection>
+      <S.InstagramContainer>
+        <S.SectionHeader>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
           >
-            <SectionEyebrow>{content.eyebrow}</SectionEyebrow>
-            <SectionTitle>{content.title}</SectionTitle>
+            <S.SectionEyebrow>{content.eyebrow}</S.SectionEyebrow>
+            <S.SectionTitle>{content.title}</S.SectionTitle>
           </motion.div>
-        </SectionHeader>
+        </S.SectionHeader>
 
-        <InstagramGrid>
+        <S.InstagramGrid>
           {posts.map((post, index) => (
-            <InstagramItem
+            <S.InstagramItem
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -44,20 +34,20 @@ function InstagramPreview({ content, posts }) {
               transition={{ duration: 0.5, delay: index * 0.08 }}
               whileHover={{ scale: 1.02 }}
             >
-              <InstagramImage src={post.src} alt="Instagram post" loading="lazy" />
-              <InstagramOverlay
+              <S.InstagramImage src={post.src} alt="Instagram post" loading="lazy" />
+              <S.InstagramOverlay
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
               >
-                <InstagramIcon>
+                <S.InstagramIcon>
                   <FiInstagram size={32} />
-                </InstagramIcon>
-              </InstagramOverlay>
-            </InstagramItem>
+                </S.InstagramIcon>
+              </S.InstagramOverlay>
+            </S.InstagramItem>
           ))}
-        </InstagramGrid>
-      </InstagramContainer>
-    </InstagramSection>
+        </S.InstagramGrid>
+      </S.InstagramContainer>
+    </S.InstagramSection>
   )
 }
 

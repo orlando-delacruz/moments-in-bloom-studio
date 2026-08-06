@@ -1,18 +1,12 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
-import Button from '../../../../components/Button/index.js'
-import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
-import {
-  GalleryHero,
-  HeroMedia,
-  HeroOverlay,
-  HeroContent,
-  HeroEyebrow,
-  HeroTitle,
-  HeroDescription,
-  HeroCTA,
-} from './GalleryHero.styles.js'
+
+import Button from '../../../../../components/Button/index.js'
+
+import { BUTTON_VARIANTS } from '../../../../../constants/ui.js'
+
+import * as S from './GalleryHero.styles.js'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,23 +17,23 @@ function GalleryHero({ content }) {
   const shouldReduceMotion = useReducedMotion()
 
   return (
-    <GalleryHero>
-      <HeroMedia
+    <S.GalleryHero>
+      <S.HeroMedia
         $src={content.backgroundImage}
         initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
         transition={{ duration: shouldReduceMotion ? 0 : 8, ease: 'easeOut' }}
         aria-hidden="true"
       />
-      <HeroOverlay aria-hidden="true" />
-      <HeroContent>
+      <S.HeroOverlay aria-hidden="true" />
+      <S.HeroContent>
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
           transition={{ delay: 0.2 }}
         >
-          <HeroEyebrow>{content.eyebrow}</HeroEyebrow>
+          <S.HeroEyebrow>{content.eyebrow}</S.HeroEyebrow>
         </motion.div>
         <motion.div
           initial="hidden"
@@ -47,7 +41,7 @@ function GalleryHero({ content }) {
           variants={fadeInUp}
           transition={{ delay: 0.3 }}
         >
-          <HeroTitle>{content.title}</HeroTitle>
+          <S.HeroTitle>{content.title}</S.HeroTitle>
         </motion.div>
         <motion.div
           initial="hidden"
@@ -55,7 +49,7 @@ function GalleryHero({ content }) {
           variants={fadeInUp}
           transition={{ delay: 0.4 }}
         >
-          <HeroDescription>{content.description}</HeroDescription>
+          <S.HeroDescription>{content.description}</S.HeroDescription>
         </motion.div>
         <motion.div
           initial="hidden"
@@ -63,7 +57,7 @@ function GalleryHero({ content }) {
           variants={fadeInUp}
           transition={{ delay: 0.5 }}
         >
-          <HeroCTA>
+          <S.HeroCTA>
             <Button as={NavLink} to={content.primaryLink}>
               {content.primaryCTA}
               <FiArrowRight aria-hidden="true" size={18} />
@@ -71,10 +65,10 @@ function GalleryHero({ content }) {
             <Button as={NavLink} to={content.secondaryLink} variant={BUTTON_VARIANTS.OUTLINE}>
               {content.secondaryCTA}
             </Button>
-          </HeroCTA>
+          </S.HeroCTA>
         </motion.div>
-      </HeroContent>
-    </GalleryHero>
+      </S.HeroContent>
+    </S.GalleryHero>
   )
 }
 

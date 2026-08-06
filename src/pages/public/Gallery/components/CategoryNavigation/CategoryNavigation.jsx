@@ -1,13 +1,13 @@
-import { CategoryNavSection, CategoryNavContainer, CategoryNavLabel, CategoryNavList, CategoryNavItem } from './CategoryNavigation.styles.js'
+import * as S from './CategoryNavigation.styles.js'
 
 function CategoryNavigation({ categories, activeCategory, onCategoryChange }) {
   return (
-    <CategoryNavSection>
-      <CategoryNavContainer>
-        <CategoryNavLabel>Filter By Category</CategoryNavLabel>
-        <CategoryNavList role="tablist" aria-label="Gallery Categories">
+    <S.CategoryNavSection>
+      <S.CategoryNavContainer>
+        <S.CategoryNavLabel>Filter By Category</S.CategoryNavLabel>
+        <S.CategoryNavList role="tablist" aria-label="Gallery Categories">
           {categories.map((category) => (
-            <CategoryNavItem
+            <S.CategoryNavItem
               key={category.id}
               role="tab"
               aria-selected={activeCategory === category.id}
@@ -15,11 +15,11 @@ function CategoryNavigation({ categories, activeCategory, onCategoryChange }) {
               onClick={() => onCategoryChange(category.id)}
             >
               {category.label}
-            </CategoryNavItem>
+            </S.CategoryNavItem>
           ))}
-        </CategoryNavList>
-      </CategoryNavContainer>
-    </CategoryNavSection>
+        </S.CategoryNavList>
+      </S.CategoryNavContainer>
+    </S.CategoryNavSection>
   )
 }
 

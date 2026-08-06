@@ -1,17 +1,12 @@
 import { motion } from 'framer-motion'
 import { FiArrowRight } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
-import Button from '../../../../components/Button/index.js'
-import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
-import {
-  CTASection,
-  CTAContainer,
-  CTAEyebrow,
-  CTATitle,
-  CTADescription,
-  CTAButtons,
-  CTABackground,
-} from './GalleryCTA.styles.js'
+
+import Button from '../../../../../components/Button/index.js'
+
+import { BUTTON_VARIANTS } from '../../../../../constants/ui.js'
+
+import * as S from './GalleryCTA.styles.js'
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -28,9 +23,9 @@ const fadeInUp = {
 
 function GalleryCTA({ content }) {
   return (
-    <CTASection>
-      <CTABackground $src={content.backgroundImage} aria-hidden="true" />
-      <CTAContainer>
+    <S.CTASection>
+      <S.CTABackground $src={content.backgroundImage} aria-hidden="true" />
+      <S.CTAContainer>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -38,16 +33,16 @@ function GalleryCTA({ content }) {
           variants={staggerContainer}
         >
           <motion.div variants={fadeInUp}>
-            <CTAEyebrow>{content.eyebrow}</CTAEyebrow>
+            <S.CTAEyebrow>{content.eyebrow}</S.CTAEyebrow>
           </motion.div>
           <motion.div variants={fadeInUp}>
-            <CTATitle>{content.title}</CTATitle>
+            <S.CTATitle>{content.title}</S.CTATitle>
           </motion.div>
           <motion.div variants={fadeInUp}>
-            <CTADescription>{content.description}</CTADescription>
+            <S.CTADescription>{content.description}</S.CTADescription>
           </motion.div>
           <motion.div variants={fadeInUp}>
-            <CTAButtons>
+            <S.CTAButtons>
               <Button as={NavLink} to={content.primaryLink}>
                 {content.primaryCTA}
                 <FiArrowRight aria-hidden="true" size={18} />
@@ -55,11 +50,11 @@ function GalleryCTA({ content }) {
               <Button as={NavLink} to={content.secondaryLink} variant={BUTTON_VARIANTS.OUTLINE}>
                 {content.secondaryCTA}
               </Button>
-            </CTAButtons>
+            </S.CTAButtons>
           </motion.div>
         </motion.div>
-      </CTAContainer>
-    </CTASection>
+      </S.CTAContainer>
+    </S.CTASection>
   )
 }
 

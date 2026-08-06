@@ -1,12 +1,8 @@
 import { motion } from 'framer-motion'
-import Container from '../../../../components/Container/index.js'
-import {
-  IntroSection,
-  IntroContent,
-  IntroEyebrow,
-  IntroTitle,
-  IntroText,
-} from './Introduction.styles.js'
+
+import Container from '../../../../../components/Container/index.js'
+
+import * as S from './Introduction.styles.js'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -15,22 +11,22 @@ const fadeInUp = {
 
 function Introduction({ content }) {
   return (
-    <IntroSection>
+    <S.IntroSection>
       <Container>
-        <IntroContent>
+        <S.IntroContent>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
           >
-            <IntroEyebrow>{content.eyebrow}</IntroEyebrow>
-            <IntroTitle>{content.title}</IntroTitle>
-            <IntroText>{content.text}</IntroText>
+            <S.IntroEyebrow>{content.eyebrow}</S.IntroEyebrow>
+            <S.IntroTitle>{content.title}</S.IntroTitle>
+            <S.IntroText>{content.text}</S.IntroText>
           </motion.div>
-        </IntroContent>
+        </S.IntroContent>
       </Container>
-    </IntroSection>
+    </S.IntroSection>
   )
 }
 
