@@ -42,27 +42,35 @@ function ClientLove({ testimonials, id }) {
   useEffect(() => {
     if (isPaused) {
       if (animationRef.current) {
-        animationRef.current.cancel()
+        cancelAnimationFrame(animationRef.current)
         animationRef.current = null
       }
       return
     }
 
-    const animate = () => {
+    let lastTime = 0
+    const speed = 0.5 // pixels per frame
+
+    const animate = (timestamp) => {
       if (!trackRef.current) return
 
-      trackRef.current.style.transform = trackRef.current.style.transform
-        ? `translateX(${parseFloat(trackRef.current.style.transform.replace('translateX(', '').replace('px)', '')) - 0.5}px)`
-        : 'translateX(-0.5px)'
+      if (timestamp - lastTime < 16) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+      lastTime = timestamp
+
+      const currentTransform = trackRef.current.style.transform || 'translateX(0px)'
+      const currentTranslate = parseFloat(currentTransform.replace('translateX(', '').replace('px)', '')) || 0
+      const newTranslate = currentTranslate - speed
+
+      trackRef.current.style.transform = `translateX(${newTranslate}px)`
 
       // Reset position when we've scrolled one full set
       const trackWidth = trackRef.current.offsetWidth
       const singleSetWidth = trackWidth / 3
-      const currentTranslate = parseFloat(
-        trackRef.current.style.transform.replace('translateX(', '').replace('px)', '')
-      )
 
-      if (currentTranslate <= -singleSetWidth) {
+      if (newTranslate <= -singleSetWidth) {
         trackRef.current.style.transform = 'translateX(0px)'
       }
 
