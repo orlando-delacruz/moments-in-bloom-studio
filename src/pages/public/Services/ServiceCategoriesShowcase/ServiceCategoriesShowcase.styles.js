@@ -873,6 +873,19 @@ export const SubcategoryNav = styled.div`
   gap: 0.75rem;
   align-items: center;
   margin-top: 1rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.5rem;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `
 
 export const SubcategoryPill = styled.button`
@@ -890,10 +903,28 @@ export const SubcategoryPill = styled.button`
   transition: all 0.2s ease;
   box-shadow: ${({ $isActive, theme }) =>
     $isActive ? theme.shadows.soft : 'none'};
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 44px;
+  touch-action: manipulation;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.primaryHover};
     transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.focus};
+    outline-offset: 2px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0.7rem 1.35rem;
+    font-size: 0.9rem;
   }
 `
 
