@@ -1,1 +1,0 @@
-import{n as e,t}from"./Container-BESNCKGJ.js";var n=e();function r({children:e,...r}){return(0,n.jsx)(t,{...r,children:e})}export{r as t};
