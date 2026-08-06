@@ -71,6 +71,7 @@ export const Button = styled.button`
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1;
+  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   transition: ${({ theme }) => theme.transitions.standard};
   ${({ $size }) => sizeStyles[$size] || sizeStyles.medium};
   ${({ $variant }) => variantStyles[$variant] || variantStyles.primary};
