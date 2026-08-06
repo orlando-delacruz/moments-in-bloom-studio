@@ -14,7 +14,7 @@ import {
   whatsIncluded,
 } from '../../../constants/services.js'
 import ClientLove from './ClientLove/index.js'
-import FAQPreview from './FAQPreview/index.js'
+import FAQPreview from '../Home/FAQPreview/FAQPreview.jsx'
 import GalleryPreview from './GalleryPreview/index.js'
 import ServiceCategoriesShowcase from './ServiceCategoriesShowcase/index.js'
 import { ServicesPage } from './Services.styles.js'
@@ -52,7 +52,7 @@ function Services() {
         testimonials={servicesTestimonials}
         id={SERVICES_SECTION_IDS.TESTIMONIALS}
       />
-      <FAQPreview faqs={servicesFaqs} id={SERVICES_SECTION_IDS.FAQ} />
+      <FAQPreview items={servicesFaqs} id={SERVICES_SECTION_IDS.FAQ} />
       <ServicesCTA content={servicesCta} id={SERVICES_SECTION_IDS.CTA} />
     </ServicesPage>
   )

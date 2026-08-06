@@ -1,3 +1,4 @@
+import { useEffect, useState, useRef } from 'react'
 import { FiStar } from 'react-icons/fi'
 import Container from '../../../../components/Container/index.js'
 import Section from '../../../../components/Section/index.js'
@@ -12,11 +13,97 @@ import {
   QuoteText,
   RatingStars,
   TestimonialCard,
-  TestimonialsGrid,
+  TestimonialsRoot,
+  TestimonialsTrack,
+  TestimonialsWrapper,
+  ReadMoreButton,
+  QuoteContent,
 } from './ClientLove.styles.js'
 
 function ClientLove({ testimonials, id }) {
   if (!testimonials || !testimonials.length) return null
+
+  const [expandedCards, setExpandedCards] = useState({})
+  const [isPaused, setIsPaused] = useState(false)
+  const trackRef = useRef(null)
+  const animationRef = useRef(null)
+
+  // Duplicate testimonials for seamless infinite loop
+  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials]
+
+  const toggleExpand = (index) => {
+    setExpandedCards((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }))
+  }
+
+  // Animation logic
+  useEffect(() => {
+    if (isPaused) {
+      if (animationRef.current) {
+        animationRef.current.cancel()
+        animationRef.current = null
+      }
+      return
+    }
+
+    const animate = () => {
+      if (!trackRef.current) return
+
+      trackRef.current.style.transform = trackRef.current.style.transform
+        ? `translateX(${parseFloat(trackRef.current.style.transform.replace('translateX(', '').replace('px)', '')) - 0.5}px)`
+        : 'translateX(-0.5px)'
+
+      // Reset position when we've scrolled one full set
+      const trackWidth = trackRef.current.offsetWidth
+      const singleSetWidth = trackWidth / 3
+      const currentTranslate = parseFloat(
+        trackRef.current.style.transform.replace('translateX(', '').replace('px)', '')
+      )
+
+      if (currentTranslate <= -singleSetWidth) {
+        trackRef.current.style.transform = 'translateX(0px)'
+      }
+
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    animationRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [isPaused])
+
+  // Handle touch swipe
+  const handleTouchStart = useRef(0)
+  const handleTouchMove = (e) => {
+    const currentTouch = e.touches[0].clientX
+    const diff = handleTouchStart.current - currentTouch
+    if (trackRef.current) {
+      const currentTranslate = parseFloat(
+        trackRef.current.style.transform.replace('translateX(', '').replace('px)', '') || 0
+      )
+      trackRef.current.style.transform = `translateX(${currentTranslate - diff}px)`
+    }
+    handleTouchStart.current = currentTouch
+  }
+
+  const handleTouchStartHandler = (e) => {
+    handleTouchStart.current = e.touches[0].clientX
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current)
+      animationRef.current = null
+    }
+  }
+
+  const handleTouchEnd = () => {
+    // Resume animation after touch ends
+    setIsPaused(false)
+  }
 
   return (
     <Section
@@ -24,45 +111,72 @@ function ClientLove({ testimonials, id }) {
       subtitle="Client Testimonials"
       title="Kind Words From Our Celebrators"
       description="Read how couples, private hosts, and brand partners describe their styling experience with Moments in Blooms."
-      tone={SECTION_TONES.DEFAULT}
+      tone={SECTION_TONES.SURFACE}
     >
       <Container>
-        <TestimonialsGrid>
-          {testimonials.map((item, index) => (
-            <TestimonialCard
-              key={index}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <CardTop>
-                <RatingStars>
-                  {Array.from({ length: item.rating || 5 }).map((_, i) => (
-                    <FiStar key={i} fill="currentColor" aria-hidden="true" />
-                  ))}
-                </RatingStars>
-                <QuoteText>“{item.quote}”</QuoteText>
-              </CardTop>
+        <TestimonialsRoot
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStartHandler}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <TestimonialsWrapper>
+            <TestimonialsTrack ref={trackRef}>
+              {extendedTestimonials.map((item, index) => {
+                const isExpanded = expandedCards[index] || false
+                const originalIndex = index % testimonials.length
 
-              <AuthorFooter>
-                {item.image ? (
-                  <AuthorAvatar>
-                    <img src={item.image.src} alt={item.image.alt} loading="lazy" />
-                  </AuthorAvatar>
-                ) : null}
-                <AuthorMeta>
-                  <AuthorName>{item.name}</AuthorName>
-                  <EventTag>{item.event}</EventTag>
-                </AuthorMeta>
-              </AuthorFooter>
-            </TestimonialCard>
-          ))}
-        </TestimonialsGrid>
+                return (
+                  <TestimonialCard
+                    key={`${item.id || index}-${index}`}
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: originalIndex * 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    <CardTop>
+                      <RatingStars>
+                        {Array.from({ length: item.rating || 5 }).map((_, i) => (
+                          <FiStar key={i} fill="currentColor" aria-hidden="true" />
+                        ))}
+                      </RatingStars>
+                      <QuoteContent $isExpanded={isExpanded}>
+                        <QuoteText>"{item.quote}"</QuoteText>
+                      </QuoteContent>
+                      {item.quote.length > 180 && (
+                        <ReadMoreButton
+                          type="button"
+                          onClick={() => toggleExpand(index)}
+                          aria-expanded={isExpanded}
+                          aria-label={isExpanded ? 'Show less' : 'Read more'}
+                        >
+                          {isExpanded ? 'Show Less' : 'Read More'}
+                        </ReadMoreButton>
+                      )}
+                    </CardTop>
+
+                    <AuthorFooter>
+                      {item.image ? (
+                        <AuthorAvatar>
+                          <img src={item.image.src} alt={item.image.alt} loading="lazy" />
+                        </AuthorAvatar>
+                      ) : null}
+                      <AuthorMeta>
+                        <AuthorName>{item.name}</AuthorName>
+                        <EventTag>{item.event}</EventTag>
+                      </AuthorMeta>
+                    </AuthorFooter>
+                  </TestimonialCard>
+                )
+              })}
+            </TestimonialsTrack>
+          </TestimonialsWrapper>
+        </TestimonialsRoot>
       </Container>
     </Section>
   )
