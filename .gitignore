@@ -1,1 +1,22 @@
-Nothing needs to be added to the .gitignore file based on the provided changes. The only modified file is a source code file (.jsx), which should not be ignored.
+```
+# Build artifacts
+dist/
+build/
+*.js
+
+# Dependencies
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+```
