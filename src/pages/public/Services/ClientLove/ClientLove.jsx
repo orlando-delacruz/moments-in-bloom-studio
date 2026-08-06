@@ -123,8 +123,6 @@ function ClientLove({ testimonials, id }) {
     >
       <Container>
         <TestimonialsRoot
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={handleTouchStartHandler}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -146,6 +144,8 @@ function ClientLove({ testimonials, id }) {
                       delay: originalIndex * 0.1,
                       ease: [0.22, 1, 0.36, 1],
                     }}
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
                   >
                     <CardTop>
                       <RatingStars>
