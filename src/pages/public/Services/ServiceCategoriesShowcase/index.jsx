@@ -7,6 +7,7 @@ import Container from "../../../../components/Container/index.js";
 import Section from "../../../../components/Section/index.js";
 import { SECTION_TONES } from "../../../../constants/ui.js";
 import {
+  blissfulNestIntro,
   blissfulNestPrizeOptions,
   photoboothHighlights,
   photoboothPackages,
@@ -335,7 +336,7 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                                       variant="primary"
                                       size="medium"
                                     >
-                                      <span>Enquire for Arch Backdrops</span>
+                                      <span>Request a Quote</span>
                                       <FiArrowRight />
                                     </Button>
                                   </div>
@@ -415,7 +416,7 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                                   variant="secondary"
                                   size="medium"
                                 >
-                                  <span>Reserve Plinths & Props</span>
+                                  <span>Request a Quote</span>
                                   <FiArrowRight />
                                 </Button>
                               </div>
@@ -456,7 +457,7 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                           sensors, every photo looks like a magazine print.
                         </CategorySubtitle>
                         <Button to="/contact" variant="primary" size="large">
-                          <span>Check Date Availability</span>
+                          <span>Reserve Your Date</span>
                           <FiArrowRight />
                         </Button>
                       </div>
@@ -649,14 +650,10 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                             marginBottom: "1.5rem",
                           }}
                         >
-                          A chic, interactive entertainment experience that
-                          delights guests of all ages. Custom wrapped in pastel
-                          tones or personalized monograms, our arcade claw
-                          machines serve as a viral centerpiece loaded with
-                          curated luxury gifts.
+                          {blissfulNestIntro.paragraph}
                         </CategorySubtitle>
                         <Button to="/contact" variant="primary" size="large">
-                          <span>Book Blissful Nest Claw Machine</span>
+                          <span>Enquire Now</span>
                           <FiArrowRight />
                         </Button>
                       </div>
