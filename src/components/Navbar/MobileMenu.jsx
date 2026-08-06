@@ -1,0 +1,142 @@
+import { AnimatePresence } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+import { NavLink } from 'react-router-dom'
+import { publicNavigation } from '../../constants/navigation.js'
+import Button from '../Button/index.js'
+import {
+  CloseButton,
+  MenuBackdrop,
+  MenuBrand,
+  MenuContact,
+  MenuFooter,
+  MenuHeader,
+  MenuLink,
+  MenuLinks,
+  MenuPanel,
+  MenuSocials,
+} from './MobileMenu.styles.js'
+
+const panelVariants = {
+  hidden: { x: '100%' },
+  visible: { x: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+  exit: { x: '100%', transition: { duration: 0.35, ease: [0.4, 0, 1, 1] } },
+}
+
+const linkVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (index) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.06, duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+  }),
+}
+
+const focusableSelector =
+  'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+function MobileMenu({ isOpen, onClose }) {
+  const panelRef = useRef(null)
+  const firstLinkRef = useRef(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      firstLinkRef.current?.focus()
+    }
+  }, [isOpen])
+
+  const handleKeyDown = (event) => {
+    if (event.key !== 'Tab' || !panelRef.current) {
+      return
+    }
+
+    const focusableElements = [...panelRef.current.querySelectorAll(focusableSelector)]
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault()
+      lastElement.focus()
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault()
+      firstElement.focus()
+    }
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen ? (
+        <>
+          <MenuBackdrop
+            key="mobile-menu-backdrop"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <MenuPanel
+            key="mobile-menu-panel"
+            id="mobile-navigation"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onKeyDown={handleKeyDown}
+          >
+            <MenuHeader>
+              <MenuBrand>Moments in Blooms</MenuBrand>
+              <CloseButton type="button" onClick={onClose} aria-label="Close menu">
+                <span aria-hidden="true">×</span>
+              </CloseButton>
+            </MenuHeader>
+
+            <MenuLinks aria-label="Mobile navigation links">
+              {publicNavigation.map((item, index) => (
+                <NavLink
+                  key={item.path}
+                  ref={index === 0 ? firstLinkRef : undefined}
+                  to={item.path}
+                  end={item.path === '/'}
+                  onClick={onClose}
+                >
+                  <MenuLink
+                    custom={index}
+                    variants={linkVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {item.label}
+                  </MenuLink>
+                </NavLink>
+              ))}
+            </MenuLinks>
+
+            <MenuFooter>
+              <Button as={NavLink} to="/contact" onClick={onClose}>
+                Enquire Now
+              </Button>
+              <MenuContact>
+                <span>Melbourne, Australia</span>
+                <a href="mailto:hello@momentsinblooms.com">hello@momentsinblooms.com</a>
+              </MenuContact>
+              <MenuSocials aria-label="Social links">
+                <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
+                  Instagram
+                </a>
+                <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
+                  Facebook
+                </a>
+              </MenuSocials>
+            </MenuFooter>
+          </MenuPanel>
+        </>
+      ) : null}
+    </AnimatePresence>
+  )
+}
+
+export default MobileMenu
