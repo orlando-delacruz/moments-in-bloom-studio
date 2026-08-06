@@ -1,20 +1,19 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { FiArrowRight, FiCheck } from 'react-icons/fi'
-import Button from '../../../../components/Button/index.js'
-import Container from '../../../../components/Container/index.js'
-import Section from '../../../../components/Section/index.js'
-import { SECTION_TONES } from '../../../../constants/ui.js'
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiArrowRight, FiCheck } from "react-icons/fi";
+import Button from "../../../../components/Button/index.js";
+import CollectionSelector from "../../../../components/CollectionSelector/index.js";
+import Container from "../../../../components/Container/index.js";
+import Section from "../../../../components/Section/index.js";
+import { SECTION_TONES } from "../../../../constants/ui.js";
 import {
   blissfulNestPrizeOptions,
   photoboothHighlights,
   photoboothPackages,
-} from '../../../../constants/services.js'
+} from "../../../../constants/services.js";
 import {
   ActiveCategoryHero,
-  ActiveIndicator,
   AddOnsBlock,
-  CategoryBadge,
   CategoryBlock,
   CategoryHeader,
   CategoryHeroContent,
@@ -23,13 +22,8 @@ import {
   CategoryHeroStats,
   CategoryHeroTagline,
   CategoryHeroTitle,
-  CategoryItemCount,
-  CategoryNavGrid,
   CategorySubtitle,
-  CategoryTabCard,
-  CategoryTabMeta,
   CategoryTabTag,
-  CategoryTabTitle,
   CategoryTitle,
   ExclusiveFramesBadge,
   ExclusiveFramesDesc,
@@ -73,26 +67,25 @@ import {
   SubcategoryNav,
   SubcategoryPill,
   TravelNote,
-} from './ServiceCategoriesShowcase.styles.js'
+} from "./ServiceCategoriesShowcase.styles.js";
 
 function ServiceCategoriesShowcase({ categories = [], id }) {
   const [activeCategoryId, setActiveCategoryId] = useState(
-    categories?.[0]?.id || ''
-  )
-  const [activeDecorSubcategory, setActiveDecorSubcategory] = useState('all')
+    categories?.[0]?.id || "",
+  );
+  const [activeDecorSubcategory, setActiveDecorSubcategory] = useState("all");
 
-  if (!categories || !categories.length) return null
+  if (!categories || !categories.length) return null;
 
   const activeCategory =
-    categories.find((cat) => cat.id === activeCategoryId) || categories[0]
+    categories.find((cat) => cat.id === activeCategoryId) || categories[0];
 
   const decorSectionsToDisplay = activeCategory.sections
     ? activeCategory.sections.filter(
         (sec) =>
-          activeDecorSubcategory === 'all' ||
-          activeDecorSubcategory === sec.id
+          activeDecorSubcategory === "all" || activeDecorSubcategory === sec.id,
       )
-    : []
+    : [];
 
   return (
     <Section
@@ -105,57 +98,18 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
       <Container>
         <ShowcaseSection>
           {/* LEVEL 1: Main Service Category Selector */}
-          <CategoryNavGrid role="tablist" aria-label="Main Service Categories">
-            {categories.map((category) => {
-              const isActive = category.id === activeCategoryId
-              return (
-                <CategoryTabCard
-                  key={category.id}
-                  $isActive={isActive}
-                  onClick={() => {
-                    setActiveCategoryId(category.id)
-                    if (category.id === 'decor-hire') {
-                      setActiveDecorSubcategory('all')
-                    }
-                  }}
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`category-panel-${category.id}`}
-                  id={`category-tab-${category.id}`}
-                >
-                  <CategoryTabTag>{category.tagline}</CategoryTabTag>
-                  <CategoryTabTitle>{category.title}</CategoryTabTitle>
-                  <div
-                    style={{
-                      fontSize: '0.825rem',
-                      opacity: 0.85,
-                      marginBottom: '0.5rem',
-                      lineHeight: '1.4',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {category.subtitle}
-                  </div>
-                  <CategoryTabMeta>
-                    <CategoryItemCount>
-                      {category.id === 'decor-hire' && 'Elegant styling pieces'}
-                      {category.id === 'luxe-booths' && 'Unlimited Prints'}
-                      {category.id === 'blissful-nest' && 'Perfect for Every Celebration'}
-                    </CategoryItemCount>
-                    {category.badge && (
-                      <CategoryBadge>{category.badge}</CategoryBadge>
-                    )}
-                  </CategoryTabMeta>
-                  {isActive && (
-                    <ActiveIndicator
-                      layoutId="activeCategoryIndicator"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </CategoryTabCard>
-              )
-            })}
-          </CategoryNavGrid>
+          <CollectionSelector
+            categories={categories}
+            activeId={activeCategoryId}
+            ariaLabel="Main Service Categories"
+            idPrefix="category"
+            onSelect={(id) => {
+              setActiveCategoryId(id);
+              if (id === "decor-hire") {
+                setActiveDecorSubcategory("all");
+              }
+            }}
+          />
 
           {/* ACTIVE CATEGORY SHOWCASE DISPLAY */}
           <AnimatePresence mode="wait">
@@ -176,8 +130,12 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                     <CategoryHeroTagline>
                       {activeCategory.tagline}
                     </CategoryHeroTagline>
-                    <CategoryHeroTitle>{activeCategory.title}</CategoryHeroTitle>
-                    <CategoryHeroDesc>{activeCategory.description}</CategoryHeroDesc>
+                    <CategoryHeroTitle>
+                      {activeCategory.title}
+                    </CategoryHeroTitle>
+                    <CategoryHeroDesc>
+                      {activeCategory.description}
+                    </CategoryHeroDesc>
                     <CategoryHeroStats>
                       <StatItem>
                         <StatNumber>Melbourne</StatNumber>
@@ -196,7 +154,9 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                   <CategoryHeroImageWrapper>
                     <img
                       src={activeCategory.coverImage?.src}
-                      alt={activeCategory.coverImage?.alt || activeCategory.title}
+                      alt={
+                        activeCategory.coverImage?.alt || activeCategory.title
+                      }
                       loading="lazy"
                     />
                   </CategoryHeroImageWrapper>
@@ -205,181 +165,317 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                 {/* -----------------------------------------------------------
                     SPECIAL CATEGORY 1: DECOR HIRE CATALOGUE
                    ----------------------------------------------------------- */}
-                {activeCategory.id === 'decor-hire' && activeCategory.sections && (
-                  <ShowcaseSection>
-                    {/* Subcategory Pills Selector */}
-                    <div style={{ background: '#FAF7F2', padding: '1.25rem 1.75rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.06)' }}>
-                      <CategorySubtitle style={{ fontWeight: 600, color: '#1A1817', marginBottom: '0.5rem' }}>
-                        Explore Subcategories:
-                      </CategorySubtitle>
-                      <SubcategoryNav role="tablist" aria-label="Decor Hire Subcategories">
-                        <SubcategoryPill
-                          $isActive={activeDecorSubcategory === 'all'}
-                          onClick={() => setActiveDecorSubcategory('all')}
+                {activeCategory.id === "decor-hire" &&
+                  activeCategory.sections && (
+                    <ShowcaseSection>
+                      {/* Subcategory Pills Selector */}
+                      <div
+                        style={{
+                          background: "#FAF7F2",
+                          padding: "1.25rem 1.75rem",
+                          borderRadius: "16px",
+                          border: "1px solid rgba(0,0,0,0.06)",
+                        }}
+                      >
+                        <CategorySubtitle
+                          style={{
+                            fontWeight: 600,
+                            color: "#1A1817",
+                            marginBottom: "0.5rem",
+                          }}
                         >
-                          All Subcategories
-                        </SubcategoryPill>
-                        {activeCategory.sections.map((sec) => (
+                          Explore Subcategories:
+                        </CategorySubtitle>
+                        <SubcategoryNav
+                          role="tablist"
+                          aria-label="Decor Hire Subcategories"
+                        >
                           <SubcategoryPill
-                            key={sec.id}
-                            $isActive={activeDecorSubcategory === sec.id}
-                            onClick={() => setActiveDecorSubcategory(sec.id)}
+                            $isActive={activeDecorSubcategory === "all"}
+                            onClick={() => setActiveDecorSubcategory("all")}
                           >
-                            {sec.title}
+                            All Subcategories
                           </SubcategoryPill>
-                        ))}
-                      </SubcategoryNav>
-                    </div>
+                          {activeCategory.sections.map((sec) => (
+                            <SubcategoryPill
+                              key={sec.id}
+                              $isActive={activeDecorSubcategory === sec.id}
+                              onClick={() => setActiveDecorSubcategory(sec.id)}
+                            >
+                              {sec.title}
+                            </SubcategoryPill>
+                          ))}
+                        </SubcategoryNav>
+                      </div>
 
-                    {/* Render Filtered Subcategories */}
-                    {decorSectionsToDisplay.map((sec) => (
-                      <CategoryBlock key={sec.id}>
-                        <CategoryHeader>
-                          <CategoryTitle>{sec.title}</CategoryTitle>
-                          <CategorySubtitle>{sec.subtitle}</CategorySubtitle>
-                        </CategoryHeader>
+                      {/* Render Filtered Subcategories */}
+                      {decorSectionsToDisplay.map((sec) => (
+                        <CategoryBlock key={sec.id}>
+                          <CategoryHeader>
+                            <CategoryTitle>{sec.title}</CategoryTitle>
+                            <CategorySubtitle>{sec.subtitle}</CategorySubtitle>
+                          </CategoryHeader>
 
-                        {/* Special Red Romance Showcase */}
-                        {sec.id === 'flower-arrangements' && sec.featuredItem && (
-                          <RedRomanceCard>
-                            <div>
-                              <CategoryTabTag style={{ color: '#C67495' }}>
-                                Featured Collection
-                              </CategoryTabTag>
-                              <CategoryTitle style={{ fontSize: '1.8rem', color: '#8B1E3F' }}>
-                                • {sec.featuredItem.name}
-                              </CategoryTitle>
-                              <CategorySubtitle>
-                                {sec.featuredItem.description}
-                              </CategorySubtitle>
-                            </div>
+                          {/* Special Red Romance Showcase */}
+                          {sec.id === "flower-arrangements" &&
+                            sec.featuredItem && (
+                              <RedRomanceCard>
+                                <div>
+                                  <CategoryTabTag style={{ color: "#C67495" }}>
+                                    Featured Collection
+                                  </CategoryTabTag>
+                                  <CategoryTitle
+                                    style={{
+                                      fontSize: "1.8rem",
+                                      color: "#8B1E3F",
+                                    }}
+                                  >
+                                    • {sec.featuredItem.name}
+                                  </CategoryTitle>
+                                  <CategorySubtitle>
+                                    {sec.featuredItem.description}
+                                  </CategorySubtitle>
+                                </div>
 
-                            <OptionGrid>
-                              {sec.featuredItem.options?.map((opt, oIdx) => (
-                                <OptionCard key={oIdx}>
-                                  <img src={opt.image} alt={opt.name} loading="lazy" />
-                                  <OptionCardBody>
-                                    <OptionName>{opt.name}</OptionName>
-                                    <OptionSpecs>{opt.specs}</OptionSpecs>
-                                    <OptionDesc>{opt.desc}</OptionDesc>
-                                  </OptionCardBody>
-                                </OptionCard>
-                              ))}
-                            </OptionGrid>
-                          </RedRomanceCard>
-                        )}
+                                <OptionGrid>
+                                  {sec.featuredItem.options?.map(
+                                    (opt, oIdx) => (
+                                      <OptionCard key={oIdx}>
+                                        <img
+                                          src={opt.image}
+                                          alt={opt.name}
+                                          loading="lazy"
+                                        />
+                                        <OptionCardBody>
+                                          <OptionName>{opt.name}</OptionName>
+                                          <OptionSpecs>{opt.specs}</OptionSpecs>
+                                          <OptionDesc>{opt.desc}</OptionDesc>
+                                        </OptionCardBody>
+                                      </OptionCard>
+                                    ),
+                                  )}
+                                </OptionGrid>
+                              </RedRomanceCard>
+                            )}
 
-                        {/* Special Whimsical Garden Showcase */}
-                        {sec.id === 'whimsical-garden' && sec.featuredItem && (
-                          <div>
-                            <div style={{ marginBottom: '1.25rem' }}>
-                              <CategoryTitle style={{ fontSize: '1.6rem' }}>
-                                • {sec.featuredItem.name}
-                              </CategoryTitle>
-                              <CategorySubtitle>
-                                {sec.featuredItem.description}
-                              </CategorySubtitle>
-                            </div>
-                            <GalleryGrid>
-                              {sec.featuredItem.gallery?.map((gal, gIdx) => (
-                                <GalleryItem key={gIdx}>
-                                  <img src={gal.src} alt={gal.title} loading="lazy" />
-                                  <GalleryCaption>{gal.title}</GalleryCaption>
-                                </GalleryItem>
-                              ))}
-                            </GalleryGrid>
-                          </div>
-                        )}
-
-                        {/* Backdrops Section */}
-                        {sec.id === 'backdrops-collection' && sec.featuredItem && (
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
+                          {/* Special Whimsical Garden Showcase */}
+                          {sec.id === "whimsical-garden" &&
+                            sec.featuredItem && (
                               <div>
-                                <OptionSpecs style={{ fontSize: '0.8rem', marginBottom: '0.5rem' }}>
-                                  Dimensions: {sec.featuredItem.dimensions}
-                                </OptionSpecs>
-                                <CategoryTitle style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>
-                                  • {sec.featuredItem.name}
-                                </CategoryTitle>
-                                <CategorySubtitle style={{ marginBottom: '1.5rem' }}>
-                                  {sec.featuredItem.description}
-                                </CategorySubtitle>
-                                <Button to="/contact" variant="primary" size="medium">
-                                  <span>Enquire for Arch Backdrops</span>
-                                  <FiArrowRight />
-                                </Button>
+                                <div style={{ marginBottom: "1.25rem" }}>
+                                  <CategoryTitle style={{ fontSize: "1.6rem" }}>
+                                    • {sec.featuredItem.name}
+                                  </CategoryTitle>
+                                  <CategorySubtitle>
+                                    {sec.featuredItem.description}
+                                  </CategorySubtitle>
+                                </div>
+                                <GalleryGrid>
+                                  {sec.featuredItem.gallery?.map(
+                                    (gal, gIdx) => (
+                                      <GalleryItem key={gIdx}>
+                                        <img
+                                          src={gal.src}
+                                          alt={gal.title}
+                                          loading="lazy"
+                                        />
+                                        <GalleryCaption>
+                                          {gal.title}
+                                        </GalleryCaption>
+                                      </GalleryItem>
+                                    ),
+                                  )}
+                                </GalleryGrid>
                               </div>
-                              <div style={{ borderRadius: '16px', overflow: 'hidden', height: '280px' }}>
+                            )}
+
+                          {/* Backdrops Section */}
+                          {sec.id === "backdrops-collection" &&
+                            sec.featuredItem && (
+                              <div
+                                style={{
+                                  display: "grid",
+                                  gridTemplateColumns: "1fr",
+                                  gap: "2rem",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "grid",
+                                    gridTemplateColumns:
+                                      "repeat(auto-fit, minmax(300px, 1fr))",
+                                    gap: "2rem",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <div>
+                                    <OptionSpecs
+                                      style={{
+                                        fontSize: "0.8rem",
+                                        marginBottom: "0.5rem",
+                                      }}
+                                    >
+                                      Dimensions: {sec.featuredItem.dimensions}
+                                    </OptionSpecs>
+                                    <CategoryTitle
+                                      style={{
+                                        fontSize: "1.8rem",
+                                        marginBottom: "0.75rem",
+                                      }}
+                                    >
+                                      • {sec.featuredItem.name}
+                                    </CategoryTitle>
+                                    <CategorySubtitle
+                                      style={{ marginBottom: "1.5rem" }}
+                                    >
+                                      {sec.featuredItem.description}
+                                    </CategorySubtitle>
+                                    <Button
+                                      to="/contact"
+                                      variant="primary"
+                                      size="medium"
+                                    >
+                                      <span>Enquire for Arch Backdrops</span>
+                                      <FiArrowRight />
+                                    </Button>
+                                  </div>
+                                  <div
+                                    style={{
+                                      borderRadius: "16px",
+                                      overflow: "hidden",
+                                      height: "280px",
+                                    }}
+                                  >
+                                    <img
+                                      src={sec.featuredItem.image}
+                                      alt={sec.featuredItem.name}
+                                      style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                          {/* Plinths & Props Section */}
+                          {sec.id === "plinths-props" && sec.featuredItem && (
+                            <div
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns:
+                                  "repeat(auto-fit, minmax(300px, 1fr))",
+                                gap: "2rem",
+                                alignItems: "center",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  borderRadius: "16px",
+                                  overflow: "hidden",
+                                  height: "280px",
+                                }}
+                              >
                                 <img
                                   src={sec.featuredItem.image}
                                   alt={sec.featuredItem.name}
-                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                  }}
                                 />
                               </div>
+                              <div>
+                                <OptionSpecs
+                                  style={{
+                                    fontSize: "0.8rem",
+                                    marginBottom: "0.5rem",
+                                  }}
+                                >
+                                  Catalogue Showcase
+                                </OptionSpecs>
+                                <CategoryTitle
+                                  style={{
+                                    fontSize: "1.8rem",
+                                    marginBottom: "0.75rem",
+                                  }}
+                                >
+                                  • {sec.featuredItem.name}
+                                </CategoryTitle>
+                                <CategorySubtitle
+                                  style={{ marginBottom: "1.5rem" }}
+                                >
+                                  {sec.featuredItem.description}
+                                </CategorySubtitle>
+                                <Button
+                                  to="/contact"
+                                  variant="secondary"
+                                  size="medium"
+                                >
+                                  <span>Reserve Plinths & Props</span>
+                                  <FiArrowRight />
+                                </Button>
+                              </div>
                             </div>
-                          </div>
-                        )}
-
-                        {/* Plinths & Props Section */}
-                        {sec.id === 'plinths-props' && sec.featuredItem && (
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
-                            <div style={{ borderRadius: '16px', overflow: 'hidden', height: '280px' }}>
-                              <img
-                                src={sec.featuredItem.image}
-                                alt={sec.featuredItem.name}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                              />
-                            </div>
-                            <div>
-                              <OptionSpecs style={{ fontSize: '0.8rem', marginBottom: '0.5rem' }}>
-                                Catalogue Showcase
-                              </OptionSpecs>
-                              <CategoryTitle style={{ fontSize: '1.8rem', marginBottom: '0.75rem' }}>
-                                • {sec.featuredItem.name}
-                              </CategoryTitle>
-                              <CategorySubtitle style={{ marginBottom: '1.5rem' }}>
-                                {sec.featuredItem.description}
-                              </CategorySubtitle>
-                              <Button to="/contact" variant="secondary" size="medium">
-                                <span>Reserve Plinths & Props</span>
-                                <FiArrowRight />
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-                      </CategoryBlock>
-                    ))}
-                  </ShowcaseSection>
-                )}
+                          )}
+                        </CategoryBlock>
+                      ))}
+                    </ShowcaseSection>
+                  )}
 
                 {/* -----------------------------------------------------------
                     SPECIAL CATEGORY 2: LUXE PHOTOBOOTH EXPERIENCES
                    ----------------------------------------------------------- */}
-                {activeCategory.id === 'luxe-booths' && (
+                {activeCategory.id === "luxe-booths" && (
                   <PhotoboothStorySection>
                     {/* Storytelling 1: Luxury Booth Experience */}
                     <StoryHeroBlock>
                       <div>
-                        <CategoryTabTag style={{ color: '#C67495' }}>
+                        <CategoryTabTag style={{ color: "#C67495" }}>
                           Refined Entertainment
                         </CategoryTabTag>
-                        <CategoryTitle style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
+                        <CategoryTitle
+                          style={{ fontSize: "2.5rem", marginBottom: "1rem" }}
+                        >
                           Luxury Booth Experience
                         </CategoryTitle>
-                        <CategorySubtitle style={{ fontSize: '1.05rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
-                          Designed for Melbourne’s most elegant celebrations, our studio photobooths elevate traditional event captures into high-fashion portraiture. Equipped with beauty softbox lights and high-resolution DSLR sensors, every photo looks like a magazine print.
+                        <CategorySubtitle
+                          style={{
+                            fontSize: "1.05rem",
+                            lineHeight: "1.8",
+                            marginBottom: "1.5rem",
+                          }}
+                        >
+                          Designed for Melbourne’s most elegant celebrations,
+                          our studio photobooths elevate traditional event
+                          captures into high-fashion portraiture. Equipped with
+                          beauty softbox lights and high-resolution DSLR
+                          sensors, every photo looks like a magazine print.
                         </CategorySubtitle>
                         <Button to="/contact" variant="primary" size="large">
                           <span>Check Date Availability</span>
                           <FiArrowRight />
                         </Button>
                       </div>
-                      <div style={{ borderRadius: '20px', overflow: 'hidden', height: '340px', boxShadow: '0 15px 35px rgba(0,0,0,0.1)' }}>
+                      <div
+                        style={{
+                          borderRadius: "20px",
+                          overflow: "hidden",
+                          height: "340px",
+                          boxShadow: "0 15px 35px rgba(0,0,0,0.1)",
+                        }}
+                      >
                         <img
                           src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1200&q=85"
                           alt="Luxury Photobooth Guest Moment"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
                         />
                       </div>
                     </StoryHeroBlock>
@@ -397,55 +493,78 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                           {photoboothHighlights.framesFeature.description}
                         </ExclusiveFramesDesc>
                         <InclusionList $popular={true}>
-                          {photoboothHighlights.framesFeature.highlights.map((item, fIdx) => (
-                            <li key={fIdx}>
-                              <FiCheck />
-                              <span>{item}</span>
-                            </li>
-                          ))}
+                          {photoboothHighlights.framesFeature.highlights.map(
+                            (item, fIdx) => (
+                              <li key={fIdx}>
+                                <FiCheck />
+                                <span>{item}</span>
+                              </li>
+                            ),
+                          )}
                         </InclusionList>
                       </div>
-                      <div style={{ borderRadius: '16px', overflow: 'hidden', height: '320px', border: '1px solid rgba(212, 175, 55, 0.3)' }}>
+                      <div
+                        style={{
+                          borderRadius: "16px",
+                          overflow: "hidden",
+                          height: "320px",
+                          border: "1px solid rgba(212, 175, 55, 0.3)",
+                        }}
+                      >
                         <img
                           src={photoboothHighlights.framesFeature.image.src}
                           alt={photoboothHighlights.framesFeature.image.alt}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
                         />
                       </div>
                     </ExclusiveFramesFeature>
 
                     {/* Storytelling 3: Studio-Grade Moments */}
                     <div>
-                      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-                        <CategoryTabTag style={{ color: '#C67495' }}>
+                      <div
+                        style={{ textAlign: "center", marginBottom: "2.5rem" }}
+                      >
+                        <CategoryTabTag style={{ color: "#C67495" }}>
                           {photoboothHighlights.studioGrade.badge}
                         </CategoryTabTag>
-                        <CategoryTitle style={{ fontSize: '2.2rem' }}>
+                        <CategoryTitle style={{ fontSize: "2.2rem" }}>
                           {photoboothHighlights.studioGrade.title}
                         </CategoryTitle>
-                        <CategorySubtitle style={{ maxWidth: '650px', margin: '0.5rem auto 0' }}>
+                        <CategorySubtitle
+                          style={{ maxWidth: "650px", margin: "0.5rem auto 0" }}
+                        >
                           {photoboothHighlights.studioGrade.description}
                         </CategorySubtitle>
                       </div>
 
                       <StudioGradeGrid>
-                        {photoboothHighlights.studioGrade.features.map((feat, sIdx) => (
-                          <StudioFeatureCard key={sIdx}>
-                            <h6>• {feat.title}</h6>
-                            <p>{feat.desc}</p>
-                          </StudioFeatureCard>
-                        ))}
+                        {photoboothHighlights.studioGrade.features.map(
+                          (feat, sIdx) => (
+                            <StudioFeatureCard key={sIdx}>
+                              <h6>• {feat.title}</h6>
+                              <p>{feat.desc}</p>
+                            </StudioFeatureCard>
+                          ),
+                        )}
                       </StudioGradeGrid>
                     </div>
 
                     {/* Dedicated Hotel-Level Pricing Section */}
                     <PricingContainer>
                       <PricingHeader>
-                        <CategoryTabTag style={{ color: '#C67495' }}>
+                        <CategoryTabTag style={{ color: "#C67495" }}>
                           Transparent Investment
                         </CategoryTabTag>
                         <h4>Luxury Photobooth Packages</h4>
-                        <p>All-inclusive packages tailored with zero hidden fees. Select the perfect suite for your event duration and guest experience.</p>
+                        <p>
+                          All-inclusive packages tailored with zero hidden fees.
+                          Select the perfect suite for your event duration and
+                          guest experience.
+                        </p>
                       </PricingHeader>
 
                       <PackageGrid>
@@ -459,7 +578,9 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
 
                             <PackagePrice $popular={pkg.popular}>
                               <span className="amount">{pkg.price}</span>
-                              <span className="duration">/ {pkg.hireDuration}</span>
+                              <span className="duration">
+                                / {pkg.hireDuration}
+                              </span>
                             </PackagePrice>
 
                             <PackageTagline $popular={pkg.popular}>
@@ -487,13 +608,11 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                               </ul>
                             </AddOnsBlock>
 
-                            <TravelNote>
-                              Note: {pkg.travelNotes}
-                            </TravelNote>
+                            <TravelNote>Note: {pkg.travelNotes}</TravelNote>
 
                             <Button
                               to="/contact"
-                              variant={pkg.popular ? 'primary' : 'secondary'}
+                              variant={pkg.popular ? "primary" : "secondary"}
                               size="medium"
                               fullWidth
                             >
@@ -510,30 +629,52 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                 {/* -----------------------------------------------------------
                     SPECIAL CATEGORY 3: BLISSFUL NEST ARCADE
                    ----------------------------------------------------------- */}
-                {activeCategory.id === 'blissful-nest' && (
+                {activeCategory.id === "blissful-nest" && (
                   <ShowcaseSection>
                     {/* Blissful Nest Intro & Claw Machines */}
                     <StoryHeroBlock>
                       <div>
-                        <CategoryTabTag style={{ color: '#C67495' }}>
+                        <CategoryTabTag style={{ color: "#C67495" }}>
                           Playful Elegance
                         </CategoryTabTag>
-                        <CategoryTitle style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
+                        <CategoryTitle
+                          style={{ fontSize: "2.5rem", marginBottom: "1rem" }}
+                        >
                           Claw Machines
                         </CategoryTitle>
-                        <CategorySubtitle style={{ fontSize: '1.05rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
-                          A chic, interactive entertainment experience that delights guests of all ages. Custom wrapped in pastel tones or personalized monograms, our arcade claw machines serve as a viral centerpiece loaded with curated luxury gifts.
+                        <CategorySubtitle
+                          style={{
+                            fontSize: "1.05rem",
+                            lineHeight: "1.8",
+                            marginBottom: "1.5rem",
+                          }}
+                        >
+                          A chic, interactive entertainment experience that
+                          delights guests of all ages. Custom wrapped in pastel
+                          tones or personalized monograms, our arcade claw
+                          machines serve as a viral centerpiece loaded with
+                          curated luxury gifts.
                         </CategorySubtitle>
                         <Button to="/contact" variant="primary" size="large">
                           <span>Book Blissful Nest Claw Machine</span>
                           <FiArrowRight />
                         </Button>
                       </div>
-                      <div style={{ borderRadius: '20px', overflow: 'hidden', height: '340px' }}>
+                      <div
+                        style={{
+                          borderRadius: "20px",
+                          overflow: "hidden",
+                          height: "340px",
+                        }}
+                      >
                         <img
                           src="https://images.unsplash.com/photo-1763076703663-8d28a686612f?auto=format&fit=crop&w=1200&q=85"
                           alt="Blissful Nest Luxury Claw Machine"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
                         />
                       </div>
                     </StoryHeroBlock>
@@ -542,13 +683,21 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
                     <CategoryBlock>
                       <CategoryHeader>
                         <CategoryTitle>Prize Options</CategoryTitle>
-                        <CategorySubtitle>Choose from our pre-curated gift tiers or request custom bespoke prize sourcing for your brand or wedding palette.</CategorySubtitle>
+                        <CategorySubtitle>
+                          Choose from our pre-curated gift tiers or request
+                          custom bespoke prize sourcing for your brand or
+                          wedding palette.
+                        </CategorySubtitle>
                       </CategoryHeader>
 
                       <PrizeOptionsGrid>
                         {blissfulNestPrizeOptions.map((prize) => (
                           <PrizeCard key={prize.id}>
-                            <img src={prize.image} alt={prize.title} loading="lazy" />
+                            <img
+                              src={prize.image}
+                              alt={prize.title}
+                              loading="lazy"
+                            />
                             <PrizeContent>
                               <PrizeBadge>{prize.badge}</PrizeBadge>
                               <PrizeTitle>{prize.title}</PrizeTitle>
@@ -567,9 +716,7 @@ function ServiceCategoriesShowcase({ categories = [], id }) {
         </ShowcaseSection>
       </Container>
     </Section>
-  )
+  );
 }
 
-export default ServiceCategoriesShowcase
-
-
+export default ServiceCategoriesShowcase;
