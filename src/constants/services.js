@@ -226,10 +226,10 @@ export const blissfulNestIntro = Object.freeze({
     "Our Blissful Nest Claw Machines add a playful yet polished touch to your celebration, a crowd-favourite feature of irresistible fun. Creating moments of excitement and connection, they make every event an experience to remember.",
 });
 
-export const blissfulNestPrizeOptions = Object.freeze([
+export const blissfulNestPackages = Object.freeze([
   {
-    id: "standard-prize",
-    title: "Standard Prize Package",
+    id: "standard",
+    name: "Standard",
     tagline: "Playful Nostalgia & Soft Keepsakes",
     description:
       "Curated pastel plush toys, custom keychains, soft plush keepsakes, and traditional metallic event tokens.",
@@ -243,8 +243,8 @@ export const blissfulNestPrizeOptions = Object.freeze([
       "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=800&q=85",
   },
   {
-    id: "premium-prize",
-    title: "Premium Prize Package",
+    id: "premium",
+    name: "Premium",
     tagline: "Artisan Confectionery & Favors",
     description:
       "Custom boxed wedding favor gifts, gourmet artisan chocolates, bespoke scented candles, and monogrammed keepsakes.",
@@ -258,8 +258,8 @@ export const blissfulNestPrizeOptions = Object.freeze([
       "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=85",
   },
   {
-    id: "deluxe-prize",
-    title: "Deluxe Prize Package",
+    id: "deluxe",
+    name: "Deluxe",
     tagline: "Luxury Beauty & Mini Champagne",
     description:
       "Designer beauty and skincare miniatures, mini Moët or Bottega champagne bottles, and high-value prize capsules.",
@@ -273,8 +273,8 @@ export const blissfulNestPrizeOptions = Object.freeze([
       "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=85",
   },
   {
-    id: "custom-order-prize",
-    title: "Custom Order Package",
+    id: "custom-order",
+    name: "Custom Order",
     tagline: "Tailored for Brand & Theme",
     description:
       "Completely tailored prizes sourced, packaged, and branded specifically for your wedding color palette, theme, or corporate sponsors.",
@@ -289,15 +289,19 @@ export const blissfulNestPrizeOptions = Object.freeze([
   },
 ]);
 
-export const serviceCategories = Object.freeze([
+export const serviceCollections = Object.freeze([
   {
     id: "decor-hire",
+    type: "collection",
+    brand: "Moments in Blooms",
     order: 1,
     featured: true,
     title: "Decor Hire",
-    navSub: "Luxury Event Decor",
+    navSub: "Luxury Event Styling",
     navMeta: "4 Collections",
-    description: "Luxury decor collections for weddings and special events.",
+    description:
+      "Luxury event styling and considered decorative collections for weddings and special events.",
+    tagline: "Bespoke Decor & Styling",
     coverImage: {
       src: "https://images.unsplash.com/photo-1707333512411-3fd0773d15ce?auto=format&fit=crop&w=1400&q=85",
       alt: "Curated event decor hire setup with plinths and flower arrangements",
@@ -400,32 +404,52 @@ export const serviceCategories = Object.freeze([
     ],
   },
   {
-    id: "luxe-booths",
+    id: "luxe-photobooth",
+    type: "collection",
+    brand: "Moments in Blooms",
     order: 2,
     featured: true,
     title: "Luxe Photobooth",
-    navSub: "Mirror Booth Experience",
+    navSub: "Premium Mirror Booth Experiences",
     navMeta: "3 Packages",
-    description: "Premium mirror photobooth experiences with luxury upgrades.",
+    description:
+      "Premium mirror photobooth experiences designed for unforgettable celebrations.",
+    tagline: "Premium Mirror Booths",
     coverImage: {
       src: "https://images.pexels.com/photos/8602142/pexels-photo-8602142.jpeg?auto=compress&cs=tinysrgb&w=1200&q=85",
       alt: "Minimal luxury photobooth studio backdrop with soft lighting",
     },
-    isPhotoboothSpecialSection: true,
+    highlights: photoboothHighlights,
+    packages: photoboothPackages,
   },
   {
     id: "blissful-nest",
+    type: "sub-brand",
+    brand: "Moments in Blooms",
     order: 3,
     featured: true,
     title: "Blissful Nest",
-    navSub: "Luxury Claw Machines",
-    navMeta: "Prize Collections",
-    description: "Luxury claw machine experiences and prize collections.",
+    navSub: "Claw Machine Hire",
+    navMeta: "4 Prize Options",
+    description:
+      "A playful luxury sub-brand offering beautifully presented claw machine experiences for unforgettable celebrations.",
+    tagline: "Playful Luxury",
+    sisterLabel: "A Moments in Blooms sister brand",
     coverImage: {
       src: "https://images.unsplash.com/photo-1763076703663-8d28a686612f?auto=format&fit=crop&w=1200&q=85",
       alt: "Pastel claw machines filled with plush toys and gifts",
     },
-    isBlissfulNestSpecialSection: true,
+    intro: blissfulNestIntro.paragraph,
+    productCategories: [
+      {
+        id: "claw-machine-hire",
+        type: "product-category",
+        name: "Claw Machine Hire",
+        description:
+          "Beautifully presented claw machines filled with curated prizes — a playful yet polished highlight for your celebration.",
+        packages: blissfulNestPackages,
+      },
+    ],
   },
 ]);
 

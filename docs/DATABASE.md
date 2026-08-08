@@ -181,21 +181,23 @@ Examples
 
 # service_categories
 
-Top-level service categories.
+Top-level service collections, representing each main offering under the Moments in Blooms master brand. The Blissful Nest entry is modeled as a sub-brand collection with its own nested product categories.
 
 Examples
 
-Event Decor Hire
+Decor Hire
 
-Luxe Booth
+Luxe Photobooth
 
-Claw Party
+Blissful Nest
 
 Columns
 
 - id
 - name
 - slug
+- brand (parent brand id — e.g. Moments in Blooms or the Blissful Nest sub-brand)
+- collection_type (e.g. collection, sub-brand)
 - description
 - featured_image
 - icon
@@ -211,7 +213,7 @@ Columns
 
 # service_subcategories
 
-Each service category may contain multiple subcategories.
+Each service collection may contain multiple subcategories. For the Blissful Nest sub-brand, subcategories represent its product categories (e.g. Claw Machine Hire), with future Blissful Nest products added as new subcategory rows.
 
 Examples
 
@@ -222,6 +224,8 @@ Backdrops
 Props
 
 Custom Decor
+
+Claw Machine Hire
 
 Columns
 

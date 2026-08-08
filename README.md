@@ -90,7 +90,7 @@ The homepage is composed from isolated section modules under [`src/pages/public/
 
 - Cinematic hero with stock floral background, parallax, scroll cue, and enquiry-led CTAs
 - Editorial trust statement and text-only trust marks
-- Staggered image-led services for Decor Hire, Luxe Booth, and Claw Party
+- Staggered image-led services for Decor Hire, Luxe Photobooth, and Blissful Nest
 - Overlap gallery collage
 - Sticky “Why us?” proof list
 - Alternating enquiry process timeline

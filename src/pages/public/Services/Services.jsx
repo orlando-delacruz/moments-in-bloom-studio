@@ -1,6 +1,6 @@
 import SEO from '../../../components/SEO/index.js'
 import {
-  serviceCategories,
+  serviceCollections,
   SERVICES_SECTION_IDS,
   servicesCta,
   servicesExperienceTimeline,
@@ -16,7 +16,7 @@ import {
 import ClientLove from './ClientLove/index.js'
 import FAQPreview from '../Home/FAQPreview/FAQPreview.jsx'
 import GalleryPreview from './GalleryPreview/index.js'
-import ServiceCategoriesShowcase from './ServiceCategoriesShowcase/index.js'
+import ServiceCollectionsShowcase from './ServiceCollectionsShowcase/index.js'
 import { ServicesPage } from './Services.styles.js'
 import ServicesCTA from './ServicesCTA/index.js'
 import ServicesExperience from './ServicesExperience/index.js'
@@ -37,8 +37,8 @@ function Services() {
       />
       <ServicesHero content={servicesHero} id={SERVICES_SECTION_IDS.HERO} />
       <ServicesIntro content={servicesIntro} id={SERVICES_SECTION_IDS.INTRO} />
-      <ServiceCategoriesShowcase
-        categories={serviceCategories}
+      <ServiceCollectionsShowcase
+        collections={serviceCollections}
         id={SERVICES_SECTION_IDS.FEATURED}
       />
       <WhatsIncluded content={whatsIncluded} id={SERVICES_SECTION_IDS.INCLUDED} />
