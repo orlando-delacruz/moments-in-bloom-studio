@@ -1,49 +1,49 @@
+import { memo, useCallback } from 'react'
+import { FiArrowUpRight } from 'react-icons/fi'
+
+import { useImageFallback } from '../../hooks/index.js'
+
+import { GALLERY_FALLBACK_IMAGES } from '../../constants/galleryImages.js'
+
 import * as S from './GalleryCard.styles.js'
 
-function GalleryCard({ item, index, onClick }) {
+const EASE = [0.22, 1, 0.36, 1]
+
+function GalleryCard({ item, index, onSelect }) {
+  const { src, onError } = useImageFallback(item.src, GALLERY_FALLBACK_IMAGES.item)
+
+  const handleSelect = useCallback(() => onSelect(index), [onSelect, index])
+
   return (
     <S.GalleryItem
-      $size={item.size}
       layout
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      whileHover={{ y: -4 }}
+      initial={{ opacity: 0, y: 24, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.55, ease: EASE, delay: Math.min(index, 8) * 0.05 }}
+      whileHover={{ y: -6 }}
     >
       <S.GalleryImageWrapper>
         <S.GalleryImage
-          src={item.src}
+          src={src}
           alt={item.title}
           loading="lazy"
+          decoding="async"
+          onError={onError}
         />
-        <S.GalleryOverlay
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-        >
+        <S.GalleryOverlay>
           <S.GalleryNumber>{String(index + 1).padStart(2, '0')}</S.GalleryNumber>
           <S.GalleryCaption>
             <S.GalleryCaptionTitle>{item.title}</S.GalleryCaptionTitle>
             <S.GalleryCaptionSubtitle>{item.subtitle}</S.GalleryCaptionSubtitle>
           </S.GalleryCaption>
         </S.GalleryOverlay>
+        <S.GalleryViewIcon aria-hidden="true">
+          <FiArrowUpRight size={18} />
+        </S.GalleryViewIcon>
       </S.GalleryImageWrapper>
-      <button
-        onClick={onClick}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          background: 'transparent',
-          border: 'none',
-          cursor: 'pointer',
-          zIndex: 2,
-        }}
-        aria-label={`View ${item.title}`}
-      />
+      <S.GalleryHitArea onClick={handleSelect} aria-label={`View ${item.title}`} />
     </S.GalleryItem>
   )
 }
 
-export default GalleryCard
+export default memo(GalleryCard)

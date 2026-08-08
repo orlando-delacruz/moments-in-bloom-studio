@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion'
 import { FiInstagram } from 'react-icons/fi'
 
+import { useImageFallback } from '../../hooks/index.js'
+
+import { GALLERY_FALLBACK_IMAGES } from '../../constants/galleryImages.js'
+
 import * as S from './InstagramPreview.styles.js'
 
 const fadeInUp = {
@@ -26,28 +30,35 @@ function InstagramPreview({ content, posts }) {
 
         <S.InstagramGrid>
           {posts.map((post, index) => (
-            <S.InstagramItem
-              key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <S.InstagramImage src={post.src} alt="Instagram post" loading="lazy" />
-              <S.InstagramOverlay
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-              >
-                <S.InstagramIcon>
-                  <FiInstagram size={32} />
-                </S.InstagramIcon>
-              </S.InstagramOverlay>
-            </S.InstagramItem>
+            <InstagramPost key={post.id} post={post} index={index} />
           ))}
         </S.InstagramGrid>
       </S.InstagramContainer>
     </S.InstagramSection>
+  )
+}
+
+function InstagramPost({ post, index }) {
+  const { src, onError } = useImageFallback(post.src, GALLERY_FALLBACK_IMAGES.instagram)
+
+  return (
+    <S.InstagramItem
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ scale: 1.02 }}
+    >
+      <S.InstagramImage src={src} alt="Instagram post" loading="lazy" onError={onError} />
+      <S.InstagramOverlay
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+      >
+        <S.InstagramIcon>
+          <FiInstagram size={32} />
+        </S.InstagramIcon>
+      </S.InstagramOverlay>
+    </S.InstagramItem>
   )
 }
 

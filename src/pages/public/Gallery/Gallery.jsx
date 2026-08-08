@@ -27,10 +27,14 @@ import {
 import * as S from './Gallery.styles.js'
 
 function Gallery() {
-  const { activeCategory, setActiveCategory, filteredItems, categories } = useGallery(
-    GALLERY_ITEMS,
-    GALLERY_CATEGORIES
-  )
+  const {
+    activeCategory,
+    setActiveCategory,
+    visibleItems,
+    hasMore,
+    loadMore,
+    categories,
+  } = useGallery(GALLERY_ITEMS, GALLERY_CATEGORIES)
 
   const {
     isOpen,
@@ -40,7 +44,7 @@ function Gallery() {
     closeLightbox,
     navigateLightbox,
     totalItems,
-  } = useLightbox(filteredItems)
+  } = useLightbox(visibleItems)
 
   return (
     <S.GalleryPage>
@@ -54,7 +58,12 @@ function Gallery() {
         onCategoryChange={setActiveCategory}
       />
 
-      <EditorialGallery items={filteredItems} onImageClick={openLightbox} />
+      <EditorialGallery
+        items={visibleItems}
+        hasMore={hasMore}
+        onLoadMore={loadMore}
+        onImageClick={openLightbox}
+      />
 
       <FeaturedStory
         content={{

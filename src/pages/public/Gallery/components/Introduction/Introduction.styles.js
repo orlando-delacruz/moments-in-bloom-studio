@@ -9,6 +9,7 @@ export const IntroContent = styled.div`
   max-width: ${({ theme }) => theme.layout.contentMaxWidth};
   margin: 0 auto;
   text-align: center;
+  padding: 0 clamp(1.25rem, 4vw, 2rem);
 `
 
 export const IntroEyebrow = styled.p`

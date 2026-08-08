@@ -1,3 +1,5 @@
+import { GALLERY_IMAGE_IDS, imageUrl } from './galleryImages.js'
+
 // Gallery categories for filtering
 export const GALLERY_CATEGORIES = [
   { id: 'all', label: 'All Collections' },
@@ -10,11 +12,11 @@ export const GALLERY_CATEGORIES = [
   { id: 'blissful-nest', label: 'Blissful Nest' },
 ]
 
-// Gallery items - placeholder data until CMS integration
+// Gallery items - temporary editorial images until CMS integration
 export const GALLERY_ITEMS = [
   {
     id: 1,
-    src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 1600),
     title: 'Ethereal Garden Wedding',
     subtitle: 'Full Service Styling',
     category: 'weddings',
@@ -22,7 +24,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 2,
-    src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_CEREMONY, 800),
     title: 'Intimate Engagement',
     subtitle: 'Floral Design',
     category: 'engagements',
@@ -30,7 +32,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 3,
-    src: 'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 800),
     title: 'Golden Hour Celebration',
     subtitle: 'Table Styling',
     category: 'weddings',
@@ -38,7 +40,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 4,
-    src: 'https://images.unsplash.com/photo-1478146896981-b80c4635432c?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.VENUE_DECOR, 800),
     title: 'Modern Minimalist',
     subtitle: 'Decor Hire',
     category: 'decor-hire',
@@ -46,7 +48,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 5,
-    src: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1200&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_RECEPTION, 1200),
     title: 'Romantic Tablescape',
     subtitle: 'Full Styling',
     category: 'weddings',
@@ -54,7 +56,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 6,
-    src: 'https://images.unsplash.com/photo-1469334031218-e38a5597bd30?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.CELEBRATION, 800),
     title: 'Boho Chic Birthday',
     subtitle: 'Party Styling',
     category: 'birthdays',
@@ -62,7 +64,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 7,
-    src: 'https://images.unsplash.com/photo-1519225421980-715cb0202128?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.CORPORATE_GALA, 800),
     title: 'Corporate Gala',
     subtitle: 'Event Design',
     category: 'corporate',
@@ -70,7 +72,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 8,
-    src: 'https://images.unsplash.com/photo-1465495976277-3b43e2700f96?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.CHAMPAGNE_TOAST, 800),
     title: 'Luxury Photobooth',
     subtitle: 'Premium Experience',
     category: 'luxury-booth',
@@ -78,7 +80,7 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 9,
-    src: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.HOME_TABLE, 800),
     title: 'Cozy Blissful Nest',
     subtitle: 'Home Styling',
     category: 'blissful-nest',
@@ -86,49 +88,180 @@ export const GALLERY_ITEMS = [
   },
   {
     id: 10,
-    src: 'https://images.unsplash.com/photo-1507504031981-a2368c6e1518?w=1600&q=80',
+    src: imageUrl(GALLERY_IMAGE_IDS.RECEPTION_DETAIL, 1600),
     title: 'Enchanted Evening',
     subtitle: 'Full Service',
     category: 'weddings',
     size: 'large',
   },
+  {
+    id: 11,
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 800),
+    title: 'Sparkler Send-Off',
+    subtitle: 'Golden Hour',
+    category: 'weddings',
+    size: 'small',
+  },
+  {
+    id: 12,
+    src: imageUrl(GALLERY_IMAGE_IDS.VENUE_DECOR, 1200),
+    title: 'Garden Pavilion',
+    subtitle: 'Venue Styling',
+    category: 'engagements',
+    size: 'wide',
+  },
+  {
+    id: 13,
+    src: imageUrl(GALLERY_IMAGE_IDS.CELEBRATION, 1200),
+    title: 'Pastel Dream Party',
+    subtitle: 'Balloon & Floral',
+    category: 'birthdays',
+    size: 'portrait',
+  },
+  {
+    id: 14,
+    src: imageUrl(GALLERY_IMAGE_IDS.CHAMPAGNE_TOAST, 800),
+    title: 'Celebration Toast',
+    subtitle: 'Premium Beverage Bar',
+    category: 'luxury-booth',
+    size: 'medium',
+  },
+  {
+    id: 15,
+    src: imageUrl(GALLERY_IMAGE_IDS.HOME_TABLE, 1200),
+    title: 'Sunday Brunch Table',
+    subtitle: 'Nest Styling',
+    category: 'blissful-nest',
+    size: 'wide',
+  },
+  {
+    id: 16,
+    src: imageUrl(GALLERY_IMAGE_IDS.CORPORATE_GALA, 1200),
+    title: 'Industry Awards Night',
+    subtitle: 'Corporate Styling',
+    category: 'corporate',
+    size: 'wide',
+  },
+  {
+    id: 17,
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_CEREMONY, 1200),
+    title: 'Vineyard Vows',
+    subtitle: 'Ceremony Design',
+    category: 'engagements',
+    size: 'medium',
+  },
+  {
+    id: 18,
+    src: imageUrl(GALLERY_IMAGE_IDS.RECEPTION_DETAIL, 800),
+    title: 'Candlelit Banquet',
+    subtitle: 'Tablescape',
+    category: 'decor-hire',
+    size: 'small',
+  },
+  {
+    id: 19,
+    src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 1200),
+    title: 'Dancing Under the Stars',
+    subtitle: 'Evening Reception',
+    category: 'weddings',
+    size: 'medium',
+  },
+  {
+    id: 20,
+    src: imageUrl(GALLERY_IMAGE_IDS.CELEBRATION, 800),
+    title: 'High Tea Soiree',
+    subtitle: 'Event Hire',
+    category: 'decor-hire',
+    size: 'small',
+  },
 ]
 
-// Featured event stories
+// Featured event stories - temporary editorial images until CMS integration
 export const FEATURED_STORIES = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80',
+    image: imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 1200),
     tag: 'Featured Wedding',
     title: 'Sarah & James • Royal Botanic Gardens',
     description: 'A breathtaking celebration featuring cascading florals, crystal elegance, and an ethereal color palette that perfectly captured their love story.',
+    eventType: 'Wedding',
+    location: 'Royal Botanic Gardens, Melbourne',
+    narrative:
+      'Sarah and James dreamed of a celebration that felt effortless and ethereal — a garden wedding that moved like poetry. From the moment guests passed through the floral archway, they were transported into a world of soft blush blooms, drifting wisteria, and the golden light of late summer. The ceremony aisle was lined with overgrown arrangements that seemed to grow organically from the landscape, while the reception unfolded beneath a canopy of fairy lights and crystal chandeliers.',
+    gallery: [
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 800),
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_CEREMONY, 800),
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_RECEPTION, 800),
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 800),
+    ],
+    highlights: [
+      'A hand-built archway of cascading garden roses and wisteria',
+      'Custom ceramic tableware in ivory and blush',
+      'Candlelit long tables with organic centerpiece design',
+      'Bespoke calligraphy stationery suite',
+    ],
+    services: ['Full Event Styling', 'Floral Design', 'Stationery & Signage'],
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1200&q=80',
+    image: imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 1200),
     tag: 'Luxury Event',
     title: 'Victoria\'s 30th • Crown Pavilion',
     description: 'An unforgettable milestone birthday transformed into a glamorous affair with gold accents, lush greenery, and bespoke lighting design.',
+    eventType: 'Milestone Birthday',
+    location: 'Crown Pavilion, Southbank',
+    narrative:
+      'Turning thirty called for something unforgettable. We transformed the Crown Pavilion into a golden garden of celebration — lush greenery walls, champagne-gold accents, and a custom lighting rig that bathed every corner in warmth. Guests danced beneath a canopy of hanging botanicals, while a marble dessert bar and vintage cocktail trolley kept the party moving until the early hours.',
+    gallery: [
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 800),
+      imageUrl(GALLERY_IMAGE_IDS.CHAMPAGNE_TOAST, 800),
+      imageUrl(GALLERY_IMAGE_IDS.CELEBRATION, 800),
+      imageUrl(GALLERY_IMAGE_IDS.VENUE_DECOR, 800),
+    ],
+    highlights: [
+      'Floor-to-ceiling greenery installation',
+      'Custom neon statement piece',
+      'Marble dessert bar and champagne tower',
+      'Ambient uplighting and floral chandeliers',
+    ],
+    services: ['Event Design', 'Lighting & Production', 'Catering Coordination'],
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1478146896981-b80c4635432c?w=1200&q=80',
+    image: imageUrl(GALLERY_IMAGE_IDS.CORPORATE_GALA, 1200),
     tag: 'Corporate Excellence',
     title: 'Tech Innovators Gala • Melbourne Convention Centre',
     description: 'A sophisticated corporate event blending modern aesthetics with warm hospitality, featuring custom installations and immersive experiences.',
+    eventType: 'Corporate Gala',
+    location: 'Melbourne Convention Centre',
+    narrative:
+      'When a leading tech company wanted to thank their partners, they turned to us for an evening that balanced sophistication with warmth. We designed a modern, monochrome palette punctuated by sculptural floral installations, state-of-the-art immersive brand moments, and a welcoming hospitality program. The result was a gala that felt every bit as considered as the innovation it celebrated.',
+    gallery: [
+      imageUrl(GALLERY_IMAGE_IDS.CORPORATE_GALA, 800),
+      imageUrl(GALLERY_IMAGE_IDS.WEDDING_RECEPTION, 800),
+      imageUrl(GALLERY_IMAGE_IDS.RECEPTION_DETAIL, 800),
+      imageUrl(GALLERY_IMAGE_IDS.HOME_TABLE, 800),
+    ],
+    highlights: [
+      'Sculptural floral centerpieces at podium height',
+      'Immersive brand activation spaces',
+      'Curated multi-course dining program',
+      'Interactive guest experience design',
+    ],
+    services: ['Corporate Event Styling', 'Floral Design', 'Guest Experience'],
   },
 ]
 
-// Instagram preview posts
+// Instagram preview posts - temporary editorial images until CMS integration
 export const INSTAGRAM_POSTS = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
-  { id: 2, src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=600&q=80' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?w=600&q=80' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1478146896981-b80c4635432c?w=600&q=80' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=600&q=80' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1469334031218-e38a5597bd30?w=600&q=80' },
-  { id: 7, src: 'https://images.unsplash.com/photo-1519225421980-715cb0272128?w=600&q=80' },
-  { id: 8, src: 'https://images.unsplash.com/photo-1465495976277-3b43e2700f96?w=600&q=80' },
+  { id: 1, src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 600) },
+  { id: 2, src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_CEREMONY, 600) },
+  { id: 3, src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_SPARKLERS, 600) },
+  { id: 4, src: imageUrl(GALLERY_IMAGE_IDS.WEDDING_RECEPTION, 600) },
+  { id: 5, src: imageUrl(GALLERY_IMAGE_IDS.VENUE_DECOR, 600) },
+  { id: 6, src: imageUrl(GALLERY_IMAGE_IDS.CELEBRATION, 600) },
+  { id: 7, src: imageUrl(GALLERY_IMAGE_IDS.CHAMPAGNE_TOAST, 600) },
+  { id: 8, src: imageUrl(GALLERY_IMAGE_IDS.HOME_TABLE, 600) },
 ]
 
 // Hero section content
@@ -140,7 +273,7 @@ export const HERO_CONTENT = {
   secondaryCTA: 'Explore Services',
   primaryLink: '/contact',
   secondaryLink: '/services',
-  backgroundImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
+  backgroundImage: imageUrl(GALLERY_IMAGE_IDS.WEDDING_AISLE, 1920),
 }
 
 // Introduction section content
@@ -159,7 +292,7 @@ export const CTA_CONTENT = {
   secondaryCTA: 'Learn More About Us',
   primaryLink: '/contact',
   secondaryLink: '/about',
-  backgroundImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
+  backgroundImage: imageUrl(GALLERY_IMAGE_IDS.WEDDING_RECEPTION, 1920),
 }
 
 // Instagram section content

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
   html {
     min-width: 320px;
     scroll-behavior: auto;
+    overflow-x: hidden;
   }
 
   body {
@@ -136,6 +137,6 @@ const GlobalStyles = createGlobalStyle`
       transition-duration: 0.01ms !important;
     }
   }
-`
+`;
 
-export default GlobalStyles
+export default GlobalStyles;

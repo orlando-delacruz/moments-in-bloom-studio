@@ -10,7 +10,7 @@ export const CTASection = styled.section`
 export const CTAContainer = styled.div`
   max-width: ${({ theme }) => theme.layout.containerMaxWidth};
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
+  padding: 0 clamp(1.25rem, 4vw, 2rem);
   position: relative;
   z-index: 2;
   text-align: center;
@@ -52,6 +52,7 @@ export const CTAButtons = styled.div`
 export const CTABackground = styled.div`
   position: absolute;
   inset: 0;
+  background-color: ${({ theme }) => theme.colors.primary};
   background-image: url(${(props) => props.$src});
   background-size: cover;
   background-position: center;

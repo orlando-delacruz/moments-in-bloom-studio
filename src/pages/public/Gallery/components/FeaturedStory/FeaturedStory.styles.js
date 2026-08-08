@@ -9,7 +9,7 @@ export const FeaturedStoriesSection = styled.section`
 export const StoriesContainer = styled.div`
   max-width: ${({ theme }) => theme.layout.containerMaxWidth};
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
+  padding: 0 clamp(1.25rem, 4vw, 2rem);
 `
 
 export const SectionHeader = styled.div`
@@ -86,6 +86,10 @@ export const StoryImage = styled.img`
 
 export const StoryContent = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0;
+  }
 `
 
 export const StoryTag = styled.p`
@@ -115,8 +119,10 @@ export const StoryDescription = styled.p`
 
 export const StoryLink = styled.button`
   font-family: ${({ theme }) => theme.typography.bodyFont};
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: ${({ theme }) => theme.colors.primary};
   background: none;
   border: none;
@@ -125,9 +131,39 @@ export const StoryLink = styled.button`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
   padding: 0;
-  transition: color ${({ theme }) => theme.transitions.fast};
-  
+  position: relative;
+
+  svg {
+    transition: transform ${({ theme }) => theme.transitions.fast};
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.3rem;
+    height: 1px;
+    width: 100%;
+    background: ${({ theme }) => theme.colors.gold};
+    transform: scaleX(0.4);
+    transform-origin: left;
+    transition: transform ${({ theme }) => theme.transitions.standard};
+  }
+
   &:hover {
     color: ${({ theme }) => theme.colors.primaryHover};
+
+    &::after {
+      transform: scaleX(1);
+    }
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.focus};
+    outline-offset: 4px;
   }
 `

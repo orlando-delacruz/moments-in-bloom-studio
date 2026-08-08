@@ -16,6 +16,7 @@ export const HeroMedia = styled(motion.div)`
   inset: 0;
   width: 100%;
   height: 100%;
+  background-color: ${({ theme }) => theme.colors.primary};
   background-image: url(${(props) => props.$src});
   background-size: cover;
   background-position: center;
@@ -39,7 +40,7 @@ export const HeroContent = styled.div`
   z-index: 2;
   text-align: center;
   max-width: 900px;
-  padding: ${({ theme }) => theme.spacing.xxl};
+  padding: clamp(6rem, 16vh, 9rem) clamp(1.5rem, 5vw, 2.5rem) clamp(4rem, 10vh, 6rem);
   color: white;
 `
 

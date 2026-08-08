@@ -9,7 +9,7 @@ export const InstagramSection = styled.section`
 export const InstagramContainer = styled.div`
   max-width: ${({ theme }) => theme.layout.containerMaxWidth};
   margin: 0 auto;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
+  padding: 0 clamp(1.25rem, 4vw, 2rem);
 `
 
 export const SectionHeader = styled.div`
@@ -37,13 +37,14 @@ export const InstagramGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: ${({ theme }) => theme.spacing.md};
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: repeat(2, 1fr);
+    gap: ${({ theme }) => theme.spacing.sm};
   }
 `
 
