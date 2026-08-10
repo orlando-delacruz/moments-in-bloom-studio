@@ -8,7 +8,7 @@ export const StoryOverlay = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(25, 22, 24, 0.72);
+  background: rgba(26, 24, 23, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: clamp(0rem, 2vw, 1.5rem);
@@ -25,7 +25,7 @@ export const StoryPanel = styled(motion.div)`
   border-radius: ${({ theme }) => theme.radii['2xl']};
   box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
   scrollbar-width: thin;
-  scrollbar-color: rgba(200, 169, 106, 0.5) transparent;
+  scrollbar-color: rgba(165, 137, 116, 0.5) transparent;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     width: 100%;
@@ -50,7 +50,7 @@ export const StoryClose = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(46, 46, 46, 0.72);
+  background: rgba(26, 24, 23, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.35);
   color: white;
   cursor: pointer;
@@ -66,7 +66,7 @@ export const StoryClose = styled.button`
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline: 2px solid ${({ theme }) => theme.colors.focus};
     outline-offset: 2px;
   }
 `
@@ -111,7 +111,7 @@ export const StoryKicker = styled.p`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.26em;
@@ -142,7 +142,7 @@ export const StoryHeroLocation = styled.p`
   align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -183,7 +183,7 @@ export const StoryDivider = styled.div`
     content: '';
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(165, 137, 116, 0.5), transparent);
   }
 
   span {
@@ -204,7 +204,7 @@ export const StorySectionTitle = styled.h3`
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.25rem;
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -255,14 +255,14 @@ export const ServiceList = styled.div`
 `
 
 export const ServiceTag = styled.span`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.primary};
   padding: 0.55rem 1.25rem;
-  border: 1px solid rgba(200, 169, 106, 0.45);
+  border: 1px solid rgba(165, 137, 116, 0.45);
   border-radius: ${({ theme }) => theme.radii.pill};
-  background: rgba(253, 230, 240, 0.4);
+  background: rgba(165, 137, 116, 0.12);
 `

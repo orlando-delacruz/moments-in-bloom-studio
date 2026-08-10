@@ -10,9 +10,11 @@ export const HeroRoot = styled.section`
   isolation: isolate;
   align-items: stretch;
   background: ${({ theme }) => theme.colors.background};
+  margin-top: calc(-1 * ${({ theme }) => theme.layout.headerHeight});
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     min-height: calc(100svh - ${({ theme }) => theme.layout.mobileHeaderHeight});
+    margin-top: calc(-1 * ${({ theme }) => theme.layout.mobileHeaderHeight});
   }
 `
 
@@ -30,7 +32,7 @@ export const HeroMedia = styled(motion.div)`
   }
 `
 
-export const HeroOverlay = styled.div`
+export const HeroOverlay = styled(motion.div)`
   position: absolute;
   z-index: -1;
   inset: 0;
@@ -59,6 +61,7 @@ export const HeroCopy = styled(motion.div)`
 
 export const HeroEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -67,6 +70,9 @@ export const HeroEyebrow = styled.span`
 
 export const HeroTitle = styled.h1`
   max-width: 12ch;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(3rem, 9vw, 8.5rem);
@@ -106,8 +112,9 @@ export const HeroSideNote = styled(motion.div)`
   gap: ${({ theme }) => theme.spacing.sm};
   max-width: 12rem;
   padding-bottom: ${({ theme }) => theme.spacing.md};
-  border-bottom: 1px solid rgba(46, 46, 46, 0.35);
+  border-bottom: 1px solid rgba(26, 24, 23, 0.3);
   color: ${({ theme }) => theme.colors.textPrimary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   line-height: 1.6;
@@ -133,14 +140,14 @@ export const HeroDecoration = styled(motion.span)`
   top: 24%;
   width: clamp(5rem, 11vw, 10rem);
   aspect-ratio: 1;
-  border: 1px solid rgba(198, 116, 149, 0.46);
+  border: 1px solid rgba(165, 137, 116, 0.4);
   border-radius: 50%;
   pointer-events: none;
 
   &::after {
     position: absolute;
     inset: 18%;
-    border: 1px solid rgba(200, 169, 106, 0.6);
+    border: 1px solid rgba(165, 137, 116, 0.45);
     border-radius: 50%;
     content: '';
   }

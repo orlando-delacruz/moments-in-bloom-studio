@@ -52,7 +52,7 @@ export const CollectionItem = styled.button`
 
   &:hover {
     background: ${({ $isActive }) =>
-      $isActive ? "transparent" : "rgba(198, 116, 149, 0.05)"};
+      $isActive ? "transparent" : "rgba(165, 137, 116, 0.05)"};
   }
 
   &:hover [data-arrow] {
@@ -76,8 +76,8 @@ export const ActivePill = styled(motion.div)`
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(198, 116, 149, 0.08) 0%,
-    rgba(198, 116, 149, 0.02) 100%
+    rgba(165, 137, 116, 0.08) 0%,
+    rgba(165, 137, 116, 0.02) 100%
   );
   box-shadow: inset 0 -2px 0 ${({ theme }) => theme.colors.primary};
   pointer-events: none;
@@ -106,12 +106,31 @@ export const CollectionTextGroup = styled.span`
 export const CollectionName = styled.span`
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-  font-weight: 500;
+  font-weight: ${({ $isActive }) => ($isActive ? 600 : 500)};
   line-height: 1.2;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ $isActive, theme }) =>
+    $isActive ? theme.colors.primary : theme.colors.textPrimary};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color ${({ theme }) => theme.transitions.standard};
+`;
+
+export const CollectionSubBrand = styled.span`
+  align-self: flex-start;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid ${({ theme }) => theme.colors.blush};
+  border-radius: ${({ theme }) => theme.radii.pill};
+  color: ${({ theme }) => theme.colors.blush};
+  font-family: ${({ theme }) => theme.typography.uiFont};
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color ${({ theme }) => theme.transitions.standard},
+    border-color ${({ theme }) => theme.transitions.standard};
 `;
 
 export const CollectionDesc = styled.span`
@@ -123,12 +142,13 @@ export const CollectionDesc = styled.span`
 `;
 
 export const CollectionMeta = styled.span`
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.primary : theme.colors.gold};
+    $isActive ? theme.colors.primary : theme.colors.primaryHover};
   transition: color ${({ theme }) => theme.transitions.standard};
 `;
 

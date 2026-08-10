@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
+import { NAVBAR_THEMES } from '../../constants/ui.js'
 
 export const MenuBackdrop = styled(motion.div)`
   position: fixed;
@@ -34,10 +35,26 @@ export const MenuHeader = styled.div`
   justify-content: space-between;
 `
 
-export const MenuBrand = styled.span`
+export const MenuBrandBlock = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+`
+
+export const MenuBrand = styled.img`
+  display: block;
+  width: auto;
+  height: 1.75rem;
+  object-fit: contain;
+`
+
+export const MenuBrandText = styled.span`
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 `
 
 export const CloseButton = styled.button`
@@ -117,7 +134,9 @@ export const MobileMenuButton = styled.button`
   padding: 0;
   border: 0;
   background: transparent;
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ $variant, theme }) =>
+    $variant === NAVBAR_THEMES.DARK ? theme.colors.surface : theme.colors.textPrimary};
+  transition: color ${({ theme }) => theme.transitions.standard};
 `
 
 export const MenuIcon = styled.span`

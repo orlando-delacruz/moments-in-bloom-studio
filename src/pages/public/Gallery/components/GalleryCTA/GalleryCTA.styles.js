@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const CTASection = styled.section`
   position: relative;
   padding: ${({ theme }) => theme.spacing.sectionGenerous} 0;
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.beige};
   overflow: hidden;
 `
 
@@ -17,7 +17,7 @@ export const CTAContainer = styled.div`
 `
 
 export const CTAEyebrow = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;

@@ -8,7 +8,7 @@ export const CatalogueSection = styled.div`
 `;
 
 export const SubcategoryBar = styled.div`
-  background: #faf7f2;
+  background: ${({ theme }) => theme.colors.background};
   padding: 1.25rem 1.75rem;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -17,7 +17,8 @@ export const SubcategoryBar = styled.div`
 export const SubcategoryLabel = styled.p`
   margin: 0 0 0.5rem;
   font-weight: 600;
-  color: #1a1817;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.875rem;
 `;
 
@@ -51,7 +52,7 @@ export const SubcategoryPill = styled.button`
       $isActive ? theme.colors.primary : theme.colors.border};
   background: ${({ $isActive, theme }) =>
     $isActive ? theme.colors.primary : theme.colors.surface};
-  color: ${({ $isActive }) => ($isActive ? "#FFFFFF" : "inherit")};
+  color: ${({ $isActive, theme }) => ($isActive ? theme.colors.surface : "inherit")};
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: ${({ $isActive, theme }) =>
@@ -125,6 +126,7 @@ export const FeaturedIntro = styled.div`
 export const FeaturedTag = styled.span`
   display: inline-block;
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.675rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -142,12 +144,8 @@ export const FeaturedName = styled.h5`
 `;
 
 export const FeaturedFeature = styled.div`
-  background: linear-gradient(
-    135deg,
-    rgba(120, 20, 50, 0.04) 0%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
-  border: 1px solid rgba(198, 116, 149, 0.25);
+  background: ${({ theme }) => theme.gradients.redRomance};
+  border: 1px solid rgba(165, 137, 116, 0.35);
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: clamp(1.5rem, 3vw, 2.25rem);
   display: flex;
@@ -166,13 +164,13 @@ export const OptionGrid = styled.div`
 `;
 
 export const OptionCard = styled.div`
-  background: #ffffff;
+  background: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.md};
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 15px rgba(26, 24, 23, 0.04);
 
   img {
     width: 100%;
@@ -200,6 +198,7 @@ export const OptionName = styled.h6`
 export const OptionSpecs = styled.span`
   display: inline-block;
   color: ${({ theme }) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -244,7 +243,7 @@ export const GalleryCaption = styled.div`
   right: 0;
   padding: 1rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.surface};
   font-size: 0.85rem;
   font-weight: 500;
 `;

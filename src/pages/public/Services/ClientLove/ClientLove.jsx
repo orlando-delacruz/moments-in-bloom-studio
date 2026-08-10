@@ -21,15 +21,15 @@ import {
 } from './ClientLove.styles.js'
 
 function ClientLove({ testimonials, id }) {
-  if (!testimonials || !testimonials.length) return null
-
   const [expandedCards, setExpandedCards] = useState({})
   const [isPaused, setIsPaused] = useState(false)
   const trackRef = useRef(null)
   const animationRef = useRef(null)
 
   // Duplicate testimonials for seamless infinite loop
-  const extendedTestimonials = [...testimonials, ...testimonials, ...testimonials]
+  const extendedTestimonials = testimonials
+    ? [...testimonials, ...testimonials, ...testimonials]
+    : []
 
   const toggleExpand = (index) => {
     setExpandedCards((prev) => ({
@@ -113,13 +113,15 @@ function ClientLove({ testimonials, id }) {
     setIsPaused(false)
   }
 
+  if (!testimonials || !testimonials.length) return null
+
   return (
     <Section
       id={id}
       subtitle="Client Testimonials"
       title="Kind Words From Our Celebrators"
       description="Read how couples, private hosts, and brand partners describe their styling experience with Moments in Blooms."
-      tone={SECTION_TONES.SURFACE}
+      tone={SECTION_TONES.SOFT}
     >
       <Container>
         <TestimonialsRoot

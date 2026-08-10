@@ -12,7 +12,7 @@ export const GalleryItem = styled(motion.div)`
   transition: box-shadow ${({ theme }) => theme.transitions.standard};
 
   &:hover {
-    box-shadow: 0 18px 44px rgba(46, 46, 46, 0.16);
+    box-shadow: 0 18px 44px rgba(26, 24, 23, 0.16);
   }
 `
 
@@ -41,11 +41,11 @@ export const GalleryOverlay = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   padding: ${({ theme }) => theme.spacing.lg};
-  background: linear-gradient(180deg, rgba(46, 46, 46, 0) 32%, rgba(46, 46, 46, 0.6) 100%);
+  background: linear-gradient(180deg, rgba(26, 24, 23, 0) 32%, rgba(26, 24, 23, 0.6) 100%);
   transition: background ${({ theme }) => theme.transitions.standard};
 
   ${GalleryItem}:hover & {
-    background: linear-gradient(180deg, rgba(46, 46, 46, 0.08) 0%, rgba(46, 46, 46, 0.82) 100%);
+    background: linear-gradient(180deg, rgba(26, 24, 23, 0.08) 0%, rgba(26, 24, 23, 0.82) 100%);
   }
 `
 
@@ -61,7 +61,7 @@ export const GalleryCaptionTitle = styled.h3`
 `
 
 export const GalleryCaptionSubtitle = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@ export const GalleryNumber = styled.span`
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   color: white;
-  background: rgba(46, 46, 46, 0.45);
+  background: rgba(26, 24, 23, 0.45);
   padding: ${({ theme }) => theme.spacing.xxs} ${({ theme }) => theme.spacing.sm};
   border-radius: ${({ theme }) => theme.radii.pill};
 `

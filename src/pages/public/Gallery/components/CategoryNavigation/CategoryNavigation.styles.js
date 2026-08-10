@@ -16,7 +16,7 @@ export const CategoryNavContainer = styled.div`
 `
 
 export const CategoryNavLabel = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -84,7 +84,7 @@ export const CategoryNavItem = styled.button`
 export const CategoryNavItemLabel = styled.span`
   position: relative;
   z-index: 1;
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -94,9 +94,9 @@ export const ActiveIndicator = styled(motion.span)`
   position: absolute;
   inset: 0;
   background: ${({ theme }) => theme.colors.secondary};
-  border: 1px solid rgba(200, 169, 106, 0.5);
+  border: 1px solid rgba(165, 137, 116, 0.5);
   border-radius: ${({ theme }) => theme.radii.pill};
-  box-shadow: 0 2px 12px rgba(46, 46, 46, 0.08);
+  box-shadow: 0 2px 12px rgba(26, 24, 23, 0.08);
 `
 
 export const ActiveUnderline = styled.span`

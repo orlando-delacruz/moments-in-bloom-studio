@@ -18,7 +18,7 @@ export const SectionHeader = styled.div`
 `
 
 export const SectionEyebrow = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -70,7 +70,7 @@ export const InstagramImage = styled.img`
 export const InstagramOverlay = styled(motion.div)`
   position: absolute;
   inset: 0;
-  background: rgba(198, 116, 149, 0.9);
+  background: rgba(165, 137, 116, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -47,6 +47,7 @@ export const FloatingBadge = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.pill};
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;

@@ -18,7 +18,7 @@ export const SectionHeader = styled.div`
 `
 
 export const SectionEyebrow = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -93,7 +93,7 @@ export const StoryContent = styled.div`
 `
 
 export const StoryTag = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -118,7 +118,7 @@ export const StoryDescription = styled.p`
 `
 
 export const StoryLink = styled.button`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.16em;

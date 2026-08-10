@@ -12,7 +12,7 @@ export const StoryGrid = styled.div`
   }
 `
 
-export const StoryContent = styled(motion.div)`
+export const StoryContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xl};
@@ -96,13 +96,14 @@ export const QuoteAuthor = styled.span`
 
 export const QuoteRole = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8125rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-top: 0.15rem;
 `
 
-export const StoryVisual = styled(motion.div)`
+export const StoryVisual = styled.div`
   position: relative;
   width: 100%;
 `
@@ -128,7 +129,7 @@ export const ImageFrame = styled.div`
   }
 `
 
-export const DecorativeBadge = styled.div`
+export const DecorativeBadge = styled(motion.div)`
   position: absolute;
   bottom: -1.5rem;
   left: -1.5rem;
@@ -164,6 +165,7 @@ export const BadgeTitle = styled.span`
 
 export const BadgeSub = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;

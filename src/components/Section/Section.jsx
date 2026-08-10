@@ -1,5 +1,14 @@
 import Heading from '../Heading/index.js'
-import { SectionDescription, SectionHeader, SectionRoot, SectionSubtitle, SectionAction } from './Section.styles.js'
+import SafeReveal from '../Reveal/SafeReveal.jsx'
+import TitleReveal from '../Reveal/TitleReveal.jsx'
+import {
+  SectionDescription,
+  SectionHeader,
+  SectionRoot,
+  SectionSubtitle,
+  SectionAction,
+  SectionTitleMask,
+} from './Section.styles.js'
 
 function Section({
   action,
@@ -17,10 +26,28 @@ function Section({
     <SectionRoot $tone={tone} {...props}>
       {hasHeader ? (
         <SectionHeader>
-          {subtitle ? <SectionSubtitle>{subtitle}</SectionSubtitle> : null}
-          {title ? <Heading level={headingLevel}>{title}</Heading> : null}
-          {description ? <SectionDescription>{description}</SectionDescription> : null}
-          {action ? <SectionAction>{action}</SectionAction> : null}
+          {subtitle ? (
+            <SafeReveal from={{ y: 12 }} duration={0.6}>
+              <SectionSubtitle>{subtitle}</SectionSubtitle>
+            </SafeReveal>
+          ) : null}
+          {title ? (
+            <SectionTitleMask>
+              <TitleReveal>
+                <Heading level={headingLevel}>{title}</Heading>
+              </TitleReveal>
+            </SectionTitleMask>
+          ) : null}
+          {description ? (
+            <SafeReveal from={{ y: 28 }} duration={0.55}>
+              <SectionDescription>{description}</SectionDescription>
+            </SafeReveal>
+          ) : null}
+          {action ? (
+            <SafeReveal from={{ y: 14 }} duration={0.7}>
+              <SectionAction>{action}</SectionAction>
+            </SafeReveal>
+          ) : null}
         </SectionHeader>
       ) : null}
       {children}

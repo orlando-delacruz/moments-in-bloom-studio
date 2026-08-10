@@ -6,10 +6,15 @@ export const HeroRoot = styled.section`
   display: flex;
   align-items: center;
   min-height: clamp(30rem, 65vh, 44rem);
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(4.75rem, 9vw, 7rem);
   overflow: hidden;
   isolation: isolate;
   background: ${({ theme }) => theme.colors.background};
+  margin-top: calc(-1 * ${({ theme }) => theme.layout.headerHeight});
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin-top: calc(-1 * ${({ theme }) => theme.layout.mobileHeaderHeight});
+  }
 `
 
 export const HeroMedia = styled(motion.div)`
@@ -26,18 +31,18 @@ export const HeroMedia = styled(motion.div)`
   }
 `
 
-export const HeroOverlay = styled.div`
+export const HeroOverlay = styled(motion.div)`
   position: absolute;
   z-index: -1;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(255, 253, 251, 0.84) 0%,
-    rgba(255, 253, 251, 0.94) 100%
+    rgba(250, 247, 241, 0.88) 0%,
+    rgba(250, 247, 241, 0.95) 100%
   );
 `
 
-export const HeroContent = styled(motion.div)`
+export const HeroContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.lg};
@@ -49,6 +54,7 @@ export const HeroEyebrow = styled.span`
   align-items: center;
   gap: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -59,12 +65,15 @@ export const HeroEyebrow = styled.span`
     display: inline-block;
     width: 2rem;
     height: 1px;
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.gold};
   }
 `
 
-export const HeroTitle = styled(motion.h1)`
+export const HeroTitle = styled.h1`
   margin: 0;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 6vw, 4.5rem);
@@ -73,7 +82,7 @@ export const HeroTitle = styled(motion.h1)`
   letter-spacing: -0.05em;
 `
 
-export const HeroDescription = styled(motion.p)`
+export const HeroDescription = styled.p`
   margin: 0;
   max-width: 38ch;
   color: ${({ theme }) => theme.colors.textSecondary};
@@ -81,7 +90,7 @@ export const HeroDescription = styled(motion.p)`
   line-height: 1.65;
 `
 
-export const HeroActions = styled(motion.div)`
+export const HeroActions = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.md};

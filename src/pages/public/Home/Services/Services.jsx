@@ -1,6 +1,7 @@
 import { FiArrowUpRight } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import Button from '../../../../components/Button/index.js'
+import { ImageReveal, SafeReveal, TitleReveal } from '../../../../components/Reveal/index.js'
 import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
 import {
   ServiceBody,
@@ -27,10 +28,14 @@ function Services({ items, id = 'home-services' }) {
       <ServicesContainer>
         <ServicesIntro>
           <div>
-            <ServicesEyebrow>Designed around your day</ServicesEyebrow>
-            <ServicesTitle>Details with a point of view.</ServicesTitle>
+            <SafeReveal from={{ y: 12 }} duration={0.6}>
+              <ServicesEyebrow>Designed around your day</ServicesEyebrow>
+            </SafeReveal>
+            <ServicesTitle>
+              <TitleReveal>Details with a point of view.</TitleReveal>
+            </ServicesTitle>
           </div>
-          <div>
+          <SafeReveal from={{ y: 20 }} duration={0.7} delay={0.15}>
             <ServicesIntroCopy>
               From the atmosphere in the room to the little moments guests take home, we style celebrations with warmth, intention and a hint of the unexpected.
             </ServicesIntroCopy>
@@ -38,37 +43,45 @@ function Services({ items, id = 'home-services' }) {
               Explore our services
               <FiArrowUpRight aria-hidden="true" color="currentColor" size={16} />
             </Button>
-          </div>
+          </SafeReveal>
         </ServicesIntro>
         <ServicesGrid>
-          {items.map((service, index) => (
-            <ServiceCard
+          {items.map((service) => (
+            <SafeReveal
               key={service.id}
+              as={ServiceCard}
               $offset={service.offset}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.65, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              from={{ y: 28, scale: 0.985 }}
               whileHover={{ y: -4 }}
             >
               <ServiceImageLink as={NavLink} to={service.path} aria-label={`Explore ${service.title}`}>
                 <ServiceImageFrame>
-                  <ServiceImage src={service.image.src} alt={service.image.alt} loading="lazy" />
+                  <ImageReveal>
+                    <ServiceImage src={service.image.src} alt={service.image.alt} loading="lazy" />
+                  </ImageReveal>
                 </ServiceImageFrame>
               </ServiceImageLink>
               <ServiceBody>
-                <ServiceEyebrow>{service.eyebrow}</ServiceEyebrow>
-                <NavLink to={service.path}>
-                  <ServiceTitle>{service.title}</ServiceTitle>
-                </NavLink>
-                <ServiceDescription>{service.description}</ServiceDescription>
-                <ServiceLink as={NavLink} to={service.path}>
-                  Learn more
-                  <FiArrowUpRight aria-hidden="true" color="currentColor" size={14} />
-                </ServiceLink>
+                <SafeReveal from={{ y: 14 }} duration={0.7}>
+                  <ServiceEyebrow>{service.eyebrow}</ServiceEyebrow>
+                </SafeReveal>
+                <SafeReveal from={{ y: 14 }} duration={0.7}>
+                  <NavLink to={service.path}>
+                    <ServiceTitle>{service.title}</ServiceTitle>
+                  </NavLink>
+                </SafeReveal>
+                <SafeReveal from={{ y: 14 }} duration={0.7}>
+                  <ServiceDescription>{service.description}</ServiceDescription>
+                </SafeReveal>
+                <SafeReveal from={{ y: 14 }} duration={0.7}>
+                  <ServiceLink as={NavLink} to={service.path}>
+                    Learn more
+                    <FiArrowUpRight aria-hidden="true" color="currentColor" size={14} />
+                  </ServiceLink>
+                </SafeReveal>
                 <span className="sr-only">{service.image.credit}</span>
               </ServiceBody>
-            </ServiceCard>
+            </SafeReveal>
           ))}
         </ServicesGrid>
       </ServicesContainer>

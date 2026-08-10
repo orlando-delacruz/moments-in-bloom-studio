@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const IntroSection = styled.section`
   padding: ${({ theme }) => theme.spacing.sectionStandard};
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.beige};
 `
 
 export const IntroContent = styled.div`
@@ -13,7 +13,7 @@ export const IntroContent = styled.div`
 `
 
 export const IntroEyebrow = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -27,6 +27,9 @@ export const IntroTitle = styled.h2`
   line-height: ${({ theme }) => theme.typography.headingLineHeight};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   color: ${({ theme }) => theme.colors.textPrimary};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: calc(${({ theme }) => theme.spacing.lg} - 0.1em);
 `
 
 export const IntroText = styled.p`

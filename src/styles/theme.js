@@ -1,22 +1,55 @@
+const nearWhite = "#FEFEFE"
+const white = "#FFFFFF"
+const charcoal = "#1A1A1A"
+const greige = "#D6C9C1"
+const taupe = "#A58974"
+const taupeText = "#7D5F49"
+const gold = "#C89A5E"
+const goldLight = "#D8BC8E"
+const softNeutral = "#EFE9E3"
+
+const garamond = "'Garamond', serif"
+const montserrat = "'Montserrat', 'Segoe UI', sans-serif"
+
 const theme = {
   colors: {
-    background: "#FFFDFB",
-    surface: "#FFFFFF",
-    primary: "#C67495",
-    primaryHover: "#B86588",
-    secondary: "#FDE6F0",
-    gold: "#C8A96A",
-    textPrimary: "#2E2E2E",
-    textSecondary: "#666666",
-    border: "#ECECEC",
-    success: "#3FA76A",
-    warning: "#E0A63B",
-    danger: "#D9534F",
-    focus: "#8E4967",
+    // Client-approved palette
+    nearWhite: nearWhite,
+    white: white,
+    charcoal: charcoal,
+    greige: greige,
+    taupe: taupe,
+    gold: gold,
+    goldLight: goldLight,
+    // Explicit semantic accents
+    accentGold: gold,
+    accentTaupe: taupe,
+    taupeText: taupeText,
+    // Legacy names remapped to the approved palette (no cream/pink)
+    background: nearWhite,
+    surface: white,
+    ink: charcoal,
+    ivory: greige,
+    beige: greige,
+    blush: taupe,
+    blushSoft: softNeutral,
+    // Semantic roles
+    primary: charcoal,
+    primaryHover: taupeText,
+    hover: "#000000",
+    secondary: "#F1ECE6",
+    textPrimary: charcoal,
+    textSecondary: "#6E6761",
+    border: "#E6DFD7",
+    success: "#3F7D54",
+    warning: "#C98A2E",
+    danger: "#C94A46",
+    focus: taupe,
   },
   typography: {
-    headingFont: "'Fraunces', Georgia, serif",
-    bodyFont: "'Manrope', 'Segoe UI', sans-serif",
+    headingFont: garamond,
+    bodyFont: garamond,
+    uiFont: montserrat,
     baseSize: "16px",
     bodyLineHeight: 1.6,
     headingLineHeight: 1.15,
@@ -50,22 +83,32 @@ const theme = {
     easing: "cubic-bezier(0.22, 1, 0.36, 1)",
   },
   shadows: {
-    soft: "0 12px 36px rgba(46, 46, 46, 0.08)",
-    card: "0 4px 18px rgba(46, 46, 46, 0.06)",
-    focus: "0 0 0 4px rgba(198, 116, 149, 0.18)",
-    header: "0 8px 30px rgba(46, 46, 46, 0.07)",
-    ctaHover: "0 4px 18px rgba(198, 116, 149, 0.3)",
+    soft: "0 12px 36px rgba(26, 26, 26, 0.08)",
+    card: "0 4px 18px rgba(26, 26, 26, 0.06)",
+    focus: "0 0 0 4px rgba(165, 137, 116, 0.28)",
+    header: "0 8px 30px rgba(26, 26, 26, 0.07)",
+    ctaHover: "0 4px 18px rgba(26, 26, 26, 0.25)",
+    imageCard: "0 18px 45px rgba(26, 26, 26, 0.16)",
+  },
+  gradients: {
+    darkSection: "linear-gradient(135deg, #262626 0%, #1A1A1A 100%)",
+    packagePopular: "linear-gradient(180deg, #2A2622 0%, #141210 100%)",
+    blissNestPanel: "linear-gradient(160deg, #EFE9E3 0%, #FEFEFE 45%, #D6C9C1 100%)",
+    storyHero: "linear-gradient(135deg, #FEFEFE 0%, #FFFFFF 100%)",
+    exclusiveFrames: "linear-gradient(135deg, #1A1A1A 0%, #262422 100%)",
+    redRomance:
+      "linear-gradient(135deg, rgba(120, 20, 50, 0.04) 0%, rgba(255, 255, 255, 0.9) 100%)",
   },
   surfaces: {
-    headerScrolled: "rgba(255, 255, 255, 0.82)",
-    menu: "#FDE6F0",
-    overlay: "rgba(46, 46, 46, 0.28)",
+    headerScrolled: "rgba(254, 254, 254, 0.88)",
+    menu: nearWhite,
+    overlay: "rgba(26, 26, 26, 0.4)",
   },
   effects: {
     headerBlur: "16px",
     menuBackdropBlur: "8px",
-    heroOverlay: "rgba(255, 253, 251, 0.64)",
-    ctaGhostHover: "rgba(255, 253, 251, 0.14)",
+    heroOverlay: "rgba(254, 254, 254, 0.74)",
+    ctaGhostHover: "rgba(254, 254, 254, 0.12)",
     watermarkOpacity: 0.03,
   },
   layers: {
@@ -94,6 +137,6 @@ const theme = {
     desktop: "1024px",
     wide: "1280px",
   },
-};
+}
 
-export default theme;
+export default theme

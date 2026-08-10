@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-export const HighlightCard = styled(motion.div)`
+export const HighlightCard = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -74,6 +73,7 @@ export const AuthorName = styled.span`
 
 export const EventRole = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;

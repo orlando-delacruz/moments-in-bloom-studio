@@ -37,14 +37,14 @@ export const LoadMoreButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.primary};
   background: transparent;
-  border: 1px solid rgba(200, 169, 106, 0.7);
+  border: 1px solid rgba(165, 137, 116, 0.55);
   border-radius: ${({ theme }) => theme.radii.pill};
   padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.xl};
   cursor: pointer;
@@ -77,7 +77,7 @@ export const EndMessage = styled.p`
   align-items: center;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.md};
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.78rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -90,7 +90,7 @@ export const EndMessage = styled.p`
     content: '';
     width: clamp(2rem, 8vw, 4rem);
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.6));
+    background: linear-gradient(90deg, transparent, rgba(165, 137, 116, 0.5));
   }
 
   &::after {

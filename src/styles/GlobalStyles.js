@@ -1,7 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.cdnfonts.com/css/garamond');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
   *,
   *::before,
@@ -13,7 +14,6 @@ const GlobalStyles = createGlobalStyle`
     color-scheme: light;
     font-family: ${({ theme }) => theme.typography.bodyFont};
     font-size: ${({ theme }) => theme.typography.baseSize};
-    font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -47,12 +47,16 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
 
-  body,
+  body {
+    font-family: ${({ theme }) => theme.typography.bodyFont};
+  }
+
   button,
   input,
   textarea,
-  select {
-    font-family: ${({ theme }) => theme.typography.bodyFont};
+  select,
+  label {
+    font-family: ${({ theme }) => theme.typography.uiFont};
   }
 
   button,

@@ -52,7 +52,7 @@ function Services() {
         testimonials={servicesTestimonials}
         id={SERVICES_SECTION_IDS.TESTIMONIALS}
       />
-      <FAQPreview items={servicesFaqs} id={SERVICES_SECTION_IDS.FAQ} />
+      <FAQPreview items={servicesFaqs} id={SERVICES_SECTION_IDS.FAQ} tone="surface" />
       <ServicesCTA content={servicesCta} id={SERVICES_SECTION_IDS.CTA} />
     </ServicesPage>
   )

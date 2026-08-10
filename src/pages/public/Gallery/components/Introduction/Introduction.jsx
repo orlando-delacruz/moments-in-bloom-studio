@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion'
 
 import Container from '../../../../../components/Container/index.js'
+import TitleReveal from '../../../../../components/Reveal/index.js'
+
+import { EASE_LUXE } from '../../../../../styles/animations.js'
 
 import * as S from './Introduction.styles.js'
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-}
 
 function Introduction({ content }) {
   return (
@@ -15,13 +13,22 @@ function Introduction({ content }) {
       <Container>
         <S.IntroContent>
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: EASE_LUXE }}
           >
             <S.IntroEyebrow>{content.eyebrow}</S.IntroEyebrow>
-            <S.IntroTitle>{content.title}</S.IntroTitle>
+          </motion.div>
+          <S.IntroTitle>
+            <TitleReveal>{content.title}</TitleReveal>
+          </S.IntroTitle>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE_LUXE }}
+          >
             <S.IntroText>{content.text}</S.IntroText>
           </motion.div>
         </S.IntroContent>

@@ -5,9 +5,9 @@ import { useImageFallback } from '../../hooks/index.js'
 
 import { GALLERY_FALLBACK_IMAGES } from '../../constants/galleryImages.js'
 
-import * as S from './GalleryCard.styles.js'
+import { EASE_LUXE } from '../../../../../styles/animations.js'
 
-const EASE = [0.22, 1, 0.36, 1]
+import * as S from './GalleryCard.styles.js'
 
 function GalleryCard({ item, index, onSelect }) {
   const { src, onError } = useImageFallback(item.src, GALLERY_FALLBACK_IMAGES.item)
@@ -19,7 +19,7 @@ function GalleryCard({ item, index, onSelect }) {
       layout
       initial={{ opacity: 0, y: 24, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.55, ease: EASE, delay: Math.min(index, 8) * 0.05 }}
+      transition={{ duration: 0.55, ease: EASE_LUXE, delay: Math.min(index, 8) * 0.05 }}
       whileHover={{ y: -6 }}
     >
       <S.GalleryImageWrapper>

@@ -1,5 +1,6 @@
 import { FiArrowRight, FiFacebook, FiInstagram } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
+import logoWhite from '../../assets/images/logo-old-white.png'
 import {
   footerContact,
   footerNavigationGroups,
@@ -7,26 +8,7 @@ import {
   routeMetadata,
 } from '../../constants/navigation.js'
 import Button from '../Button/index.js'
-import {
-  FooterBottom,
-  FooterBrand,
-  FooterContact,
-  FooterContainer,
-  FooterCta,
-  FooterCtaCopy,
-  FooterCtaEyebrow,
-  FooterCtaTitle,
-  FooterDescription,
-  FooterGrid,
-  FooterLink,
-  FooterLinkGroup,
-  FooterLinkHeading,
-  FooterLinkList,
-  FooterLinks,
-  FooterShell,
-  FooterSocials,
-  FooterWatermark,
-} from './Footer.styles.js'
+import * as S from './Footer.styles.js'
 
 const socialIcons = {
   Instagram: FiInstagram,
@@ -35,49 +17,50 @@ const socialIcons = {
 
 function Footer() {
   return (
-    <FooterShell>
-      <FooterContainer>
-        <FooterGrid>
+    <S.FooterShell>
+      <S.FooterContainer>
+        <S.FooterGrid>
           <div>
-            <FooterBrand>{routeMetadata.public.title}</FooterBrand>
-            <FooterDescription>
+            <S.FooterLogo src={logoWhite} alt="Moments in Blooms" />
+            <S.FooterBrand>{routeMetadata.public.title}</S.FooterBrand>
+            <S.FooterDescription>
               Thoughtful floral design and considered event styling for life&apos;s most beautiful gatherings.
-            </FooterDescription>
-            <FooterCta aria-labelledby="footer-enquiry-title">
-              <FooterCtaEyebrow>Let&apos;s create something beautiful</FooterCtaEyebrow>
-              <FooterCtaTitle id="footer-enquiry-title">Planning a celebration?</FooterCtaTitle>
-              <FooterCtaCopy>
+            </S.FooterDescription>
+            <S.FooterCta aria-labelledby="footer-enquiry-title">
+              <S.FooterCtaEyebrow>Let&apos;s create something beautiful</S.FooterCtaEyebrow>
+              <S.FooterCtaTitle id="footer-enquiry-title">Planning a celebration?</S.FooterCtaTitle>
+              <S.FooterCtaCopy>
                 Share your vision with us and we&apos;ll help shape an unforgettable event in full bloom.
-              </FooterCtaCopy>
-              <Button as={NavLink} to="/contact">
+              </S.FooterCtaCopy>
+              <Button as={NavLink} to="/contact" variant="light">
                 Start an enquiry
                 <FiArrowRight aria-hidden="true" color="currentColor" size={17} />
               </Button>
-            </FooterCta>
+            </S.FooterCta>
           </div>
 
-          <FooterLinks>
+          <S.FooterLinks>
             {footerNavigationGroups.map((group) => (
-              <FooterLinkGroup key={group.title}>
-                <FooterLinkHeading>{group.title}</FooterLinkHeading>
-                <FooterLinkList>
+              <S.FooterLinkGroup key={group.title}>
+                <S.FooterLinkHeading>{group.title}</S.FooterLinkHeading>
+                <S.FooterLinkList>
                   {group.links.map((link) => (
                     <li key={`${group.title}-${link.label}`}>
                       <NavLink to={link.path}>
-                        <FooterLink>{link.label}</FooterLink>
+                        <S.FooterLink>{link.label}</S.FooterLink>
                       </NavLink>
                     </li>
                   ))}
-                </FooterLinkList>
-              </FooterLinkGroup>
+                </S.FooterLinkList>
+              </S.FooterLinkGroup>
             ))}
-            <FooterLinkGroup>
-              <FooterLinkHeading>Contact</FooterLinkHeading>
-              <FooterContact>
+            <S.FooterLinkGroup>
+              <S.FooterLinkHeading>Contact</S.FooterLinkHeading>
+              <S.FooterContact>
                 <span>{footerContact.location}</span>
                 <a href={`mailto:${footerContact.email}`}>{footerContact.email}</a>
                 <a href={`tel:${footerContact.phone.replaceAll(' ', '')}`}>{footerContact.phone}</a>
-                <FooterSocials aria-label="Social links">
+                <S.FooterSocials aria-label="Social links">
                   {footerSocialLinks.map((social) => {
                     const Icon = socialIcons[social.label]
                     return (
@@ -87,19 +70,19 @@ function Footer() {
                       </a>
                     )
                   })}
-                </FooterSocials>
-              </FooterContact>
-            </FooterLinkGroup>
-          </FooterLinks>
-        </FooterGrid>
+                </S.FooterSocials>
+              </S.FooterContact>
+            </S.FooterLinkGroup>
+          </S.FooterLinks>
+        </S.FooterGrid>
 
-        <FooterBottom>
+        <S.FooterBottom>
           <span>© {new Date().getFullYear()} Moments in Blooms</span>
           <span>Made for beautiful moments</span>
-          <FooterWatermark aria-hidden="true">MOMENTS IN BLOOMS</FooterWatermark>
-        </FooterBottom>
-      </FooterContainer>
-    </FooterShell>
+          <S.FooterWatermark aria-hidden="true">MOMENTS IN BLOOMS</S.FooterWatermark>
+        </S.FooterBottom>
+      </S.FooterContainer>
+    </S.FooterShell>
   )
 }
 

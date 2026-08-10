@@ -4,7 +4,7 @@ import PageContainer from '../../../../components/PageContainer/index.js'
 
 export const TrustedByRoot = styled.section`
   padding-block: ${({ theme }) => theme.spacing.sectionGenerous};
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.beige};
 `
 
 export const TrustedByContainer = styled(PageContainer)`
@@ -15,6 +15,7 @@ export const TrustedByContainer = styled(PageContainer)`
 
 export const TrustEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -24,7 +25,7 @@ export const TrustEyebrow = styled.span`
 export const TrustStatement = styled(motion.p)`
   max-width: 58rem;
   margin-top: ${({ theme }) => theme.spacing.lg};
-  color: ${({ theme }) => theme.colors.primaryHover};
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2rem, 5.8vw, 5.5rem);
   font-style: italic;

@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
 import Container from '../../../../components/Container/index.js'
 import Section from '../../../../components/Section/index.js'
 import { SECTION_TONES } from '../../../../constants/ui.js'
+import { staggerContainer, stepIn, VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   ProcessTimeline,
   StepCard,
@@ -19,26 +21,27 @@ function BehindExperience({ content, id }) {
       subtitle={subtitle}
       title={title}
       description={description}
-      tone={SECTION_TONES.SURFACE}
+      tone={SECTION_TONES.IVORY}
     >
       <Container>
-        <ProcessTimeline>
-          {steps.map((step, index) => (
-            <StepCard
-              key={step.stepNumber || index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <StepNumber>{step.stepNumber}</StepNumber>
-              <StepContent>
-                <StepTitle>{step.title}</StepTitle>
-                <StepDescription>{step.description}</StepDescription>
-              </StepContent>
-            </StepCard>
-          ))}
-        </ProcessTimeline>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
+        >
+          <ProcessTimeline>
+            {steps.map((step, index) => (
+              <StepCard key={step.stepNumber || index} variants={stepIn(index % 2 === 0 ? 'left' : 'right')}>
+                <StepNumber>{step.stepNumber}</StepNumber>
+                <StepContent>
+                  <StepTitle>{step.title}</StepTitle>
+                  <StepDescription>{step.description}</StepDescription>
+                </StepContent>
+              </StepCard>
+            ))}
+          </ProcessTimeline>
+        </motion.div>
       </Container>
     </Section>
   )

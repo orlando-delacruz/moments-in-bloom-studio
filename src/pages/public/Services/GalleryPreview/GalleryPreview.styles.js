@@ -63,6 +63,7 @@ export const ItemOverlay = styled.div`
 
 export const ItemCategory = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;

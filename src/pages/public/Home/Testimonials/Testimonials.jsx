@@ -1,6 +1,7 @@
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { useState } from 'react'
+import { VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   QuoteMark,
   TestimonialArrow,
@@ -38,8 +39,23 @@ function Testimonials({ items, id = 'home-testimonials' }) {
   return (
     <TestimonialsRoot id={id} onKeyDown={handleKeyDown} tabIndex={0} aria-label="Client Testimonials Carousel">
       <TestimonialsContainer>
-        <TestimonialEyebrow>Kind words from good people</TestimonialEyebrow>
-        <QuoteMark aria-hidden="true">“</QuoteMark>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT_DEFAULT}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <TestimonialEyebrow>Kind words from good people</TestimonialEyebrow>
+        </motion.div>
+        <QuoteMark
+          key={activeIndex}
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          “
+        </QuoteMark>
         <TestimonialViewport aria-live="polite">
           <AnimatePresence mode="wait" initial={false}>
             <TestimonialSlide
@@ -47,7 +63,7 @@ function Testimonials({ items, id = 'home-testimonials' }) {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -18 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <TestimonialQuote>“{activeTestimonial.quote}”</TestimonialQuote>
               <TestimonialMeta>

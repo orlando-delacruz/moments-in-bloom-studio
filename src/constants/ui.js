@@ -3,6 +3,8 @@ export const BUTTON_VARIANTS = Object.freeze({
   SECONDARY: 'secondary',
   OUTLINE: 'outline',
   GHOST: 'ghost',
+  LIGHT: 'light',
+  OUTLINE_LIGHT: 'outlineLight',
 })
 
 export const BUTTON_SIZES = Object.freeze({
@@ -15,6 +17,15 @@ export const SECTION_TONES = Object.freeze({
   DEFAULT: 'default',
   SOFT: 'soft',
   SURFACE: 'surface',
+  IVORY: 'ivory',
+  BEIGE: 'beige',
+  BLUSH: 'blush',
+  INK: 'ink',
+})
+
+export const NAVBAR_THEMES = Object.freeze({
+  LIGHT: 'light',
+  DARK: 'dark',
 })
 
 export const NAVBAR_SCROLL_THRESHOLD = 50

@@ -4,7 +4,7 @@ import PageContainer from '../../../../components/PageContainer/index.js'
 
 export const ProcessRoot = styled.section`
   padding-block: ${({ theme }) => theme.spacing.sectionStandard};
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.beige};
 `
 
 export const ProcessContainer = styled(PageContainer)``
@@ -19,6 +19,7 @@ export const ProcessHeader = styled.div`
 
 export const ProcessEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -27,6 +28,9 @@ export const ProcessEyebrow = styled.span`
 
 export const ProcessTitle = styled.h2`
   margin-top: ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 7vw, 6rem);
@@ -43,7 +47,7 @@ export const ProcessIntro = styled.p`
   line-height: 1.8;
 `
 
-export const ProcessList = styled.ol`
+export const ProcessList = styled(motion.ol)`
   position: relative;
   display: grid;
   gap: ${({ theme }) => theme.spacing.xxl};
@@ -57,7 +61,7 @@ export const ProcessList = styled.ol`
     bottom: 1rem;
     left: 50%;
     width: 1px;
-    background: ${({ theme }) => theme.colors.gold};
+    background: rgba(26, 24, 23, 0.14);
     content: '';
     transform: translateX(-50%);
   }
@@ -68,6 +72,22 @@ export const ProcessList = styled.ol`
     &::before {
       left: 1rem;
     }
+  }
+`
+
+export const ProcessTrack = styled(motion.span)`
+  position: absolute;
+  z-index: 0;
+  top: 1rem;
+  bottom: 1rem;
+  left: 50%;
+  width: 1px;
+  background: ${({ theme }) => theme.colors.taupe};
+  transform-origin: top;
+  pointer-events: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    left: 1rem;
   }
 `
 
@@ -99,7 +119,7 @@ export const ProcessCopy = styled.div`
   }
 `
 
-export const ProcessStep = styled.span`
+export const ProcessStep = styled(motion.span)`
   grid-column: 2;
   grid-row: 1;
   z-index: 1;
@@ -119,7 +139,7 @@ export const ProcessStep = styled.span`
 
   ${ProcessItem}:hover & {
     transform: scale(1.15);
-    box-shadow: 0 0 0 4px rgba(198, 116, 149, 0.25);
+    box-shadow: 0 0 0 4px rgba(165, 137, 116, 0.25);
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -130,6 +150,7 @@ export const ProcessStep = styled.span`
 
 export const ProcessLabel = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.14em;

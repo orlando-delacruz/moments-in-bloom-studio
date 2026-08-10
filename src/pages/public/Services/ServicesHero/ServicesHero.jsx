@@ -1,5 +1,8 @@
+import { motion } from 'framer-motion'
 import Button from '../../../../components/Button/index.js'
 import Container from '../../../../components/Container/index.js'
+import TitleReveal from '../../../../components/Reveal/index.js'
+import { EASE_LUXE } from '../../../../styles/animations.js'
 import {
   BadgeSubtitle,
   BadgeTitle,
@@ -18,59 +21,63 @@ function ServicesHero({ content, id }) {
 
   return (
     <HeroRoot id={id}>
-      <HeroBackground>
+      <HeroBackground
+        initial={{ scale: 1.08 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2.2, ease: EASE_LUXE }}
+      >
         <img src={content.image.src} alt={content.image.alt} loading="eager" />
       </HeroBackground>
 
       <Container>
-        <HeroContent
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <HeroContent>
           {content.eyebrow ? (
-            <HeroEyebrow
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.25, ease: EASE_LUXE }}
             >
-              {content.eyebrow}
-            </HeroEyebrow>
+              <HeroEyebrow>{content.eyebrow}</HeroEyebrow>
+            </motion.div>
           ) : null}
 
-          <HeroTitle
+          {content.title ? (
+            <HeroTitle>
+              <TitleReveal delay={0.4}>{content.title}</TitleReveal>
+            </HeroTitle>
+          ) : null}
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.85, ease: EASE_LUXE }}
           >
-            {content.title}
-          </HeroTitle>
+            <HeroDescription>{content.description}</HeroDescription>
+          </motion.div>
 
-          <HeroDescription
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 1, ease: EASE_LUXE }}
           >
-            {content.description}
-          </HeroDescription>
+            <HeroActions>
+              {content.primaryCta ? (
+                <Button to={content.primaryCta.path} size="large" variant="primary">
+                  {content.primaryCta.label}
+                </Button>
+              ) : null}
 
-          <HeroActions
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
-            {content.primaryCta ? (
-              <Button to={content.primaryCta.path} size="large" variant="primary">
-                {content.primaryCta.label}
-              </Button>
-            ) : null}
-
-            {content.secondaryCta ? (
-              <Button to={content.secondaryCta.path} size="large" variant="outline">
-                {content.secondaryCta.label}
-              </Button>
-            ) : null}
-          </HeroActions>
+              {content.secondaryCta ? (
+                <Button
+                  to={content.secondaryCta.path}
+                  size="large"
+                  variant="outlineLight"
+                >
+                  {content.secondaryCta.label}
+                </Button>
+              ) : null}
+            </HeroActions>
+          </motion.div>
         </HeroContent>
       </Container>
 
@@ -78,7 +85,7 @@ function ServicesHero({ content, id }) {
         <FloatingBadge
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 1.2, ease: EASE_LUXE }}
         >
           <BadgeTitle>{content.badge.title}</BadgeTitle>
           <BadgeSubtitle>{content.badge.subtitle}</BadgeSubtitle>

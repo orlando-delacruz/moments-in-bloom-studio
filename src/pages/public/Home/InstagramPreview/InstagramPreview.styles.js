@@ -5,7 +5,7 @@ import PageContainer from '../../../../components/PageContainer/index.js'
 export const InstagramRoot = styled.section`
   overflow: hidden;
   padding-block: ${({ theme }) => theme.spacing.sectionStandard};
-  background: ${({ theme }) => theme.colors.surface};
+  background: ${({ theme }) => theme.colors.background};
 `
 
 export const InstagramContainer = styled(PageContainer)`
@@ -15,6 +15,7 @@ export const InstagramContainer = styled(PageContainer)`
 
 export const InstagramEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;

@@ -30,6 +30,7 @@ export const WhyLead = styled.div`
 
 export const WhyEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -39,6 +40,9 @@ export const WhyEyebrow = styled.span`
 export const WhyTitle = styled.h2`
   max-width: 7ch;
   margin-top: ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(3.25rem, 9vw, 8rem);
@@ -60,7 +64,7 @@ export const WhyCopy = styled.p`
   line-height: 1.8;
 `
 
-export const ReasonsList = styled.ol`
+export const ReasonsList = styled(motion.ol)`
   margin: 0;
   padding: 0;
   list-style: none;

@@ -6,8 +6,8 @@ export const CTARoot = styled.section`
   position: relative;
   overflow: hidden;
   padding-block: ${({ theme }) => theme.spacing.sectionGenerous};
-  background: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.background};
+  background: ${({ theme }) => theme.colors.blushSoft};
+  color: ${({ theme }) => theme.colors.textPrimary};
   isolation: isolate;
 `
 
@@ -20,17 +20,21 @@ export const CTAContainer = styled(PageContainer)`
 `
 
 export const CTAEyebrow = styled.span`
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 `
 
-export const CTATitle = styled(motion.h2)`
+export const CTATitle = styled.h2`
   max-width: 10ch;
   margin-top: ${({ theme }) => theme.spacing.lg};
-  color: ${({ theme }) => theme.colors.background};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+  color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(3rem, 9vw, 8.5rem);
   font-weight: 500;
@@ -46,7 +50,7 @@ export const CTATitle = styled(motion.h2)`
 export const CTADescription = styled.p`
   max-width: 32rem;
   margin-top: ${({ theme }) => theme.spacing.xl};
-  color: rgba(255, 253, 251, 0.84);
+  color: ${({ theme }) => theme.colors.textSecondary};
   font-size: clamp(1rem, 1.7vw, 1.2rem);
   line-height: 1.75;
 `
@@ -57,26 +61,6 @@ export const CTAActions = styled.div`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.sm};
   margin-top: ${({ theme }) => theme.spacing.xxl};
-
-  a:first-child {
-    border-color: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.background};
-  }
-
-  a:first-child:hover:not(:disabled) {
-    border-color: ${({ theme }) => theme.colors.background};
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.primaryHover};
-  }
-
-  a:last-child {
-    color: ${({ theme }) => theme.colors.background};
-  }
-
-  a:last-child:hover:not(:disabled) {
-    background: ${({ theme }) => theme.effects.ctaGhostHover};
-    color: ${({ theme }) => theme.colors.background};
-  }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: grid;
@@ -95,13 +79,13 @@ export const CTAOrb = styled(motion.span)`
   right: 9%;
   width: clamp(8rem, 18vw, 17rem);
   aspect-ratio: 1;
-  border: 1px solid rgba(255, 253, 251, 0.34);
+  border: 1px solid rgba(165, 137, 116, 0.3);
   border-radius: 50%;
 
   &::after {
     position: absolute;
     inset: 18%;
-    border: 1px solid rgba(253, 230, 240, 0.42);
+    border: 1px solid rgba(165, 137, 116, 0.18);
     border-radius: 50%;
     content: '';
   }
@@ -112,13 +96,14 @@ export const CTAOrb = styled(motion.span)`
   }
 `
 
-export const CTABottomLine = styled.span`
+export const CTABottomLine = styled(motion.span)`
   position: absolute;
   bottom: 0;
   left: 50%;
   width: min(76rem, 90%);
   height: 1px;
-  background: rgba(255, 253, 251, 0.32);
+  background: rgba(26, 24, 23, 0.12);
   content: '';
   transform: translateX(-50%);
+  transform-origin: left;
 `

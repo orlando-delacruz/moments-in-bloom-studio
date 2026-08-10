@@ -1,10 +1,12 @@
+import { NAVBAR_THEMES } from './ui.js'
+
 export const publicNavigation = Object.freeze([
-  { label: 'Home', path: '/' },
-  { label: 'About', path: '/about' },
-  { label: 'Services', path: '/services' },
-  { label: 'Gallery', path: '/gallery' },
-  { label: 'FAQs', path: '/faqs' },
-  { label: 'Contact', path: '/contact' },
+  { label: 'Home', path: '/', navbarTheme: NAVBAR_THEMES.LIGHT },
+  { label: 'About', path: '/about', navbarTheme: NAVBAR_THEMES.LIGHT },
+  { label: 'Services', path: '/services', navbarTheme: NAVBAR_THEMES.DARK },
+  { label: 'Gallery', path: '/gallery', navbarTheme: NAVBAR_THEMES.DARK },
+  { label: 'FAQs', path: '/faqs', navbarTheme: NAVBAR_THEMES.LIGHT },
+  { label: 'Contact', path: '/contact', navbarTheme: NAVBAR_THEMES.LIGHT },
 ])
 
 export const adminNavigation = Object.freeze([

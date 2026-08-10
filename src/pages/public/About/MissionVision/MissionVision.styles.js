@@ -60,7 +60,7 @@ export const StyledMissionCard = styled(motion.article)`
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(198, 116, 149, 0.06) 0%,
+      rgba(165, 137, 116, 0.07) 0%,
       rgba(255, 255, 255, 0) 70%
     );
     pointer-events: none;
@@ -72,6 +72,7 @@ export const CardTag = styled.span`
   align-items: center;
   gap: 0.5rem;
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.15em;

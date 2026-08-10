@@ -36,7 +36,7 @@ export const ValueCard = styled(motion.article)`
 
   &:hover {
     transform: translateY(-6px) !important;
-    border-color: rgba(198, 116, 149, 0.35);
+    border-color: rgba(165, 137, 116, 0.4);
     box-shadow: ${({ theme }) => theme.shadows.soft};
   }
 

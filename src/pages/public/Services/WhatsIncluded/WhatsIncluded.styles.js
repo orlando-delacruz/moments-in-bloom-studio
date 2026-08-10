@@ -30,7 +30,7 @@ export const IncludedCard = styled(motion.article)`
 
   &:hover {
     transform: translateY(-6px);
-    border-color: rgba(198, 116, 149, 0.35);
+    border-color: rgba(165, 137, 116, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.soft};
   }
 

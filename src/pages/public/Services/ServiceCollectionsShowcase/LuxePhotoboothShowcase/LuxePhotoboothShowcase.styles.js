@@ -9,6 +9,7 @@ export const PhotoboothSection = styled.div`
 export const TabTag = styled.span`
   display: inline-block;
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.675rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -20,7 +21,7 @@ export const StoryHeroBlock = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
-  background: linear-gradient(135deg, #faf7f2 0%, #ffffff 100%);
+  background: ${({ theme }) => theme.gradients.storyHero};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: clamp(2rem, 4vw, 3.5rem);
@@ -68,8 +69,8 @@ export const StoryHeroImageWrapper = styled.div`
 `;
 
 export const ExclusiveFramesFeature = styled.div`
-  background: linear-gradient(135deg, #1a1817 0%, #2a2422 100%);
-  color: #ffffff;
+  background: ${({ theme }) => theme.gradients.exclusiveFrames};
+  color: ${({ theme }) => theme.colors.surface};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: clamp(2rem, 4vw, 3.5rem);
   display: grid;
@@ -86,9 +87,10 @@ export const ExclusiveFramesFeature = styled.div`
 export const ExclusiveFramesBadge = styled.span`
   display: inline-block;
   padding: 0.35rem 0.85rem;
-  background: rgba(212, 175, 55, 0.2);
-  color: #d4af37;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(201, 178, 138, 0.16);
+  color: ${({ theme }) => theme.colors.goldLight};
+  border: 1px solid rgba(201, 178, 138, 0.4);
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -101,7 +103,7 @@ export const ExclusiveFramesTitle = styled.h4`
   margin: 0 0 1rem;
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.surface};
   font-weight: 500;
   line-height: 1.15;
 `;
@@ -117,7 +119,7 @@ export const ExclusiveFramesImage = styled.div`
   border-radius: 16px;
   overflow: hidden;
   height: 320px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  border: 1px solid rgba(201, 178, 138, 0.3);
 
   img {
     width: 100%;
@@ -143,8 +145,8 @@ export const HighlightList = styled.ul`
     color: ${({ $onDark }) => ($onDark ? "rgba(255, 255, 255, 0.85)" : "inherit")};
 
     svg {
-      color: ${({ $popular, $onDark }) =>
-        $popular ? "#D4AF37" : $onDark ? "#D4AF37" : "#C67495"};
+      color: ${({ $popular, $onDark, theme }) =>
+        $popular ? theme.colors.gold : $onDark ? theme.colors.gold : theme.colors.textSecondary};
       flex-shrink: 0;
       font-size: 1rem;
       margin-top: 0.1rem;
@@ -256,11 +258,11 @@ export const PackageCard = styled.div`
   position: relative;
   background: ${({ $popular, theme }) =>
     $popular
-      ? "linear-gradient(180deg, #231F20 0%, #151314 100%)"
+      ? theme.gradients.packagePopular
       : theme.colors.surface};
-  color: ${({ $popular }) => ($popular ? "#FFFFFF" : "inherit")};
+  color: ${({ $popular, theme }) => ($popular ? theme.colors.surface : "inherit")};
   border: ${({ $popular, theme }) =>
-    $popular ? "2px solid #D4AF37" : `1px solid ${theme.colors.border}`};
+    $popular ? `2px solid ${theme.colors.gold}` : `1px solid ${theme.colors.border}`};
   border-radius: ${({ theme }) => theme.radii.xl};
   padding: clamp(2rem, 3vw, 2.5rem);
   display: flex;
@@ -281,8 +283,9 @@ export const PackageBadge = styled.span`
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: #d4af37;
-  color: #111111;
+  background: ${({ theme }) => theme.colors.gold};
+  color: ${({ theme }) => theme.colors.ink};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -290,7 +293,7 @@ export const PackageBadge = styled.span`
   padding: 0.35rem 1.25rem;
   border-radius: ${({ theme }) => theme.radii.pill};
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(165, 137, 116, 0.4);
 `;
 
 export const PackageName = styled.h5`
@@ -312,7 +315,7 @@ export const PackagePrice = styled.div`
     font-size: 2.75rem;
     font-weight: 600;
     line-height: 1;
-    color: ${({ $popular }) => ($popular ? "#D4AF37" : "inherit")};
+    color: ${({ $popular, theme }) => ($popular ? theme.colors.surface : "inherit")};
   }
 
   span.duration {
@@ -340,6 +343,7 @@ export const InclusionsBlock = styled.div`
 
   h6 {
     margin: 0;
+    font-family: ${({ theme }) => theme.typography.uiFont};
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -358,6 +362,7 @@ export const AddOnsBlock = styled.div`
 
   h6 {
     margin: 0 0 0.5rem;
+    font-family: ${({ theme }) => theme.typography.uiFont};
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.1em;

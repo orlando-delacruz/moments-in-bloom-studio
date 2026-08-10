@@ -157,6 +157,7 @@ export const AuthorName = styled.span`
 
 export const EventTag = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;

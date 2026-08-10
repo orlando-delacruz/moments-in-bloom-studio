@@ -21,7 +21,7 @@ export const FAQItem = styled.div`
   ${({ $isOpen, theme }) =>
     $isOpen &&
     `
-    border-color: rgba(198, 116, 149, 0.4);
+    border-color: rgba(165, 137, 116, 0.4);
     box-shadow: ${theme.shadows.soft};
   `}
 `

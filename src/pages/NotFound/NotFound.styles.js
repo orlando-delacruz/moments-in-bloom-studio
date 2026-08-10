@@ -17,7 +17,7 @@ export const NotFoundNumber = styled.span`
   position: absolute;
   z-index: 0;
   top: -2rem;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.greige};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(10rem, 35vw, 22rem);
   letter-spacing: -0.08em;

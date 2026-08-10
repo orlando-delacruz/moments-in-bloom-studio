@@ -1,6 +1,7 @@
 import { FiArrowUpRight, FiStar } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import Button from '../../../../components/Button/index.js'
+import { ImageReveal, SafeReveal, TitleReveal } from '../../../../components/Reveal/index.js'
 import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
 import {
   GalleryAction,
@@ -25,44 +26,34 @@ function GalleryPreview({ items, id = 'home-gallery-preview' }) {
       <GalleryContainer>
         <GalleryHeader>
           <div>
-            <GalleryEyebrow>A glimpse of the good stuff</GalleryEyebrow>
-            <GalleryTitle>Made for the memory.</GalleryTitle>
+            <SafeReveal from={{ y: 12 }} duration={0.6}>
+              <GalleryEyebrow>A glimpse of the good stuff</GalleryEyebrow>
+            </SafeReveal>
+            <GalleryTitle>
+              <TitleReveal>Made for the memory.</TitleReveal>
+            </GalleryTitle>
           </div>
-          <GalleryCopy>
-            A little floral, a little playful, always intentional. Explore a selection of celebrations styled with our signature mix of softness and surprise.
-          </GalleryCopy>
+          <SafeReveal>
+            <GalleryCopy>
+              A little floral, a little playful, always intentional. Explore a selection of celebrations styled with our signature mix of softness and surprise.
+            </GalleryCopy>
+          </SafeReveal>
         </GalleryHeader>
         <GalleryCollage>
-          <GalleryFeature
-            to="/gallery"
-            aria-label="View featured floral installation in the gallery"
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <GalleryImage src={feature.image.src} alt={feature.image.alt} loading="lazy" />
+          <GalleryFeature to="/gallery" aria-label="View featured floral installation in the gallery">
+            <ImageReveal>
+              <GalleryImage src={feature.image.src} alt={feature.image.alt} loading="lazy" />
+            </ImageReveal>
           </GalleryFeature>
-          <GallerySide
-            $overlap
-            to="/gallery"
-            aria-label="View couple walking through petals in the gallery"
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.65, delay: 0.12 }}
-          >
-            <GalleryImage src={firstSide.image.src} alt={firstSide.image.alt} loading="lazy" />
+          <GallerySide $overlap to="/gallery" aria-label="View couple walking through petals in the gallery">
+            <ImageReveal>
+              <GalleryImage src={firstSide.image.src} alt={firstSide.image.alt} loading="lazy" />
+            </ImageReveal>
           </GallerySide>
-          <GallerySide
-            to="/gallery"
-            aria-label="View place card detail in the gallery"
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.65, delay: 0.22 }}
-          >
-            <GalleryImage src={secondSide.image.src} alt={secondSide.image.alt} loading="lazy" />
+          <GallerySide to="/gallery" aria-label="View place card detail in the gallery">
+            <ImageReveal>
+              <GalleryImage src={secondSide.image.src} alt={secondSide.image.alt} loading="lazy" />
+            </ImageReveal>
           </GallerySide>
           <GallerySpark
             aria-hidden="true"
@@ -76,10 +67,12 @@ function GalleryPreview({ items, id = 'home-gallery-preview' }) {
           {items.map((item) => item.image.credit).join('. ')}
         </span>
         <GalleryAction>
-          <Button as={NavLink} to="/gallery" variant={BUTTON_VARIANTS.OUTLINE}>
-            View Gallery
-            <FiArrowUpRight aria-hidden="true" color="currentColor" size={16} />
-          </Button>
+          <SafeReveal from={{ y: 14 }} duration={0.7}>
+            <Button as={NavLink} to="/gallery" variant={BUTTON_VARIANTS.OUTLINE}>
+              View Gallery
+              <FiArrowUpRight aria-hidden="true" color="currentColor" size={16} />
+            </Button>
+          </SafeReveal>
         </GalleryAction>
       </GalleryContainer>
     </GalleryRoot>

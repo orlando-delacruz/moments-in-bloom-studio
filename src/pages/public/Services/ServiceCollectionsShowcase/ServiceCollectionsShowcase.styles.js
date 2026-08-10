@@ -30,6 +30,7 @@ export const CollectionHeroContent = styled.div`
 
 export const CollectionHeroTagline = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -77,6 +78,7 @@ export const StatNumber = styled.span`
 
 export const StatLabel = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;

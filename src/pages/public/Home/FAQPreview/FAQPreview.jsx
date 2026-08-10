@@ -1,9 +1,16 @@
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from '../../../../components/Button/index.js'
+import TitleReveal from '../../../../components/Reveal/index.js'
 import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
+import {
+  fadeUp,
+  softReveal,
+  staggerContainer,
+  VIEWPORT_DEFAULT,
+} from '../../../../styles/animations.js'
 import {
   FAQAction,
   FAQAnswer,
@@ -19,24 +26,38 @@ import {
   FAQTrigger,
 } from './FAQPreview.styles.js'
 
-function FAQPreview({ items, id = 'home-faq-preview' }) {
+function FAQPreview({ items, id = 'home-faq-preview', tone }) {
   const [openId, setOpenId] = useState(null)
 
   return (
-    <FAQRoot id={id}>
+    <FAQRoot id={id} $tone={tone}>
       <FAQContainer>
         <FAQHeader>
-          <FAQEyebrow>A few helpful things</FAQEyebrow>
-          <FAQTitle>Good to know.</FAQTitle>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT_DEFAULT}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <FAQEyebrow>A few helpful things</FAQEyebrow>
+          </motion.div>
+          <FAQTitle>
+            <TitleReveal>Good to know.</TitleReveal>
+          </FAQTitle>
         </FAQHeader>
-        <FAQList>
+        <FAQList
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
+        >
           {items.map((item) => {
             const isOpen = openId === item.id
             const panelId = `faq-panel-${item.id}`
             const triggerId = `faq-trigger-${item.id}`
 
             return (
-              <FAQItem key={item.id}>
+              <FAQItem key={item.id} variants={softReveal}>
                 <FAQTrigger
                   id={triggerId}
                   type="button"
@@ -74,10 +95,17 @@ function FAQPreview({ items, id = 'home-faq-preview' }) {
           })}
         </FAQList>
         <FAQAction>
-          <Button as={NavLink} to="/faqs" variant={BUTTON_VARIANTS.GHOST}>
-            View all FAQs
-            <FiArrowUpRight aria-hidden="true" color="currentColor" size={16} />
-          </Button>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_DEFAULT}
+          >
+            <Button as={NavLink} to="/faqs" variant={BUTTON_VARIANTS.GHOST}>
+              View all FAQs
+              <FiArrowUpRight aria-hidden="true" color="currentColor" size={16} />
+            </Button>
+          </motion.div>
         </FAQAction>
       </FAQContainer>
     </FAQRoot>

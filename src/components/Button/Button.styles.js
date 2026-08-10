@@ -7,27 +7,29 @@ const variantStyles = {
     color: ${({ theme }) => theme.colors.surface};
 
     &:hover:not(:disabled) {
-      border-color: ${({ theme }) => theme.colors.primaryHover};
-      background: ${({ theme }) => theme.colors.primaryHover};
+      border-color: ${({ theme }) => theme.colors.hover};
+      background: ${({ theme }) => theme.colors.hover};
     }
   `,
   secondary: css`
     border-color: ${({ theme }) => theme.colors.secondary};
     background: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.primaryHover};
+    color: ${({ theme }) => theme.colors.primary};
 
     &:hover:not(:disabled) {
-      border-color: ${({ theme }) => theme.colors.primary};
-      background: ${({ theme }) => theme.colors.surface};
+      border-color: ${({ theme }) => theme.colors.blushSoft};
+      background: ${({ theme }) => theme.colors.blushSoft};
     }
   `,
   outline: css`
     border-color: ${({ theme }) => theme.colors.primary};
     background: transparent;
-    color: ${({ theme }) => theme.colors.primaryHover};
+    color: ${({ theme }) => theme.colors.primary};
 
     &:hover:not(:disabled) {
-      background: ${({ theme }) => theme.colors.secondary};
+      border-color: ${({ theme }) => theme.colors.primary};
+      background: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.surface};
     }
   `,
   ghost: css`
@@ -36,8 +38,28 @@ const variantStyles = {
     color: ${({ theme }) => theme.colors.textPrimary};
 
     &:hover:not(:disabled) {
-      background: ${({ theme }) => theme.colors.secondary};
-      color: ${({ theme }) => theme.colors.primaryHover};
+      background: ${({ theme }) => theme.colors.beige};
+      color: ${({ theme }) => theme.colors.primary};
+    }
+  `,
+  light: css`
+    border-color: ${({ theme }) => theme.colors.ivory};
+    background: ${({ theme }) => theme.colors.ivory};
+    color: ${({ theme }) => theme.colors.ink};
+
+    &:hover:not(:disabled) {
+      border-color: ${({ theme }) => theme.colors.surface};
+      background: ${({ theme }) => theme.colors.surface};
+    }
+  `,
+  outlineLight: css`
+    border-color: rgba(245, 240, 232, 0.55);
+    background: transparent;
+    color: #f5f0e8;
+
+    &:hover:not(:disabled) {
+      border-color: rgba(245, 240, 232, 0.8);
+      background: rgba(245, 240, 232, 0.1);
     }
   `,
 }
@@ -67,6 +89,7 @@ export const Button = styled.button`
   padding-block: ${({ theme }) => theme.spacing.sm};
   border: 1px solid transparent;
   border-radius: ${({ theme }) => theme.radii.pill};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -78,12 +101,26 @@ export const Button = styled.button`
 
   &:hover:not(:disabled) {
     box-shadow: ${({ theme, $variant }) =>
-      $variant === 'primary' ? theme.shadows.ctaHover : 'none'};
+      $variant === 'primary' || $variant === 'light'
+        ? theme.shadows.ctaHover
+        : 'none'};
     transform: translateY(-1px);
+  }
+
+  & > svg {
+    transition: transform ${({ theme }) => theme.transitions.fast};
+  }
+
+  &:hover:not(:disabled) > svg {
+    transform: translateX(3px);
   }
 
   &:active:not(:disabled) {
     transform: translateY(0) scale(0.98);
+
+    & > svg {
+      transform: translateX(0);
+    }
   }
 
   &:disabled {

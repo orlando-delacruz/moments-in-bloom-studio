@@ -24,6 +24,7 @@ export const ServicesIntro = styled.div`
 
 export const ServicesEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -33,6 +34,9 @@ export const ServicesEyebrow = styled.span`
 export const ServicesTitle = styled.h2`
   max-width: 10ch;
   margin-top: ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 7vw, 6rem);
@@ -113,6 +117,7 @@ export const ServiceBody = styled.div`
 
 export const ServiceEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.11em;
@@ -162,12 +167,21 @@ export const ServiceLink = styled.a`
   gap: ${({ theme }) => theme.spacing.xs};
   margin-top: ${({ theme }) => theme.spacing.xs};
   color: ${({ theme }) => theme.colors.textPrimary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 
+  svg {
+    transition: transform ${({ theme }) => theme.transitions.fast};
+  }
+
   &:hover {
     color: ${({ theme }) => theme.colors.primaryHover};
+
+    svg {
+      transform: translate(2px, -2px);
+    }
   }
 `

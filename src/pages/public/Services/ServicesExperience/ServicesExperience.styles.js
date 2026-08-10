@@ -19,7 +19,7 @@ export const ProcessTimeline = styled.div`
     background: linear-gradient(
       180deg,
       ${({ theme }) => theme.colors.primary} 0%,
-      rgba(198, 116, 149, 0.2) 100%
+      rgba(165, 137, 116, 0.2) 100%
     );
     z-index: 0;
 
@@ -93,7 +93,7 @@ export const StepCard = styled(motion.article)`
 
   &:hover ${StepContent} {
     transform: translateY(-4px);
-    border-color: rgba(198, 116, 149, 0.35);
+    border-color: rgba(165, 137, 116, 0.35);
     box-shadow: ${({ theme }) => theme.shadows.soft};
   }
 

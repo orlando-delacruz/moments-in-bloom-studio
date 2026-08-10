@@ -25,6 +25,7 @@ export const GalleryHeader = styled.div`
 
 export const GalleryEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -34,6 +35,9 @@ export const GalleryEyebrow = styled.span`
 export const GalleryTitle = styled.h2`
   max-width: 11ch;
   margin-top: ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 7vw, 6rem);
@@ -71,7 +75,7 @@ export const GalleryCollage = styled.div`
   }
 `
 
-export const GalleryItem = styled(motion(NavLink))`
+export const GalleryItem = styled(NavLink)`
   position: relative;
   display: block;
   overflow: hidden;

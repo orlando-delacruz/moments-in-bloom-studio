@@ -1,3 +1,10 @@
+import { motion } from 'framer-motion'
+import TitleReveal from '../../../../components/Reveal/index.js'
+import {
+  staggerContainer,
+  stepIn,
+  VIEWPORT_DEFAULT,
+} from '../../../../styles/animations.js'
 import {
   ReasonContent,
   ReasonDescription,
@@ -18,21 +25,36 @@ function WhyChooseUs({ reasons, id = 'home-why-choose-us' }) {
     <WhyRoot id={id}>
       <WhyContainer>
         <WhyLead>
-          <WhyEyebrow>The difference is in the detail</WhyEyebrow>
-          <WhyTitle>Why us?</WhyTitle>
-          <WhyCopy>
-            You bring the reason to celebrate. We bring the calm, creative thinking and considered details that make it all feel easy.
-          </WhyCopy>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT_DEFAULT}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <WhyEyebrow>The difference is in the detail</WhyEyebrow>
+          </motion.div>
+          <WhyTitle>
+            <TitleReveal>Why us?</TitleReveal>
+          </WhyTitle>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT_DEFAULT}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <WhyCopy>
+              You bring the reason to celebrate. We bring the calm, creative thinking and considered details that make it all feel easy.
+            </WhyCopy>
+          </motion.div>
         </WhyLead>
-        <ReasonsList>
+        <ReasonsList
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
+        >
           {reasons.map((reason, index) => (
-            <ReasonRow
-              key={reason.number}
-              initial={{ opacity: 0, x: 18 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, delay: index * 0.06 }}
-            >
+            <ReasonRow key={reason.number} variants={stepIn(index % 2 === 0 ? 'left' : 'right')}>
               <ReasonNumber aria-hidden="true">{reason.number}</ReasonNumber>
               <ReasonContent>
                 <ReasonTitle>{reason.title}</ReasonTitle>

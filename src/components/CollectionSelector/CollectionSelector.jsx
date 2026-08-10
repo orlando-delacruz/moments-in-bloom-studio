@@ -9,6 +9,7 @@ import {
   CollectionName,
   CollectionNav,
   CollectionNavList,
+  CollectionSubBrand,
   CollectionTextGroup,
 } from "./CollectionSelector.styles.js";
 
@@ -50,7 +51,12 @@ function CollectionSelector({
               </CollectionIndex>
 
               <CollectionTextGroup>
-                <CollectionName>{category.title}</CollectionName>
+                <CollectionName $isActive={isActive}>
+                  {category.title}
+                </CollectionName>
+                {category.type === "sub-brand" && (
+                  <CollectionSubBrand>Sister brand</CollectionSubBrand>
+                )}
                 {category.navSub && (
                   <CollectionDesc>{category.navSub}</CollectionDesc>
                 )}

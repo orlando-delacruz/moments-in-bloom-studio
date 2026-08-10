@@ -1,20 +1,10 @@
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import logo from '../../assets/images/logo-old.png'
 import { publicNavigation } from '../../constants/navigation.js'
 import Button from '../Button/index.js'
-import {
-  CloseButton,
-  MenuBackdrop,
-  MenuBrand,
-  MenuContact,
-  MenuFooter,
-  MenuHeader,
-  MenuLink,
-  MenuLinks,
-  MenuPanel,
-  MenuSocials,
-} from './MobileMenu.styles.js'
+import * as S from './MobileMenu.styles.js'
 
 const panelVariants = {
   hidden: { x: '100%' },
@@ -66,7 +56,7 @@ function MobileMenu({ isOpen, onClose }) {
     <AnimatePresence>
       {isOpen ? (
         <>
-          <MenuBackdrop
+          <S.MenuBackdrop
             key="mobile-menu-backdrop"
             aria-hidden="true"
             initial={{ opacity: 0 }}
@@ -74,7 +64,7 @@ function MobileMenu({ isOpen, onClose }) {
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
-          <MenuPanel
+          <S.MenuPanel
             key="mobile-menu-panel"
             id="mobile-navigation"
             ref={panelRef}
@@ -87,14 +77,17 @@ function MobileMenu({ isOpen, onClose }) {
             exit="exit"
             onKeyDown={handleKeyDown}
           >
-            <MenuHeader>
-              <MenuBrand>Moments in Blooms</MenuBrand>
-              <CloseButton type="button" onClick={onClose} aria-label="Close menu">
+            <S.MenuHeader>
+              <S.MenuBrandBlock>
+                <S.MenuBrand src={logo} alt="" />
+                <S.MenuBrandText>Moments in Blooms</S.MenuBrandText>
+              </S.MenuBrandBlock>
+              <S.CloseButton type="button" onClick={onClose} aria-label="Close menu">
                 <span aria-hidden="true">×</span>
-              </CloseButton>
-            </MenuHeader>
+              </S.CloseButton>
+            </S.MenuHeader>
 
-            <MenuLinks aria-label="Mobile navigation links">
+            <S.MenuLinks aria-label="Mobile navigation links">
               {publicNavigation.map((item, index) => (
                 <NavLink
                   key={item.path}
@@ -103,36 +96,36 @@ function MobileMenu({ isOpen, onClose }) {
                   end={item.path === '/'}
                   onClick={onClose}
                 >
-                  <MenuLink
+                  <S.MenuLink
                     custom={index}
                     variants={linkVariants}
                     initial="hidden"
                     animate="visible"
                   >
                     {item.label}
-                  </MenuLink>
+                  </S.MenuLink>
                 </NavLink>
               ))}
-            </MenuLinks>
+            </S.MenuLinks>
 
-            <MenuFooter>
+            <S.MenuFooter>
               <Button as={NavLink} to="/contact" onClick={onClose}>
                 Enquire Now
               </Button>
-              <MenuContact>
+              <S.MenuContact>
                 <span>Melbourne, Australia</span>
                 <a href="mailto:hello@momentsinblooms.com">hello@momentsinblooms.com</a>
-              </MenuContact>
-              <MenuSocials aria-label="Social links">
+              </S.MenuContact>
+              <S.MenuSocials aria-label="Social links">
                 <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
                   Instagram
                 </a>
                 <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
                   Facebook
                 </a>
-              </MenuSocials>
-            </MenuFooter>
-          </MenuPanel>
+              </S.MenuSocials>
+            </S.MenuFooter>
+          </S.MenuPanel>
         </>
       ) : null}
     </AnimatePresence>

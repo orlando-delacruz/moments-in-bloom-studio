@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import { FiArrowRight, FiGift } from "react-icons/fi";
 
 import Button from "../../../../../components/Button/index.js";
+import {
+  rise,
+  staggerContainer,
+  VIEWPORT_DEFAULT,
+} from "../../../../../styles/animations.js";
 
 import * as S from "./BlissfulNestShowcase.styles.js";
 
@@ -34,15 +39,14 @@ function BlissfulNestShowcase({ collection }) {
             )}
           </S.ProductCategoryHeader>
 
-          <S.PackageGrid>
-            {category.packages.map((pkg, index) => (
-              <motion.div
-                key={pkg.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-              >
+          <S.PackageGrid
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT_DEFAULT}
+          >
+            {category.packages.map((pkg) => (
+              <motion.div key={pkg.id} variants={rise}>
                 <S.PackageCard>
                   <S.PackageImageWrapper>
                     <img src={pkg.image} alt={pkg.name} loading="lazy" />

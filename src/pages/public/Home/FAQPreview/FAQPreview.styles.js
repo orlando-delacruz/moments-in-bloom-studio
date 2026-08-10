@@ -4,7 +4,8 @@ import PageContainer from '../../../../components/PageContainer/index.js'
 
 export const FAQRoot = styled.section`
   padding-block: ${({ theme }) => theme.spacing.sectionStandard};
-  background: ${({ theme }) => theme.colors.background};
+  background: ${({ $tone, theme }) =>
+    $tone === 'surface' ? theme.colors.surface : theme.colors.beige};
 `
 
 export const FAQContainer = styled(PageContainer)`
@@ -20,6 +21,7 @@ export const FAQHeader = styled.div`
 
 export const FAQEyebrow = styled.span`
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -28,6 +30,9 @@ export const FAQEyebrow = styled.span`
 
 export const FAQTitle = styled.h2`
   margin-top: ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
   color: ${({ theme }) => theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 7vw, 5.5rem);
@@ -36,11 +41,11 @@ export const FAQTitle = styled.h2`
   line-height: 0.88;
 `
 
-export const FAQList = styled.div`
+export const FAQList = styled(motion.div)`
   border-top: 1px solid ${({ theme }) => theme.colors.border};
 `
 
-export const FAQItem = styled.div`
+export const FAQItem = styled(motion.div)`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `
 
@@ -55,9 +60,13 @@ export const FAQTrigger = styled.button`
   border: 0;
   background: transparent;
   color: ${({ theme }) => theme.colors.textPrimary};
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-family: ${({ theme }) => theme.typography.headingFont};
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
   text-align: left;
+  transition: color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     color: ${({ theme }) => theme.colors.primaryHover};

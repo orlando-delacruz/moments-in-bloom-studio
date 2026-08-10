@@ -1,19 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import logo from '../../assets/images/logo-old.png'
+import logoWhite from '../../assets/images/logo-old-white.png'
 import { publicNavigation } from '../../constants/navigation.js'
-import { BUTTON_VARIANTS, MENU_KEYS, NAVBAR_SCROLL_THRESHOLD } from '../../constants/ui.js'
+import {
+  BUTTON_VARIANTS,
+  MENU_KEYS,
+  NAVBAR_SCROLL_THRESHOLD,
+  NAVBAR_THEMES,
+} from '../../constants/ui.js'
 import useBodyScrollLock from '../../hooks/useBodyScrollLock.js'
 import useScrolled from '../../hooks/useScrolled.js'
 import Button from '../Button/index.js'
 import MobileMenu from './MobileMenu.jsx'
-import { Brand, DesktopActions, Header, HeaderContainer, MobileActions, NavigationLink, PrimaryNav } from './Navbar.styles.js'
-import { MenuIcon, MenuLine, MobileMenuButton } from './MobileMenu.styles.js'
+import * as S from './Navbar.styles.js'
+import * as M from './MobileMenu.styles.js'
 
-function Navbar() {
+function Navbar({ variant = NAVBAR_THEMES.LIGHT }) {
   const isScrolled = useScrolled(NAVBAR_SCROLL_THRESHOLD)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuButtonRef = useRef(null)
   const hadMenuOpen = useRef(false)
+  const navbarTheme = isScrolled ? NAVBAR_THEMES.LIGHT : variant
+  const isDark = navbarTheme === NAVBAR_THEMES.DARK
 
   useBodyScrollLock(isMenuOpen)
 
@@ -52,44 +61,55 @@ function Navbar() {
 
   return (
     <>
-      <Header $scrolled={isScrolled}>
-        <HeaderContainer>
-        <NavLink to="/" end aria-label="Moments in Blooms home">
-          <Brand>Moments in Blooms</Brand>
-        </NavLink>
-        <PrimaryNav aria-label="Primary navigation">
-          {publicNavigation.map((item) => (
-            <NavLink key={item.path} to={item.path} end={item.path === '/'}>
-              <NavigationLink>{item.label}</NavigationLink>
-            </NavLink>
-          ))}
-        </PrimaryNav>
-          <DesktopActions>
-            <Button as={NavLink} to="/contact" variant={BUTTON_VARIANTS.PRIMARY}>
+      <S.Header $scrolled={isScrolled} $variant={navbarTheme}>
+        <S.HeaderContainer>
+          <NavLink to="/" end aria-label="Moments in Blooms home">
+            <S.Brand>
+              <S.LogoStage aria-hidden="true">
+                <S.LogoImage src={logo} alt="" $visible={!isDark} />
+                <S.LogoImage src={logoWhite} alt="" $visible={isDark} />
+              </S.LogoStage>
+              <S.Wordmark $variant={navbarTheme}>Moments in Blooms</S.Wordmark>
+            </S.Brand>
+          </NavLink>
+          <S.PrimaryNav aria-label="Primary navigation">
+            {publicNavigation.map((item) => (
+              <NavLink key={item.path} to={item.path} end={item.path === '/'}>
+                <S.NavigationLink $variant={navbarTheme}>{item.label}</S.NavigationLink>
+              </NavLink>
+            ))}
+          </S.PrimaryNav>
+          <S.DesktopActions>
+            <Button
+              as={NavLink}
+              to="/contact"
+              variant={isDark ? BUTTON_VARIANTS.LIGHT : BUTTON_VARIANTS.PRIMARY}
+            >
               Enquire Now
             </Button>
-          </DesktopActions>
-          <MobileActions>
-            <MobileMenuButton
+          </S.DesktopActions>
+          <S.MobileActions>
+            <M.MobileMenuButton
               ref={menuButtonRef}
               type="button"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-navigation"
               aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
+              $variant={navbarTheme}
             >
-              <MenuIcon aria-hidden="true">
-                <MenuLine
+              <M.MenuIcon aria-hidden="true">
+                <M.MenuLine
                   animate={isMenuOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
                 />
-                <MenuLine
+                <M.MenuLine
                   animate={isMenuOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
                 />
-              </MenuIcon>
-            </MobileMenuButton>
-          </MobileActions>
-        </HeaderContainer>
-      </Header>
+              </M.MenuIcon>
+            </M.MobileMenuButton>
+          </S.MobileActions>
+        </S.HeaderContainer>
+      </S.Header>
       <MobileMenu isOpen={isMenuOpen} onClose={closeMenu} />
     </>
   )

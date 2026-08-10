@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Container from '../Container/index.js'
+import { NAVBAR_THEMES } from '../../constants/ui.js'
 
 export const Header = styled.header`
   position: fixed;
@@ -33,13 +34,45 @@ export const HeaderContainer = styled(Container)`
   }
 `
 
-export const Brand = styled.span`
-  color: ${({ theme }) => theme.colors.textPrimary};
+export const Brand = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+`
+
+export const LogoStage = styled.span`
+  position: relative;
+  display: inline-block;
+  flex: none;
+  height: clamp(1.75rem, 3.5vw, 2.25rem);
+  aspect-ratio: 1;
+`
+
+export const LogoImage = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity ${({ theme }) => theme.transitions.standard};
+`
+
+export const Wordmark = styled.span`
+  color: ${({ $variant, theme }) =>
+    $variant === NAVBAR_THEMES.DARK ? theme.colors.surface : theme.colors.textPrimary};
   font-family: ${({ theme }) => theme.typography.headingFont};
-  font-size: 1.25rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
   white-space: nowrap;
+  transition: color ${({ theme }) => theme.transitions.standard};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
 `
 
 export const PrimaryNav = styled.nav`
@@ -57,7 +90,9 @@ export const NavigationLink = styled.span`
   position: relative;
   display: inline-flex;
   padding-block: ${({ theme }) => theme.spacing.xs};
-  color: ${({ theme }) => theme.colors.textPrimary};
+  color: ${({ $variant, theme }) =>
+    $variant === NAVBAR_THEMES.DARK ? theme.colors.surface : theme.colors.textPrimary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -72,7 +107,8 @@ export const NavigationLink = styled.span`
     left: 0;
     height: 2px;
     border-radius: ${({ theme }) => theme.radii.pill};
-    background: ${({ theme }) => theme.colors.primary};
+    background: ${({ $variant, theme }) =>
+      $variant === NAVBAR_THEMES.DARK ? theme.colors.goldLight : theme.colors.primaryHover};
     content: '';
     opacity: 0;
     transform: scaleX(0.5);
@@ -82,7 +118,8 @@ export const NavigationLink = styled.span`
 
   a:hover &,
   a.active & {
-    color: ${({ theme }) => theme.colors.primaryHover};
+    color: ${({ $variant, theme }) =>
+      $variant === NAVBAR_THEMES.DARK ? theme.colors.goldLight : theme.colors.primaryHover};
   }
 
   a:hover &::after,

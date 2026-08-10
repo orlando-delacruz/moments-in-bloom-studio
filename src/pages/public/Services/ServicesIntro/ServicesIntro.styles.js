@@ -12,7 +12,7 @@ export const IntroGrid = styled.div`
   }
 `
 
-export const IntroContent = styled(motion.div)`
+export const IntroContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.lg};
@@ -81,12 +81,13 @@ export const QuoteAuthor = styled.span`
 
 export const QuoteRole = styled.span`
   color: ${({ theme }) => theme.colors.textSecondary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 `
 
-export const IntroVisual = styled(motion.div)`
+export const IntroVisual = styled.div`
   position: relative;
   width: 100%;
 `
@@ -112,7 +113,7 @@ export const PrimaryImageFrame = styled.div`
   }
 `
 
-export const SecondaryImageFloat = styled.div`
+export const SecondaryImageFloat = styled(motion.div)`
   position: absolute;
   bottom: -2rem;
   left: -2rem;

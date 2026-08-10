@@ -11,12 +11,18 @@ export const HeroRoot = styled.section`
   overflow: hidden;
   isolation: isolate;
   padding-block: clamp(6rem, 12vw, 10rem);
+  margin-top: calc(-1 * ${({ theme }) => theme.layout.headerHeight});
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin-top: calc(-1 * ${({ theme }) => theme.layout.mobileHeaderHeight});
+  }
 `
 
-export const HeroBackground = styled.div`
+export const HeroBackground = styled(motion.div)`
   position: absolute;
   inset: 0;
   z-index: 1;
+  will-change: transform;
 
   img {
     width: 100%;
@@ -54,7 +60,8 @@ export const HeroEyebrow = styled(motion.span)`
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.goldLight};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.725rem;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -67,8 +74,11 @@ export const HeroEyebrow = styled(motion.span)`
   border-radius: ${({ theme }) => theme.radii.pill};
 `
 
-export const HeroTitle = styled(motion.h1)`
+export const HeroTitle = styled.h1`
   margin: 0 0 ${({ theme }) => theme.spacing.md};
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: calc(${({ theme }) => theme.spacing.md} - 0.1em);
   color: ${({ theme }) => theme.colors.surface};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(2.75rem, 6vw, 4.75rem);
@@ -128,6 +138,7 @@ export const BadgeTitle = styled.span`
 
 export const BadgeSubtitle = styled.span`
   color: rgba(255, 255, 255, 0.85);
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;

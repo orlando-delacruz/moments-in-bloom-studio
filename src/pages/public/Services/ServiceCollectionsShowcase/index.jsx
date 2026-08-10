@@ -29,7 +29,7 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
       subtitle="Client Services"
       title="Bespoke Collections & Experiences"
       description="Select a service collection below to explore our decor hire catalogue, premium photobooth experiences, and the Blissful Nest sub-brand."
-      tone={SECTION_TONES.DEFAULT}
+      tone={SECTION_TONES.SURFACE}
     >
       <Container>
         <S.ShowcaseSection>

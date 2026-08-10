@@ -9,7 +9,7 @@ export const StorySectionTitle = styled.h3`
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.25rem;
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -120,7 +120,7 @@ export const StoryGalleryCounter = styled.p`
 
   span {
     margin: 0 0.4rem;
-    color: ${({ theme }) => theme.colors.gold};
+    color: ${({ theme }) => theme.colors.primaryHover};
   }
 `
 

@@ -1,6 +1,7 @@
-import { useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { FiInstagram } from 'react-icons/fi'
 import Button from '../../../../components/Button/index.js'
+import { VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   InstagramAction,
   InstagramContainer,
@@ -21,8 +22,22 @@ function InstagramPreview({ items, id = 'home-instagram', profileUrl = 'https://
   return (
     <InstagramRoot id={id}>
       <InstagramContainer>
-        <InstagramEyebrow>A little more over on Instagram</InstagramEyebrow>
-        <InstagramTitle>@momentsinblooms</InstagramTitle>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT_DEFAULT}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <InstagramEyebrow>A little more over on Instagram</InstagramEyebrow>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT_DEFAULT}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <InstagramTitle>@momentsinblooms</InstagramTitle>
+        </motion.div>
       </InstagramContainer>
       <InstagramStripViewport aria-label="Moments in Blooms Instagram preview">
         <InstagramStrip

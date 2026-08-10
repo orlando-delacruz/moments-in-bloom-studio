@@ -62,6 +62,7 @@ export const StatValue = styled.span`
 export const StatLabel = styled.h3`
   margin: 0 0 ${({ theme }) => theme.spacing.xs};
   color: ${({ theme }) => theme.colors.primaryHover};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: 0.05em;

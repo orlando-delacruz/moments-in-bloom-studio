@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { softReveal, staggerContainer, VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   TrustEyebrow,
   TrustMarks,
@@ -12,24 +13,28 @@ function TrustedBy({ marks, id = 'home-trusted-by' }) {
   return (
     <TrustedByRoot id={id}>
       <TrustedByContainer>
-        <TrustEyebrow>Trusted by beautiful celebrations</TrustEyebrow>
-        <TrustStatement
-          initial={{ opacity: 0, y: 24 }}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          viewport={VIEWPORT_DEFAULT}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <TrustEyebrow>Trusted by beautiful celebrations</TrustEyebrow>
+        </motion.div>
+        <TrustStatement
+          variants={softReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
         >
           <TrustStatementLead>We believe a celebration should feel</TrustStatementLead>{' '}
           as beautiful as the reason you&apos;re gathering.
         </TrustStatement>
         <TrustMarks
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-          }}
         >
           {marks.map((mark) => (
             <motion.li

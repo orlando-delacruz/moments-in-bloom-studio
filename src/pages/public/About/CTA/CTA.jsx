@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import Button from '../../../../components/Button/index.js'
 import Container from '../../../../components/Container/index.js'
+import SafeReveal from '../../../../components/Reveal/SafeReveal.jsx'
+import TitleReveal from '../../../../components/Reveal/TitleReveal.jsx'
 import { BUTTON_VARIANTS } from '../../../../constants/ui.js'
 import {
   CTAActions,
@@ -17,28 +19,33 @@ function CTA({ content, id }) {
   return (
     <CTARoot id={id}>
       <Container>
-        <CTAContent
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {subtitle && <CTASubtitle>{subtitle}</CTASubtitle>}
-          <CTATitle>{title}</CTATitle>
-          <CTADescription>{description}</CTADescription>
+        <CTAContent>
+          {subtitle && (
+            <SafeReveal from={{ y: 12 }} duration={0.6}>
+              <CTASubtitle>{subtitle}</CTASubtitle>
+            </SafeReveal>
+          )}
+          <CTATitle>
+            <TitleReveal>{title}</TitleReveal>
+          </CTATitle>
+          <SafeReveal from={{ y: 28 }} duration={0.55}>
+            <CTADescription>{description}</CTADescription>
+          </SafeReveal>
 
-          <CTAActions>
-            {primaryCta && (
-              <Button as={NavLink} to={primaryCta.path} variant={BUTTON_VARIANTS.SECONDARY}>
-                {primaryCta.label}
-              </Button>
-            )}
-            {secondaryCta && (
-              <Button as={NavLink} to={secondaryCta.path} variant={BUTTON_VARIANTS.SECONDARY}>
-                {secondaryCta.label}
-              </Button>
-            )}
-          </CTAActions>
+          <SafeReveal from={{ y: 14 }} duration={0.7} delay={0.2}>
+            <CTAActions>
+              {primaryCta && (
+                <Button as={NavLink} to={primaryCta.path} variant={BUTTON_VARIANTS.LIGHT}>
+                  {primaryCta.label}
+                </Button>
+              )}
+              {secondaryCta && (
+                <Button as={NavLink} to={secondaryCta.path} variant={BUTTON_VARIANTS.OUTLINE_LIGHT}>
+                  {secondaryCta.label}
+                </Button>
+              )}
+            </CTAActions>
+          </SafeReveal>
         </CTAContent>
       </Container>
     </CTARoot>

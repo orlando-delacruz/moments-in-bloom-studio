@@ -1,5 +1,7 @@
 import Button from '../../../../components/Button/index.js'
 import Container from '../../../../components/Container/index.js'
+import SafeReveal from '../../../../components/Reveal/SafeReveal.jsx'
+import TitleReveal from '../../../../components/Reveal/TitleReveal.jsx'
 import {
   CTAActions,
   CTAContent,
@@ -15,29 +17,34 @@ function ServicesCTA({ content, id }) {
   return (
     <CTARoot id={id}>
       <Container>
-        <CTAContent
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {content.eyebrow ? <CTASubtitle>{content.eyebrow}</CTASubtitle> : null}
-          <CTATitle>{content.title}</CTATitle>
-          <CTADescription>{content.description}</CTADescription>
+        <CTAContent>
+          {content.eyebrow ? (
+            <SafeReveal from={{ y: 12 }} duration={0.6}>
+              <CTASubtitle>{content.eyebrow}</CTASubtitle>
+            </SafeReveal>
+          ) : null}
+          <CTATitle>
+            <TitleReveal>{content.title}</TitleReveal>
+          </CTATitle>
+          <SafeReveal from={{ y: 28 }} duration={0.55}>
+            <CTADescription>{content.description}</CTADescription>
+          </SafeReveal>
 
-          <CTAActions>
-            {content.primaryCta ? (
-              <Button to={content.path || '/contact'} size="large" variant="primary">
-                {content.primaryCta}
-              </Button>
-            ) : null}
+          <SafeReveal from={{ y: 14 }} duration={0.7} delay={0.2}>
+            <CTAActions>
+              {content.primaryCta ? (
+                <Button to={content.path || '/contact'} size="large" variant="light">
+                  {content.primaryCta}
+                </Button>
+              ) : null}
 
-            {content.secondaryCta ? (
-              <Button to="/gallery" size="large" variant="outline">
-                {content.secondaryCta}
-              </Button>
-            ) : null}
-          </CTAActions>
+              {content.secondaryCta ? (
+                <Button to="/gallery" size="large" variant="outlineLight">
+                  {content.secondaryCta}
+                </Button>
+              ) : null}
+            </CTAActions>
+          </SafeReveal>
         </CTAContent>
       </Container>
     </CTARoot>

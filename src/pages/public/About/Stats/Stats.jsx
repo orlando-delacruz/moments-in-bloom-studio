@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
 import Container from '../../../../components/Container/index.js'
 import Section from '../../../../components/Section/index.js'
 import { SECTION_TONES } from '../../../../constants/ui.js'
+import { rise, staggerContainer, VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   StatCard,
   StatDescription,
@@ -18,24 +20,25 @@ function Stats({ content, id }) {
       subtitle={subtitle}
       title={title}
       description={description}
-      tone={SECTION_TONES.SOFT}
+      tone={SECTION_TONES.BLUSH}
     >
       <Container>
-        <StatsGrid>
-          {items.map((item, index) => (
-            <StatCard
-              key={item.label || index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <StatValue>{item.value}</StatValue>
-              <StatLabel>{item.label}</StatLabel>
-              <StatDescription>{item.description}</StatDescription>
-            </StatCard>
-          ))}
-        </StatsGrid>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
+        >
+          <StatsGrid>
+            {items.map((item, index) => (
+              <StatCard key={item.label || index} variants={rise}>
+                <StatValue>{item.value}</StatValue>
+                <StatLabel>{item.label}</StatLabel>
+                <StatDescription>{item.description}</StatDescription>
+              </StatCard>
+            ))}
+          </StatsGrid>
+        </motion.div>
       </Container>
     </Section>
   )

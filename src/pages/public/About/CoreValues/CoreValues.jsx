@@ -1,7 +1,9 @@
+import { motion } from 'framer-motion'
 import { FiAward, FiFeather, FiHeart, FiStar } from 'react-icons/fi'
 import Container from '../../../../components/Container/index.js'
 import Section from '../../../../components/Section/index.js'
 import { SECTION_TONES } from '../../../../constants/ui.js'
+import { rise, staggerContainer, VIEWPORT_DEFAULT } from '../../../../styles/animations.js'
 import {
   IconContainer,
   ValueCard,
@@ -24,30 +26,31 @@ function CoreValues({ items, id }) {
       subtitle="Our Principles"
       title="Values that guide every arrangement"
       description="The foundational standards behind our creative direction, floral selection, and client relationships."
-      tone={SECTION_TONES.SURFACE}
+      tone={SECTION_TONES.INK}
     >
       <Container>
-        <ValuesGrid>
-          {items.map((item, index) => {
-            const IconComponent = iconMap[item.iconName] || FiStar
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT_DEFAULT}
+        >
+          <ValuesGrid>
+            {items.map((item, index) => {
+              const IconComponent = iconMap[item.iconName] || FiStar
 
-            return (
-              <ValueCard
-                key={item.id || index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.4, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <IconContainer>
-                  <IconComponent aria-hidden="true" />
-                </IconContainer>
-                <ValueTitle>{item.title}</ValueTitle>
-                <ValueDescription>{item.description}</ValueDescription>
-              </ValueCard>
-            )
-          })}
-        </ValuesGrid>
+              return (
+                <ValueCard key={item.id || index} variants={rise}>
+                  <IconContainer>
+                    <IconComponent aria-hidden="true" />
+                  </IconContainer>
+                  <ValueTitle>{item.title}</ValueTitle>
+                  <ValueDescription>{item.description}</ValueDescription>
+                </ValueCard>
+              )
+            })}
+          </ValuesGrid>
+        </motion.div>
       </Container>
     </Section>
   )

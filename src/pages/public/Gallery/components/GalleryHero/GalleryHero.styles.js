@@ -9,6 +9,11 @@ export const GalleryHero = styled.section`
   justify-content: center;
   overflow: hidden;
   background: ${({ theme }) => theme.colors.background};
+  margin-top: calc(-1 * ${({ theme }) => theme.layout.headerHeight});
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    margin-top: calc(-1 * ${({ theme }) => theme.layout.mobileHeaderHeight});
+  }
 `
 
 export const HeroMedia = styled(motion.div)`
@@ -28,9 +33,9 @@ export const HeroOverlay = styled.div`
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(46, 46, 46, 0.3) 0%,
-    rgba(46, 46, 46, 0.5) 50%,
-    rgba(46, 46, 46, 0.7) 100%
+    rgba(26, 24, 23, 0.3) 0%,
+    rgba(26, 24, 23, 0.5) 50%,
+    rgba(26, 24, 23, 0.7) 100%
   );
   z-index: 1;
 `
@@ -45,7 +50,7 @@ export const HeroContent = styled.div`
 `
 
 export const HeroEyebrow = styled.p`
-  font-family: ${({ theme }) => theme.typography.bodyFont};
+  font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -59,6 +64,9 @@ export const HeroTitle = styled.h1`
   line-height: ${({ theme }) => theme.typography.headingLineHeight};
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   font-weight: 400;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: calc(${({ theme }) => theme.spacing.lg} - 0.1em);
 `
 
 export const HeroDescription = styled.p`
