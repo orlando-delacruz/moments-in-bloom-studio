@@ -61,7 +61,7 @@ export const LogoImage = styled.img`
 
 export const Wordmark = styled.span`
   color: ${({ $variant, theme }) =>
-    $variant === NAVBAR_THEMES.DARK ? theme.colors.surface : theme.colors.textPrimary};
+    $variant === NAVBAR_THEMES.DARK ? theme.colors.surface : theme.colors.primaryHover};
   font-family: ${({ theme }) => theme.typography.headingFont};
   font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   font-weight: 500;
@@ -69,10 +69,6 @@ export const Wordmark = styled.span`
   line-height: 1.1;
   white-space: nowrap;
   transition: color ${({ theme }) => theme.transitions.standard};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    display: none;
-  }
 `
 
 export const PrimaryNav = styled.nav`

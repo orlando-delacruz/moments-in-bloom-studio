@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import logo from '../../assets/images/logo-old.png'
+import logoPrimary from '../../assets/images/logo-old-primary.png'
 import logoWhite from '../../assets/images/logo-old-white.png'
 import { publicNavigation } from '../../constants/navigation.js'
 import {
@@ -66,7 +66,7 @@ function Navbar({ variant = NAVBAR_THEMES.LIGHT }) {
           <NavLink to="/" end aria-label="Moments in Blooms home">
             <S.Brand>
               <S.LogoStage aria-hidden="true">
-                <S.LogoImage src={logo} alt="" $visible={!isDark} />
+                <S.LogoImage src={logoPrimary} alt="" $visible={!isDark} />
                 <S.LogoImage src={logoWhite} alt="" $visible={isDark} />
               </S.LogoStage>
               <S.Wordmark $variant={navbarTheme}>Moments in Blooms</S.Wordmark>
