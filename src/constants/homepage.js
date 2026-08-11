@@ -121,34 +121,6 @@ export const homepageReasons = Object.freeze([
   },
 ])
 
-export const homepageProcessSteps = Object.freeze([
-  {
-    step: '01',
-    title: 'Enquire',
-    description: 'Tell us what you are celebrating, where it is happening and the feeling you want to create.',
-  },
-  {
-    step: '02',
-    title: 'Planning',
-    description: 'We shape the mood, refine the details and bring your ideas into a considered visual direction.',
-  },
-  {
-    step: '03',
-    title: 'Confirmation',
-    description: 'Your styling plan is locked in with clear inclusions, timing and a beautifully simple next step.',
-  },
-  {
-    step: '04',
-    title: 'Event Day',
-    description: 'Our team arrives early, styles every detail and quietly handles the moving parts behind the scenes.',
-  },
-  {
-    step: '05',
-    title: 'Celebrate',
-    description: 'You step into a space that feels like you, with more time to be present for the people you love.',
-  },
-])
-
 export const homepageTestimonials = Object.freeze([
   {
     quote:
@@ -236,33 +208,6 @@ export const homepageInstagramItems = Object.freeze([
   },
 ])
 
-export const homepageFaqItems = Object.freeze([
-  {
-    id: 'service-area',
-    question: 'What is your service area?',
-    answer:
-      'We are based in Melbourne and style events across the city, inner suburbs and selected regional Victorian locations. Share your venue with us and we will confirm availability.',
-  },
-  {
-    id: 'lead-time',
-    question: 'How far in advance should we enquire?',
-    answer:
-      'We recommend reaching out as soon as your date and venue are known, especially for peak spring and summer weekends. Last-minute celebrations are welcome when our calendar allows.',
-  },
-  {
-    id: 'custom-styling',
-    question: 'Can styling be tailored to our event?',
-    answer:
-      'Absolutely. Every celebration begins with your story, palette, venue and guest experience. We can work from a clear brief or help you shape the creative direction from the very beginning.',
-  },
-  {
-    id: 'after-enquiry',
-    question: 'What happens after we submit an enquiry?',
-    answer:
-      'We will review the details, come back with a few thoughtful questions and arrange a conversation if the fit feels right. From there, we can shape a tailored styling direction and proposal.',
-  },
-])
-
 export const homepageCta = Object.freeze({
   eyebrow: 'Your moment starts here',
   title: "Let's create something beautiful.",
@@ -286,9 +231,7 @@ export const HOME_SECTION_IDS = Object.freeze({
   SERVICES: 'home-services',
   GALLERY: 'home-gallery-preview',
   WHY_US: 'home-why-choose-us',
-  PROCESS: 'home-process',
   TESTIMONIALS: 'home-testimonials',
   INSTAGRAM: 'home-instagram',
-  FAQ: 'home-faq-preview',
   CTA: 'home-cta',
 })
