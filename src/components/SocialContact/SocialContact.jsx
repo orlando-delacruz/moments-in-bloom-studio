@@ -106,19 +106,11 @@ function SocialContact() {
         aria-controls={isOpen ? ACTIONS_ID : undefined}
         aria-label="Open social contact options"
         initial={false}
+        $bouncing={!isOpen && !reduceMotion}
         animate={
           isOpen
             ? { y: 0, scale: 0.96, transition: { duration: 0.25, ease: EASE_LUXE } }
-            : reduceMotion
-              ? { y: 0, scale: 1 }
-              : {
-                  y: [0, -8, 0],
-                  scale: 1,
-                  transition: {
-                    y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
-                    scale: { duration: 0.25, ease: EASE_LUXE },
-                  },
-                }
+            : { y: 0, scale: 1, transition: { duration: 0.25, ease: EASE_LUXE } }
         }
         whileHover={reduceMotion ? undefined : { scale: 1.06 }}
         whileTap={reduceMotion ? undefined : { scale: 0.94 }}

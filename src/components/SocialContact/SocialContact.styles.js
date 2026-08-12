@@ -1,5 +1,16 @@
 import { motion } from 'framer-motion'
+import { keyframes } from 'styled-components'
 import styled from 'styled-components'
+
+const socialContactBounce = keyframes`
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5rem);
+  }
+`
 
 export const Launcher = styled.div`
   position: fixed;
@@ -102,6 +113,12 @@ export const MainButton = styled(motion.button)`
   box-shadow: ${({ theme }) => theme.shadows.soft};
   transition: box-shadow ${({ theme }) => theme.transitions.fast},
     background ${({ theme }) => theme.transitions.fast};
+  animation: ${({ $bouncing }) =>
+    $bouncing ? `${socialContactBounce} 1.8s ease-in-out infinite` : 'none'};
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 
   svg {
     color: ${({ theme }) => theme.colors.background};
