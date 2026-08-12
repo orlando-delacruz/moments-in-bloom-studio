@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { keyframes } from 'styled-components'
+import { css, keyframes } from 'styled-components'
 import styled from 'styled-components'
 
 const socialContactBounce = keyframes`
@@ -114,7 +114,7 @@ export const MainButton = styled(motion.button)`
   transition: box-shadow ${({ theme }) => theme.transitions.fast},
     background ${({ theme }) => theme.transitions.fast};
   animation: ${({ $bouncing }) =>
-    $bouncing ? `${socialContactBounce} 1.8s ease-in-out infinite` : 'none'};
+    $bouncing ? css`${socialContactBounce} 1.8s ease-in-out infinite` : 'none'};
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
