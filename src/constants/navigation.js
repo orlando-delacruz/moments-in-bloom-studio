@@ -51,11 +51,11 @@ export const footerContact = Object.freeze({
 export const footerSocialLinks = Object.freeze([
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/direct/t/110491270348175/',
+    href: 'https://ig.me/m/momentsinblooms',
   },
   {
     label: 'Facebook',
-    href: 'https://web.facebook.com/messages/new?initial_e2ee_toggle_position=true',
+    href: 'https://m.me/61575145079420',
   },
 ])
 
