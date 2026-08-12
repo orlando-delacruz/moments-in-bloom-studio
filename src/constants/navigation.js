@@ -5,7 +5,7 @@ export const publicNavigation = Object.freeze([
   { label: 'About', path: '/about', navbarTheme: NAVBAR_THEMES.LIGHT },
   { label: 'Services', path: '/services', navbarTheme: NAVBAR_THEMES.DARK },
   { label: 'Gallery', path: '/gallery', navbarTheme: NAVBAR_THEMES.DARK },
-  { label: 'FAQs', path: '/faqs', navbarTheme: NAVBAR_THEMES.LIGHT },
+  { label: 'FAQs', path: '/faqs', navbarTheme: NAVBAR_THEMES.DARK },
   { label: 'Contact', path: '/contact', navbarTheme: NAVBAR_THEMES.LIGHT },
 ])
 

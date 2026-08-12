@@ -3,8 +3,6 @@ import { useLightbox } from './hooks/index.js'
 
 import {
   CTA_CONTENT,
-  FEATURED_STORIES,
-  FEATURED_STORIES_SECTION_CONTENT,
   GALLERY_CATEGORIES,
   GALLERY_ITEMS,
   HERO_CONTENT,
@@ -14,9 +12,7 @@ import {
 } from './constants/index.js'
 
 import {
-  CategoryNavigation,
   EditorialGallery,
-  FeaturedStory,
   GalleryCTA,
   GalleryHero,
   GalleryLightbox,
@@ -27,14 +23,10 @@ import {
 import * as S from './Gallery.styles.js'
 
 function Gallery() {
-  const {
-    activeCategory,
-    setActiveCategory,
-    visibleItems,
-    hasMore,
-    loadMore,
-    categories,
-  } = useGallery(GALLERY_ITEMS, GALLERY_CATEGORIES)
+  const { visibleItems, hasMore, loadMore } = useGallery(
+    GALLERY_ITEMS,
+    GALLERY_CATEGORIES,
+  )
 
   const {
     isOpen,
@@ -52,24 +44,11 @@ function Gallery() {
 
       <Introduction content={INTRODUCTION_CONTENT} />
 
-      <CategoryNavigation
-        categories={categories}
-        activeCategory={activeCategory}
-        onCategoryChange={setActiveCategory}
-      />
-
       <EditorialGallery
         items={visibleItems}
         hasMore={hasMore}
         onLoadMore={loadMore}
         onImageClick={openLightbox}
-      />
-
-      <FeaturedStory
-        content={{
-          ...FEATURED_STORIES_SECTION_CONTENT,
-          stories: FEATURED_STORIES,
-        }}
       />
 
       <InstagramPreview content={INSTAGRAM_CONTENT} posts={INSTAGRAM_POSTS} />

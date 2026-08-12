@@ -116,23 +116,6 @@ export const CollectionName = styled.span`
   transition: color ${({ theme }) => theme.transitions.standard};
 `;
 
-export const CollectionSubBrand = styled.span`
-  align-self: flex-start;
-  padding: 0.1rem 0.45rem;
-  border: 1px solid ${({ theme }) => theme.colors.blush};
-  border-radius: ${({ theme }) => theme.radii.pill};
-  color: ${({ theme }) => theme.colors.blush};
-  font-family: ${({ theme }) => theme.typography.uiFont};
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color ${({ theme }) => theme.transitions.standard},
-    border-color ${({ theme }) => theme.transitions.standard};
-`;
-
 export const CollectionDesc = styled.span`
   font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.textSecondary};

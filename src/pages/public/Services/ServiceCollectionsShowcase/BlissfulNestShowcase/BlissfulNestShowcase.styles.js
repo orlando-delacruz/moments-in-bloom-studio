@@ -53,29 +53,6 @@ export const NestIntro = styled.div`
   max-width: 720px;
 `;
 
-export const NestEyebrow = styled.span`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: ${({ theme }) => theme.colors.primaryHover};
-  font-family: ${({ theme }) => theme.typography.uiFont};
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-
-  &::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: ${({ theme }) => theme.colors.primaryHover};
-    border-radius: 1px;
-    transform: rotate(45deg);
-  }
-`;
-
 export const NestBrandTitle = styled.h3`
   margin: 0 0 1rem;
   color: ${({ theme }) => theme.colors.textPrimary};

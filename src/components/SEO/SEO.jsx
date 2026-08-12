@@ -9,6 +9,7 @@ function SEO({
   url,
   type = 'website',
   siteName = routeMetadata.public.title,
+  jsonLd,
 }) {
   const resolvedTitle = title ? `${title} | ${routeMetadata.public.title}` : routeMetadata.public.title
   const resolvedDescription = description || routeMetadata.public.description
@@ -29,6 +30,9 @@ function SEO({
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={resolvedDescription} />
       {image ? <meta name="twitter:image" content={image} /> : null}
+      {jsonLd ? (
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      ) : null}
     </Helmet>
   )
 }

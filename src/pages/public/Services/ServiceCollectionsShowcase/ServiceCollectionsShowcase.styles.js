@@ -55,36 +55,6 @@ export const CollectionHeroDesc = styled.p`
   line-height: 1.75;
 `;
 
-export const CollectionHeroStats = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding-top: ${({ theme }) => theme.spacing.md};
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-`;
-
-export const StatItem = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const StatNumber = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
-  font-family: ${({ theme }) => theme.typography.headingFont};
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1;
-`;
-
-export const StatLabel = styled.span`
-  color: ${({ theme }) => theme.colors.textSecondary};
-  font-family: ${({ theme }) => theme.typography.uiFont};
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 0.25rem;
-`;
-
 export const CollectionHeroImageWrapper = styled.div`
   position: relative;
   width: 100%;

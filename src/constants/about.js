@@ -13,9 +13,9 @@ export const ABOUT_SECTION_IDS = Object.freeze({
 })
 
 export const aboutSeo = Object.freeze({
-  title: 'About Us | Moments in Blooms - Luxury Event Styling & Floral Design',
+  title: 'About Us | Moments in Blooms - Event Decor Hire & Entertainment',
   description:
-    'Learn about Moments in Blooms, Melbourne’s premier luxury event styling and floral design studio dedicated to crafting unforgettable celebrations with artistry and timeless elegance.',
+    'Meet Moments in Blooms, Melbourne’s studio for beautiful event decor hire, the Luxe Photobooth, and Blissful Nest claw machine entertainment — with professional setup and styling for hired pieces.',
   url: '/about',
   image: imageUrl('https://images.unsplash.com/photo-1519225421980-715cb0215aed', 1200),
 })
@@ -24,7 +24,7 @@ export const aboutHero = Object.freeze({
   eyebrow: 'Our Heritage & Philosophy',
   title: 'Designing moments that bloom into memories.',
   description:
-    'Melbourne’s premier luxury event styling studio crafting bespoke botanical art and unforgettable atmospheres.',
+    'A Melbourne studio for beautiful decor hire and playful, polished entertainment — professionally set up and styled for your celebration.',
   primaryCta: {
     label: 'Explore Our Services',
     path: '/services',
@@ -45,8 +45,8 @@ export const aboutBrandStory = Object.freeze({
   title: 'Rooted in passion, cultivated with intention.',
   paragraphs: Object.freeze([
     'Moments in Blooms began with a simple yet profound realization: extraordinary celebrations are born from the seamless union of artistic floral design and thoughtful atmosphere.',
-    'Over the years, our studio has grown from intimate botanical styling into one of Melbourne’s most sought-after luxury event styling houses. We treat every floral arrangement as a living sculpture, carefully selecting blooms for texture, movement, and color harmony.',
-    'Whether styling an opulent vineyard wedding, an intimate private soirée, or a high-profile brand launch, our team brings meticulous attention to detail and unwavering artistic passion to every single element.',
+    'Over the years, our studio has grown around a love of botanical artistry — curating decor collections, floral arrangements, and playful experiences that help celebrations feel warm, considered, and beautifully put together.',
+    'Whether it’s a wedding, a milestone birthday, or a private celebration, our team brings meticulous attention to detail to every hired piece — from the final bloom to the last backdrop.',
   ]),
   quote: {
     text: 'We believe flowers speak a quiet language of luxury—transforming spaces into unforgettable emotional experiences.',
@@ -65,15 +65,15 @@ export const aboutMissionVision = Object.freeze({
   title: 'What drives our creative pursuit',
   mission: {
     tag: 'Our Mission',
-    title: 'Curating Extraordinary Experiences',
+    title: 'Curating Beautiful Celebrations',
     description:
-      'To design and execute sensory-rich event environments through bespoke botanical arrangements, refined prop curations, and seamless atmosphere creation that honours our clients’ unique stories.',
+      'To curate beautiful decor collections, botanical arrangements, and entertainment experiences — set up and styled with care — so every celebration feels considered, joyful, and entirely your own.',
   },
   vision: {
     tag: 'Our Vision',
     title: 'Pioneering Timeless Floral Artistry',
     description:
-      'To be recognized as Australia’s premier luxury event styling studio—setting benchmarks in sustainable botanical practices, artistic innovation, and emotionally resonant event design.',
+      'To grow into Australia’s premier luxury event styling studio—setting benchmarks in sustainable botanical practices, artistic innovation, and emotionally resonant event design.',
   },
 })
 

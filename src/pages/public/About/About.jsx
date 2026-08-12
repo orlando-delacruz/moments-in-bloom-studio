@@ -1,27 +1,21 @@
 import SEO from '../../../components/SEO/index.js'
 import {
   ABOUT_SECTION_IDS,
-  aboutBehindExperience,
   aboutBrandStory,
   aboutCoreValues,
   aboutCta,
   aboutHero,
   aboutMissionVision,
   aboutSeo,
-  aboutStats,
   aboutTestimonialHighlight,
-  aboutWhyChooseUs,
 } from '../../../constants/about.js'
 import { AboutPage } from './About.styles.js'
 import AboutHero from './AboutHero/index.js'
-import BehindExperience from './BehindExperience/index.js'
 import BrandStory from './BrandStory/index.js'
 import CoreValues from './CoreValues/index.js'
 import CTA from './CTA/index.js'
 import MissionVision from './MissionVision/index.js'
-import Stats from './Stats/index.js'
 import TestimonialHighlight from './TestimonialHighlight/index.js'
-import WhyChooseUs from './WhyChooseUs/index.js'
 
 function About() {
   return (
@@ -37,9 +31,6 @@ function About() {
       <BrandStory content={aboutBrandStory} id={ABOUT_SECTION_IDS.BRAND_STORY} />
       <MissionVision content={aboutMissionVision} id={ABOUT_SECTION_IDS.MISSION_VISION} />
       <CoreValues items={aboutCoreValues} id={ABOUT_SECTION_IDS.CORE_VALUES} />
-      <WhyChooseUs content={aboutWhyChooseUs} id={ABOUT_SECTION_IDS.WHY_US} />
-      <BehindExperience content={aboutBehindExperience} id={ABOUT_SECTION_IDS.BEHIND_EXPERIENCE} />
-      <Stats content={aboutStats} id={ABOUT_SECTION_IDS.STATS} />
       <TestimonialHighlight
         content={aboutTestimonialHighlight}
         id={ABOUT_SECTION_IDS.TESTIMONIAL}

@@ -1,10 +1,12 @@
+import { faqItems } from "./faqs.js"
+
 const imageUrl = (source, width = 1600) =>
   `${source}?auto=format&fit=crop&w=${width}&q=85`;
 
 export const servicesSeo = Object.freeze({
-  title: "Luxury Event Styling & Photobooth Services Melbourne",
+  title: "Event Decor Hire, Photobooth & Claw Machines Melbourne",
   description:
-    "Discover Moments in Blooms bespoke event services in Melbourne — luxury photobooths, event styling, haute floral installations, custom claw machines, and curated tablescapes.",
+    "Discover Moments in Blooms services in Melbourne — event decor hire, the Luxe Photobooth, Blissful Nest claw machines, and professional setup and styling for hired items.",
   url: "https://www.momentsinblooms.com.au/services",
   image: imageUrl(
     "https://images.unsplash.com/photo-1519741497674-611481863552",
@@ -26,10 +28,10 @@ export const SERVICES_SECTION_IDS = Object.freeze({
 });
 
 export const servicesHero = Object.freeze({
-  eyebrow: "Bespoke Event Styling & Entertainment · Melbourne",
+  eyebrow: "Event Decor Hire & Entertainment · Melbourne",
   title: "The Art of Extraordinary Celebrations.",
   description:
-    "From couture floral installations and immersive photobooths to interactive claw machines and bespoke tablescapes — we shape moments that linger in memory.",
+    "From curated floral installations and decor hire to the Luxe Photobooth and Blissful Nest claw machines — beautiful pieces, professionally set up and styled for your celebration.",
   primaryCta: {
     label: "Reserve Your Date",
     path: "/contact",
@@ -40,7 +42,7 @@ export const servicesHero = Object.freeze({
   },
   badge: {
     title: "Melbourne",
-    subtitle: "Premier Event Studio",
+    subtitle: "Decor Hire & Entertainment",
   },
   image: {
     src: imageUrl(
@@ -297,11 +299,11 @@ export const serviceCollections = Object.freeze([
     order: 1,
     featured: true,
     title: "Decor Hire",
-    navSub: "Luxury Event Styling",
+    navSub: "Event Decor Hire",
     navMeta: "4 Collections",
     description:
-      "Luxury event styling and considered decorative collections for weddings and special events.",
-    tagline: "Bespoke Decor & Styling",
+      "Curated decorative collections for hire — floral arrangements, backdrops, plinths, and feature pieces, professionally set up and styled for your event.",
+    tagline: "Curated Decor Collections",
     coverImage: {
       src: "https://images.unsplash.com/photo-1707333512411-3fd0773d15ce?auto=format&fit=crop&w=1400&q=85",
       alt: "Curated event decor hire setup with plinths and flower arrangements",
@@ -432,9 +434,8 @@ export const serviceCollections = Object.freeze([
     navSub: "Claw Machine Hire",
     navMeta: "4 Prize Options",
     description:
-      "A playful luxury sub-brand offering beautifully presented claw machine experiences for unforgettable celebrations.",
+      "Beautifully presented claw machine experiences with curated prizes — a playful, polished highlight for your celebration.",
     tagline: "Playful Luxury",
-    sisterLabel: "A Moments in Blooms sister brand",
     coverImage: {
       src: "https://images.unsplash.com/photo-1763076703663-8d28a686612f?auto=format&fit=crop&w=1200&q=85",
       alt: "Pastel claw machines filled with plush toys and gifts",
@@ -616,7 +617,7 @@ export const servicesWhyChooseUs = Object.freeze({
   subtitle: "The Moments in Blooms Difference",
   title: "Why discerning hosts choose our studio",
   description:
-    "We combine artistic flair with meticulous logisitical execution to create events that excel in both beauty and precision.",
+    "We combine a considered eye for detail with reliable, professional delivery — so your hired pieces look beautiful and your celebration runs smoothly.",
   image: {
     src: imageUrl(
       "https://images.unsplash.com/photo-1527529482837-4698179dc6ce",
@@ -624,7 +625,6 @@ export const servicesWhyChooseUs = Object.freeze({
     ),
     alt: "Stylist carefully adjusting a candle on a luxury dinner table",
   },
-  badge: "Melbourne Choice",
   features: [
     {
       number: "01",
@@ -634,15 +634,15 @@ export const servicesWhyChooseUs = Object.freeze({
     },
     {
       number: "02",
-      title: "Seamless Turnkey Execution",
+      title: "Professional Setup & Styling",
       description:
-        "From venue liaisons and bump-in permits to midnight bump-outs, we manage all logistics so you enjoy peace of mind.",
+        "Your hired pieces are delivered, set up, and styled on the day, and packed down afterwards — so you can simply enjoy your celebration.",
     },
     {
       number: "03",
-      title: "Tailored Aesthetic — Never Off-The-Shelf",
+      title: "Curated to Your Celebration",
       description:
-        "No cookie-cutter packages. Every styling design is custom-curated to reflect your unique personal taste.",
+        "Choose from our decor collections and prize options, and we'll style them to suit your palette, theme, and venue.",
     },
     {
       number: "04",
@@ -714,38 +714,11 @@ export const servicesTestimonials = Object.freeze([
   },
 ]);
 
-export const servicesFaqs = Object.freeze([
-  {
-    id: "faq-1",
-    question: "How far in advance should we book your services?",
-    answer:
-      "We recommend booking 6 to 12 months in advance for weekend weddings during peak season (October to April). For photobooths, claw machines, and private events, 2 to 4 months lead time is usually sufficient subject to availability.",
-  },
-  {
-    id: "faq-2",
-    question: "Can we combine multiple services into a custom package?",
-    answer:
-      "Yes! Combining services such as Event Styling + Haute Florals + Luxe Photobooth allows us to create a unified aesthetic across your entire venue, while providing bundled investment savings.",
-  },
-  {
-    id: "faq-3",
-    question: "Which areas in Victoria do you service?",
-    answer:
-      "We service all Greater Melbourne metropolitan suburbs, Yarra Valley, Mornington Peninsula, Daylesford, and the Bellarine Peninsula. Travel fees apply for regional Victorian locations.",
-  },
-  {
-    id: "faq-4",
-    question: "What happens during bump-in and bump-out on the event day?",
-    answer:
-      "Our team coordinates directly with your venue manager to secure bump-in timing. We handle complete setup prior to guest arrival and return after the event to pack down quietly and efficiently.",
-  },
-  {
-    id: "faq-5",
-    question: "How do we secure our date?",
-    answer:
-      "To lock in your date on our studio calendar, we require a 30% retainer deposit alongside a signed styling agreement. The remaining balance is due 14 days prior to your celebration.",
-  },
-]);
+export const servicesFaqs = Object.freeze(
+  faqItems.filter((item) =>
+    ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"].includes(item.id),
+  ),
+);
 
 export const servicesCta = Object.freeze({
   eyebrow: "Reserve Your Celebration Date",

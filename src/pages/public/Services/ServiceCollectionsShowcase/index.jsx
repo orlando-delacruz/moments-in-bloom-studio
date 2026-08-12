@@ -28,7 +28,7 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
       id={id}
       subtitle="Client Services"
       title="Bespoke Collections & Experiences"
-      description="Select a service collection below to explore our decor hire catalogue, premium photobooth experiences, and the Blissful Nest sub-brand."
+      description="Select a service collection below to explore our decor hire catalogue, premium photobooth experiences, and the Blissful Nest claw machines."
       tone={SECTION_TONES.SURFACE}
     >
       <Container>
@@ -63,20 +63,6 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
                   <S.CollectionHeroDesc>
                     {activeCollection.description}
                   </S.CollectionHeroDesc>
-                  <S.CollectionHeroStats>
-                    <S.StatItem>
-                      <S.StatNumber>Melbourne</S.StatNumber>
-                      <S.StatLabel>Service Region</S.StatLabel>
-                    </S.StatItem>
-                    <S.StatItem>
-                      <S.StatNumber>100%</S.StatNumber>
-                      <S.StatLabel>Bespoke Setup</S.StatLabel>
-                    </S.StatItem>
-                    <S.StatItem>
-                      <S.StatNumber>5★</S.StatNumber>
-                      <S.StatLabel>Guest Rating</S.StatLabel>
-                    </S.StatItem>
-                  </S.CollectionHeroStats>
                 </S.CollectionHeroContent>
                 <S.CollectionHeroImageWrapper>
                   <img

@@ -18,7 +18,6 @@ function BlissfulNestShowcase({ collection }) {
   return (
     <S.NestSection>
       <S.NestIntro>
-        <S.NestEyebrow>{collection.sisterLabel}</S.NestEyebrow>
         <S.NestBrandTitle>{collection.title}</S.NestBrandTitle>
         <S.NestIntroText>{collection.intro}</S.NestIntroText>
         <div>
