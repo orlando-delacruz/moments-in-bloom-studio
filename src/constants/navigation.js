@@ -6,7 +6,7 @@ export const publicNavigation = Object.freeze([
   { label: 'Services', path: '/services', navbarTheme: NAVBAR_THEMES.DARK },
   { label: 'Gallery', path: '/gallery', navbarTheme: NAVBAR_THEMES.DARK },
   { label: 'FAQs', path: '/faqs', navbarTheme: NAVBAR_THEMES.DARK },
-  { label: 'Contact', path: '/contact', navbarTheme: NAVBAR_THEMES.LIGHT },
+  { label: 'Contact', path: '/contact', navbarTheme: NAVBAR_THEMES.DARK },
 ])
 
 export const adminNavigation = Object.freeze([
@@ -49,8 +49,14 @@ export const footerContact = Object.freeze({
 })
 
 export const footerSocialLinks = Object.freeze([
-  { label: 'Instagram', href: 'https://www.instagram.com' },
-  { label: 'Facebook', href: 'https://www.facebook.com' },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/direct/t/110491270348175/',
+  },
+  {
+    label: 'Facebook',
+    href: 'https://web.facebook.com/messages/new?initial_e2ee_toggle_position=true',
+  },
 ])
 
 export const routeMetadata = Object.freeze({

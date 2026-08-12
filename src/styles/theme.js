@@ -116,12 +116,14 @@ const theme = {
     menuBackdrop: 110,
     menu: 120,
     backToTop: 90,
+    socialContact: 80,
     loading: 200,
   },
   controls: {
     tapTarget: "44px",
     dotHitTarget: "44px",
     backToTopSize: "48px",
+    socialContactSize: "3.5rem",
   },
   layout: {
     containerMaxWidth: "1200px",

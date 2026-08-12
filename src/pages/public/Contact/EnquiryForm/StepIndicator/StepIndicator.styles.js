@@ -17,19 +17,23 @@ export const Header = styled.p`
 export const List = styled.ol`
   --marker: 40px;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 0 0 ${({ theme }) => theme.spacing.xl};
+  padding: 0 0 ${({ theme }) => theme.spacing.lg};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   display: grid;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: repeat(5, 1fr);
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     --marker: 32px;
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.md};
+    gap: ${({ theme }) => theme.spacing.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    --marker: 28px;
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
+    padding-bottom: ${({ theme }) => theme.spacing.md};
+    gap: ${({ theme }) => theme.spacing.xs};
   }
 `
 
@@ -57,8 +61,12 @@ export const Item = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.xs};
+  gap: ${({ theme }) => theme.spacing.sm};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: ${({ theme }) => theme.spacing.xs};
+  }
 
   &:not(:last-child)::after {
     content: '';
@@ -119,14 +127,18 @@ export const Label = styled.span`
   ${({ $state }) => labelStyles[$state]}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: relative;
-    width: auto;
-    height: auto;
-    padding: 0 0 ${({ theme }) => theme.spacing.xs} 0;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
     font-size: 0.55rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 `

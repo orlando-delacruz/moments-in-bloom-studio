@@ -127,11 +127,11 @@ export const Fieldset = styled.fieldset`
   padding: 0;
   border: 0;
   display: grid;
-  gap: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.xl};
 
   & + & {
-    margin-top: ${({ theme }) => theme.spacing.xl};
-    padding-top: ${({ theme }) => theme.spacing.xl};
+    margin-top: ${({ theme }) => theme.spacing.xxl};
+    padding-top: ${({ theme }) => theme.spacing.xxl};
     border-top: 1px solid ${({ theme }) => theme.colors.border};
   }
 `
@@ -168,7 +168,7 @@ export const FieldsetHint = styled.p`
 export const FieldRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: ${({ theme }) => theme.spacing.md};
+  gap: ${({ theme }) => theme.spacing.lg};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     grid-template-columns: 1fr;
@@ -177,7 +177,7 @@ export const FieldRow = styled.div`
 
 export const Field = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing.xs};
+  gap: ${({ theme }) => theme.spacing.sm};
 `
 
 export const FieldLabel = styled.label`
@@ -237,14 +237,6 @@ const fieldBase = css`
 
 export const Input = styled.input`
   ${fieldBase}
-`
-
-export const Select = styled.select`
-  ${fieldBase}
-
-  &:invalid {
-    color: ${({ theme }) => theme.colors.textSecondary};
-  }
 `
 
 export const Textarea = styled.textarea`
@@ -356,7 +348,7 @@ export const NavRow = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing.md};
-  margin-top: ${({ theme }) => theme.spacing.xl};
+  margin-top: ${({ theme }) => theme.spacing.xxl};
   flex-wrap: wrap;
 `
 
@@ -379,6 +371,9 @@ export const SubmitRow = styled.div`
 `
 
 export const SubmitNote = styled.p`
+  margin: ${({ theme }) => theme.spacing.md} 0 0;
+  padding-top: ${({ theme }) => theme.spacing.md};
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
   color: ${({ theme }) => theme.colors.textSecondary};
   font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.72rem;

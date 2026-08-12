@@ -39,7 +39,9 @@ const DEFAULT_VALUES = {
   guestCount: '',
   services: [],
   setupRequired: '',
+  setupRequests: '',
   message: '',
+  customInquiry: '',
 }
 
 function EnquiryForm({ content, id }) {
@@ -58,6 +60,7 @@ function EnquiryForm({ content, id }) {
     reset,
     clearErrors,
     trigger,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onBlur',
@@ -128,7 +131,9 @@ function EnquiryForm({ content, id }) {
       venue: values.eventLocation,
       guestCount: values.guestCount,
       setupRequired: values.setupRequired,
+      setupRequests: values.setupRequests,
       message: values.message,
+      customInquiry: values.customInquiry,
     })
 
     if (result.error) {
@@ -228,6 +233,8 @@ function EnquiryForm({ content, id }) {
                   <S.StepPanel hidden={step !== 1} aria-labelledby="enquiry-step-heading-1">
                     <EventDetails
                       register={register}
+                      watch={watch}
+                      setValue={setValue}
                       errors={errors}
                       titleId="enquiry-step-heading-1"
                     />

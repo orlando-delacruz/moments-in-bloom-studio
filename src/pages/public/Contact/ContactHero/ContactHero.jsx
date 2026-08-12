@@ -9,51 +9,60 @@ function ContactHero({ content, id }) {
 
   return (
     <S.HeroRoot id={id}>
+      <S.HeroBackground
+        initial={{ scale: 1.08 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2.2, ease: EASE_LUXE }}
+      >
+        <img src={content.image.src} alt={content.image.alt} loading="eager" />
+      </S.HeroBackground>
+
       <Container>
-        <S.HeroGrid>
-          <S.HeroCopy
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE_LUXE }}
-          >
-            <S.HeroEyebrow>{content.eyebrow}</S.HeroEyebrow>
+        <S.HeroContent>
+          {content.eyebrow ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.25, ease: EASE_LUXE }}
+            >
+              <S.HeroEyebrow>{content.eyebrow}</S.HeroEyebrow>
+            </motion.div>
+          ) : null}
+
+          {content.title ? (
             <S.HeroTitle>
-              <TitleReveal delay={0.15}>{content.title}</TitleReveal>
+              <TitleReveal delay={0.4}>{content.title}</TitleReveal>
             </S.HeroTitle>
+          ) : null}
+
+          {content.description ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: EASE_LUXE }}
+              transition={{ duration: 0.7, delay: 0.85, ease: EASE_LUXE }}
             >
               <S.HeroDescription>{content.description}</S.HeroDescription>
             </motion.div>
-            <S.HeroNote
+          ) : null}
+
+          {content.note ? (
+            <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.75, ease: EASE_LUXE }}
+              transition={{ duration: 0.7, delay: 1, ease: EASE_LUXE }}
             >
-              <span aria-hidden="true" />
-              <p>{content.note}</p>
-            </S.HeroNote>
-          </S.HeroCopy>
-
-          <S.HeroMedia
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.3, ease: EASE_LUXE }}
-          >
-            <img
-              src={content.image.src}
-              alt={content.image.alt}
-              loading="eager"
-              width="560"
-              height="700"
-            />
-            <span className="hero-frame" aria-hidden="true" />
-          </S.HeroMedia>
-        </S.HeroGrid>
+              <S.HeroNote>
+                <span aria-hidden="true" />
+                <p>{content.note}</p>
+              </S.HeroNote>
+            </motion.div>
+          ) : null}
+        </S.HeroContent>
       </Container>
-      <span className="sr-only">{content.image.credit}</span>
+
+      {content.image.credit ? (
+        <span className="sr-only">{content.image.credit}</span>
+      ) : null}
     </S.HeroRoot>
   )
 }

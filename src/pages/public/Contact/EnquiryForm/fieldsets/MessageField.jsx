@@ -24,6 +24,22 @@ function MessageField({ register, titleId }) {
           {...register('message')}
         />
       </S.Field>
+
+      <S.Field>
+        <S.FieldLabel htmlFor="contact-custom-inquiry">
+          Other Custom Inquiries or Requests
+        </S.FieldLabel>
+        <S.Textarea
+          id="contact-custom-inquiry"
+          placeholder="Anything else you'd like us to know — no detail is too small."
+          aria-describedby="contact-custom-inquiry-hint"
+          {...register('customInquiry')}
+        />
+        <S.HelpText id="contact-custom-inquiry-hint">
+          Have something else in mind? Tell us about your request or any additional
+          details you&apos;d like us to know. This field is optional.
+        </S.HelpText>
+      </S.Field>
     </S.Fieldset>
   )
 }

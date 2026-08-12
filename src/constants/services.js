@@ -613,46 +613,6 @@ export const servicesGallery = Object.freeze({
   ],
 });
 
-export const servicesWhyChooseUs = Object.freeze({
-  subtitle: "The Moments in Blooms Difference",
-  title: "Why discerning hosts choose our studio",
-  description:
-    "We combine a considered eye for detail with reliable, professional delivery — so your hired pieces look beautiful and your celebration runs smoothly.",
-  image: {
-    src: imageUrl(
-      "https://images.unsplash.com/photo-1527529482837-4698179dc6ce",
-      1400,
-    ),
-    alt: "Stylist carefully adjusting a candle on a luxury dinner table",
-  },
-  features: [
-    {
-      number: "01",
-      title: "Uncompromising Floral & Material Quality",
-      description:
-        "We source fresh blooms daily from Victorian growers and select high-grade linens, crystal, and custom props.",
-    },
-    {
-      number: "02",
-      title: "Professional Setup & Styling",
-      description:
-        "Your hired pieces are delivered, set up, and styled on the day, and packed down afterwards — so you can simply enjoy your celebration.",
-    },
-    {
-      number: "03",
-      title: "Curated to Your Celebration",
-      description:
-        "Choose from our decor collections and prize options, and we'll style them to suit your palette, theme, and venue.",
-    },
-    {
-      number: "04",
-      title: "Transparent Investment & Inclusions",
-      description:
-        "Clear, itemized proposals with zero hidden costs. You know exactly what is included at every stage.",
-    },
-  ],
-});
-
 // NOTE: Placeholder testimonials — clearly fictional until the client supplies
 // approved reviews, at which point this becomes dynamic CMS content.
 export const servicesTestimonials = Object.freeze([

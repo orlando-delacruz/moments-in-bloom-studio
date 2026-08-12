@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 export const IntroRoot = styled.section`
@@ -58,7 +59,7 @@ export const IntroCardsWrap = styled.div`
   margin-inline: auto;
 `
 
-export const IntroCards = styled.div`
+export const IntroCards = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing.lg};

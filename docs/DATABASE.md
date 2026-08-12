@@ -399,6 +399,8 @@ Columns
 - venue
 - selected_services
 - message
+- setup_requests
+- custom_inquiry
 - status
 - created_at
 - updated_at

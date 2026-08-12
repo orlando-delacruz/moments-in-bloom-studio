@@ -4,9 +4,11 @@ import {
   guestCountOptions,
 } from '../../../../../constants/contact.js'
 import { todayIsoDate } from '../../../../../utils/validation.js'
+import DatePicker from '../DatePicker/index.js'
+import Dropdown from '../Dropdown/index.js'
 import * as S from '../EnquiryForm.styles.js'
 
-function EventDetails({ register, errors, titleId }) {
+function EventDetails({ register, watch, setValue, errors, titleId }) {
   return (
     <S.Fieldset>
       <legend className="sr-only">Event Details</legend>
@@ -17,31 +19,26 @@ function EventDetails({ register, errors, titleId }) {
 
       <S.FieldRow>
         <S.Field>
-          <S.FieldLabel htmlFor="contact-event-type">
+          <S.FieldLabel as="span">
             Event Type <S.RequiredMark aria-hidden="true">*</S.RequiredMark>
           </S.FieldLabel>
-          <S.Select
+          <Dropdown
             id="contact-event-type"
-            $error={Boolean(errors.eventType)}
-            aria-invalid={Boolean(errors.eventType)}
-            aria-describedby={
+            name="eventType"
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            rules={{ required: 'Please select the type of event.' }}
+            options={eventTypeOptions}
+            placeholder="Select an event type"
+            ariaLabel="Event Type"
+            invalid={Boolean(errors.eventType)}
+            ariaDescribedBy={
               errors.eventType
                 ? 'contact-event-type-error'
                 : 'contact-event-type-hint'
             }
-            {...register('eventType', {
-              required: 'Please select the type of event.',
-            })}
-          >
-            <option value="" disabled hidden>
-              Select an event type
-            </option>
-            {eventTypeOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </S.Select>
+          />
           <S.HelpText id="contact-event-type-hint">
             For anything else, choose Other and tell us more below.
           </S.HelpText>
@@ -54,23 +51,27 @@ function EventDetails({ register, errors, titleId }) {
         </S.Field>
 
         <S.Field>
-          <S.FieldLabel htmlFor="contact-event-date">Event Date</S.FieldLabel>
-          <S.Input
+          <S.FieldLabel as="span">Event Date</S.FieldLabel>
+          <DatePicker
             id="contact-event-date"
-            type="date"
-            $error={Boolean(errors.eventDate)}
-            aria-invalid={Boolean(errors.eventDate)}
-            aria-describedby={
-              errors.eventDate
-                ? 'contact-event-date-error'
-                : 'contact-event-date-hint'
-            }
-            {...register('eventDate', {
+            name="eventDate"
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            rules={{
               validate: (value) =>
                 !value ||
                 value >= todayIsoDate() ||
                 'Please choose today or a later date.',
-            })}
+            }}
+            placeholder="Select a date"
+            ariaLabel="Event Date"
+            invalid={Boolean(errors.eventDate)}
+            ariaDescribedBy={
+              errors.eventDate
+                ? 'contact-event-date-error'
+                : 'contact-event-date-hint'
+            }
           />
           <S.HelpText id="contact-event-date-hint">
             This is an enquiry date, not a booking confirmation.
@@ -86,9 +87,7 @@ function EventDetails({ register, errors, titleId }) {
 
       <S.FieldRow>
         <S.Field>
-          <S.FieldLabel htmlFor="contact-event-location">
-            Event Location / Venue
-          </S.FieldLabel>
+          <S.FieldLabel as="span">Event Location / Venue</S.FieldLabel>
           <S.Input
             id="contact-event-location"
             type="text"
@@ -103,24 +102,18 @@ function EventDetails({ register, errors, titleId }) {
         </S.Field>
 
         <S.Field>
-          <S.FieldLabel htmlFor="contact-guest-count">
-            Approximate Guest Count
-          </S.FieldLabel>
-          <S.Select
+          <S.FieldLabel as="span">Approximate Guest Count</S.FieldLabel>
+          <Dropdown
             id="contact-guest-count"
-            aria-describedby="contact-guest-count-hint"
-            defaultValue=""
-            {...register('guestCount')}
-          >
-            <option value="" disabled hidden>
-              Select a range
-            </option>
-            {guestCountOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </S.Select>
+            name="guestCount"
+            register={register}
+            watch={watch}
+            setValue={setValue}
+            options={guestCountOptions}
+            placeholder="Select a range"
+            ariaLabel="Approximate Guest Count"
+            ariaDescribedBy="contact-guest-count-hint"
+          />
           <S.HelpText id="contact-guest-count-hint">
             A rough idea helps us understand the scale of your celebration.
           </S.HelpText>
