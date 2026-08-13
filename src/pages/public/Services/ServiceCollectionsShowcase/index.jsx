@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 
 import CollectionSelector from "../../../../components/CollectionSelector/index.js";
 import Container from "../../../../components/Container/index.js";
 import Section from "../../../../components/Section/index.js";
+import { serviceCollectionsShowcase } from "../../../../constants/services.js";
 import { SECTION_TONES } from "../../../../constants/ui.js";
 
 import BlissfulNestShowcase from "./BlissfulNestShowcase/BlissfulNestShowcase.jsx";
@@ -11,6 +11,22 @@ import DecorHireCatalogue from "./DecorHireCatalogue/DecorHireCatalogue.jsx";
 import LuxePhotoboothShowcase from "./LuxePhotoboothShowcase/LuxePhotoboothShowcase.jsx";
 
 import * as S from "./ServiceCollectionsShowcase.styles.js";
+
+function CollectionContent({ collection }) {
+  if (collection.id === "decor-hire") {
+    return <DecorHireCatalogue collection={collection} />;
+  }
+
+  if (collection.id === "luxe-photobooth") {
+    return <LuxePhotoboothShowcase collection={collection} />;
+  }
+
+  if (collection.type === "sub-brand") {
+    return <BlissfulNestShowcase collection={collection} />;
+  }
+
+  return null;
+}
 
 function ServiceCollectionsShowcase({ collections = [], id }) {
   const [activeCollectionId, setActiveCollectionId] = useState(
@@ -26,9 +42,9 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
   return (
     <Section
       id={id}
-      subtitle="Client Services"
-      title="Bespoke Collections & Experiences"
-      description="Select a service collection below to explore our decor hire catalogue, premium photobooth experiences, and the Blissful Nest claw machines."
+      subtitle={serviceCollectionsShowcase.subtitle}
+      title={serviceCollectionsShowcase.title}
+      description={serviceCollectionsShowcase.description}
       tone={SECTION_TONES.SURFACE}
     >
       <Container>
@@ -41,53 +57,40 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
             onSelect={setActiveCollectionId}
           />
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCollection.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              id={`collection-panel-${activeCollection.id}`}
+          {collections.map((collection) => (
+            <S.CollectionPanel
+              key={collection.id}
+              id={`collection-panel-${collection.id}`}
               role="tabpanel"
-              aria-labelledby={`collection-tab-${activeCollection.id}`}
+              aria-labelledby={`collection-tab-${collection.id}`}
+              hidden={collection.id !== activeCollection.id}
             >
               <S.ActiveCollectionHero>
                 <S.CollectionHeroContent>
                   <S.CollectionHeroTagline>
-                    {activeCollection.tagline}
+                    {collection.tagline}
                   </S.CollectionHeroTagline>
                   <S.CollectionHeroTitle>
-                    {activeCollection.title}
+                    {collection.title}
                   </S.CollectionHeroTitle>
                   <S.CollectionHeroDesc>
-                    {activeCollection.description}
+                    {collection.description}
                   </S.CollectionHeroDesc>
                 </S.CollectionHeroContent>
                 <S.CollectionHeroImageWrapper>
                   <img
-                    src={activeCollection.coverImage?.src}
+                    src={collection.coverImage?.src}
                     alt={
-                      activeCollection.coverImage?.alt || activeCollection.title
+                      collection.coverImage?.alt || collection.title
                     }
                     loading="lazy"
                   />
                 </S.CollectionHeroImageWrapper>
               </S.ActiveCollectionHero>
 
-              {activeCollection.id === "decor-hire" && (
-                <DecorHireCatalogue collection={activeCollection} />
-              )}
-
-              {activeCollection.id === "luxe-photobooth" && (
-                <LuxePhotoboothShowcase collection={activeCollection} />
-              )}
-
-              {activeCollection.type === "sub-brand" && (
-                <BlissfulNestShowcase collection={activeCollection} />
-              )}
-            </motion.div>
-          </AnimatePresence>
+              <CollectionContent collection={collection} />
+            </S.CollectionPanel>
+          ))}
         </S.ShowcaseSection>
       </Container>
     </Section>

@@ -28,6 +28,8 @@ export const NAVBAR_THEMES = Object.freeze({
   DARK: 'dark',
 })
 
+export const COLLECTION_INSTRUCTION = 'Select a category to explore'
+
 export const NAVBAR_SCROLL_THRESHOLD = 50
 export const BACK_TO_TOP_THRESHOLD = 500
 

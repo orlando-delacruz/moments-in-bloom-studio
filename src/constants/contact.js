@@ -2,7 +2,6 @@ const imageUrl = (source, width = 1600) => `${source}?auto=format&fit=crop&w=${w
 
 export const CONTACT_SECTION_IDS = Object.freeze({
   HERO: 'contact-hero',
-  INTRO: 'contact-intro',
   FORM: 'contact-enquiry-form',
   INFORMATION: 'contact-information',
   CTA: 'contact-cta',
@@ -27,30 +26,6 @@ export const contactHero = Object.freeze({
     alt: 'Elegant event reception styled with tall candles and floral arrangements',
     credit: 'Photo by Secret Garden on Unsplash',
   },
-})
-
-export const enquiryIntro = Object.freeze({
-  eyebrow: 'Before you begin',
-  title: 'A few details, thoughtfully shared.',
-  description:
-    'Whatever the occasion — a wedding, a milestone, a corporate affair — a handful of details helps us understand your celebration and respond with ideas that genuinely fit.',
-  cards: [
-    {
-      number: '01',
-      title: 'Event Decor Hire',
-      description: 'Considered styling and decorative collections for your space.',
-    },
-    {
-      number: '02',
-      title: 'Luxe Photobooth',
-      description: 'A refined photo moment your guests will keep.',
-    },
-    {
-      number: '03',
-      title: 'Blissful Nest',
-      description: 'Beautifully presented claw machines and curated prizes.',
-    },
-  ],
 })
 
 export const eventTypeOptions = Object.freeze([

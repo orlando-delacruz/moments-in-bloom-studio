@@ -6,6 +6,37 @@ export const ShowcaseSection = styled.div`
   gap: clamp(3rem, 6vw, 5rem);
 `;
 
+export const CollectionPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4rem);
+
+  &[hidden] {
+    display: none;
+  }
+
+  @keyframes collection-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &:not([hidden]) {
+    animation: collection-panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:not([hidden]) {
+      animation: none;
+    }
+  }
+`;
+
 export const ActiveCollectionHero = styled.div`
   display: grid;
   grid-template-columns: 1fr;

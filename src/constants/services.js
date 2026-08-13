@@ -454,6 +454,13 @@ export const serviceCollections = Object.freeze([
   },
 ]);
 
+export const serviceCollectionsShowcase = Object.freeze({
+  subtitle: "Explore Our Services",
+  title: "Bespoke Collections & Experiences",
+  description:
+    "Select a service category below to explore our decor hire catalogue, the Luxe Photobooth, and Blissful Nest claw machines.",
+});
+
 export const whatsIncluded = Object.freeze({
   subtitle: "The Standard of Excellence",
   title: "What every service experience includes",
