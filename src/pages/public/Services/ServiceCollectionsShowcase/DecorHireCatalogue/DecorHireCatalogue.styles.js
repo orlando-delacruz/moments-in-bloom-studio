@@ -7,81 +7,6 @@ export const CatalogueSection = styled.div`
   gap: clamp(2.5rem, 5vw, 4rem);
 `;
 
-export const SubcategoryBar = styled.div`
-  background: ${({ theme }) => theme.colors.background};
-  padding: 1.25rem 1.75rem;
-  border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-`;
-
-export const SubcategoryLabel = styled.p`
-  margin: 0 0 0.5rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.textPrimary};
-  font-family: ${({ theme }) => theme.typography.uiFont};
-  font-size: 0.875rem;
-`;
-
-export const SubcategoryNav = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding-bottom: 0.5rem;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-`;
-
-export const SubcategoryPill = styled.button`
-  padding: 0.6rem 1.25rem;
-  border-radius: ${({ theme }) => theme.radii.pill};
-  font-size: 0.875rem;
-  font-weight: 500;
-  border: 1px solid
-    ${({ $isActive, theme }) =>
-      $isActive ? theme.colors.primary : theme.colors.border};
-  background: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.primary : theme.colors.surface};
-  color: ${({ $isActive, theme }) => ($isActive ? theme.colors.surface : "inherit")};
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: ${({ $isActive, theme }) =>
-    $isActive ? theme.shadows.soft : "none"};
-  white-space: nowrap;
-  flex-shrink: 0;
-  min-height: 44px;
-  touch-action: manipulation;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.primaryHover};
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.focus};
-    outline-offset: 2px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: 0.7rem 1.35rem;
-    font-size: 0.9rem;
-  }
-`;
-
 export const CollectionBlock = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.border};
@@ -91,6 +16,31 @@ export const CollectionBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
+
+  &[hidden] {
+    display: none;
+  }
+
+  @keyframes subcategory-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &:not([hidden]) {
+    animation: subcategory-panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:not([hidden]) {
+      animation: none;
+    }
+  }
 `;
 
 export const CollectionHeader = styled.div`
@@ -214,7 +164,7 @@ export const OptionDesc = styled.p`
 
 export const GalleryGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 1.25rem;
 `;
 

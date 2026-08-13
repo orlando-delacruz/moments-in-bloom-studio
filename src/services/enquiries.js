@@ -1,3 +1,4 @@
+import { isEmailConfigured, sendEnquiryEmail } from './email.js'
 import { supabase } from './supabaseClient.js'
 
 const DEMO_STORAGE_KEY = 'mib_demo_public_enquiries'
@@ -138,6 +139,16 @@ async function insertIntoSupabase(payload) {
 
 export async function createEnquiry(values) {
   const payload = toExternal(values)
+
+  if (isEmailConfigured()) {
+    const emailError = await sendEnquiryEmail(values)
+    if (emailError) {
+      return {
+        data: null,
+        error: { message: `${FALLBACK_ERROR_MESSAGE} (${emailError})` },
+      }
+    }
+  }
 
   if (!supabase) {
     return storeDemoEnquiry(payload)

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 
 import Button from "../../../../../components/Button/index.js";
+import SubcategoryNav from "../SubcategoryNav/index.js";
 
 import * as S from "./DecorHireCatalogue.styles.js";
 
@@ -10,36 +11,26 @@ function DecorHireCatalogue({ collection }) {
 
   if (!collection.sections || !collection.sections.length) return null;
 
-  const visibleSections = collection.sections.filter(
-    (section) =>
-      activeSubcategory === "all" || activeSubcategory === section.id,
-  );
-
   return (
     <S.CatalogueSection>
-      <S.SubcategoryBar>
-        <S.SubcategoryLabel>Explore Collections</S.SubcategoryLabel>
-        <S.SubcategoryNav role="tablist" aria-label="Decor Hire Subcategories">
-          <S.SubcategoryPill
-            $isActive={activeSubcategory === "all"}
-            onClick={() => setActiveSubcategory("all")}
-          >
-            All Collections
-          </S.SubcategoryPill>
-          {collection.sections.map((section) => (
-            <S.SubcategoryPill
-              key={section.id}
-              $isActive={activeSubcategory === section.id}
-              onClick={() => setActiveSubcategory(section.id)}
-            >
-              {section.title}
-            </S.SubcategoryPill>
-          ))}
-        </S.SubcategoryNav>
-      </S.SubcategoryBar>
+      <SubcategoryNav
+        sections={collection.sections}
+        activeId={activeSubcategory}
+        onSelect={setActiveSubcategory}
+        ariaLabel="Decor Hire Collections"
+        idPrefix="decor"
+      />
 
-      {visibleSections.map((section) => (
-        <S.CollectionBlock key={section.id}>
+      {collection.sections.map((section) => (
+        <S.CollectionBlock
+          key={section.id}
+          id={`decor-subpanel-${section.id}`}
+          role="tabpanel"
+          aria-labelledby={`decor-subtab-${section.id}`}
+          hidden={
+            activeSubcategory !== "all" && activeSubcategory !== section.id
+          }
+        >
           <S.CollectionHeader>
             <S.CollectionTitle>{section.title}</S.CollectionTitle>
             <S.CollectionSubtitle>{section.subtitle}</S.CollectionSubtitle>
