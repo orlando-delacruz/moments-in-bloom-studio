@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import AdminLayout from '../layout/AdminLayout.jsx'
 import PublicLayout from '../layout/PublicLayout.jsx'
 import { LoadingScreen } from '../components/Loading/index.js'
+import RequireAuth from '../components/RequireAuth/index.js'
 import ScrollToTop from '../components/ScrollToTop/index.js'
 
 const Home = lazy(() => import('../pages/public/Home/Home.jsx'))
@@ -20,6 +21,7 @@ const FAQsCMS = lazy(() => import('../pages/admin/FAQsCMS/FAQsCMS.jsx'))
 const Enquiries = lazy(() => import('../pages/admin/Enquiries/Enquiries.jsx'))
 const SEO = lazy(() => import('../pages/admin/SEO/SEO.jsx'))
 const Settings = lazy(() => import('../pages/admin/Settings/Settings.jsx'))
+const Login = lazy(() => import('../pages/admin/Login/Login.jsx'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound.jsx'))
 
 function AppRoutes() {
@@ -38,7 +40,16 @@ function AppRoutes() {
             <Route path="*" element={<NotFound />} />
           </Route>
 
-          <Route path="admin" element={<AdminLayout />}>
+          <Route path="admin/login" element={<Login />} />
+
+          <Route
+            path="admin"
+            element={
+              <RequireAuth>
+                <AdminLayout />
+              </RequireAuth>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="homepage" element={<HomepageCMS />} />

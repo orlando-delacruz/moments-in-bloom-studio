@@ -5,6 +5,8 @@ export const BUTTON_VARIANTS = Object.freeze({
   GHOST: 'ghost',
   LIGHT: 'light',
   OUTLINE_LIGHT: 'outlineLight',
+  DANGER: 'danger',
+  SUCCESS: 'success',
 })
 
 export const BUTTON_SIZES = Object.freeze({

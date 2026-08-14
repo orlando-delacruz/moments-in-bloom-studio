@@ -9,16 +9,36 @@ export const publicNavigation = Object.freeze([
   { label: 'Contact', path: '/contact', navbarTheme: NAVBAR_THEMES.DARK },
 ])
 
-export const adminNavigation = Object.freeze([
-  { label: 'Dashboard', path: '/admin/dashboard', icon: 'dashboard' },
-  { label: 'Homepage CMS', path: '/admin/homepage', icon: 'homepage' },
-  { label: 'About CMS', path: '/admin/about', icon: 'about' },
-  { label: 'Services CMS', path: '/admin/services', icon: 'services' },
-  { label: 'Gallery CMS', path: '/admin/gallery', icon: 'gallery' },
-  { label: 'FAQs CMS', path: '/admin/faqs', icon: 'faqs' },
-  { label: 'Enquiries', path: '/admin/enquiries', icon: 'enquiries' },
-  { label: 'SEO', path: '/admin/seo', icon: 'seo' },
-  { label: 'Settings', path: '/admin/settings', icon: 'settings' },
+export const adminNavigationGroups = Object.freeze([
+  {
+    id: 'overview',
+    label: 'Overview',
+    items: [{ label: 'Dashboard', path: '/admin/dashboard', icon: 'dashboard' }],
+  },
+  {
+    id: 'content',
+    label: 'Content',
+    items: [
+      { label: 'Homepage', path: '/admin/homepage', icon: 'homepage' },
+      { label: 'About', path: '/admin/about', icon: 'about' },
+      { label: 'Services', path: '/admin/services', icon: 'services' },
+      { label: 'Gallery', path: '/admin/gallery', icon: 'gallery' },
+      { label: 'FAQs', path: '/admin/faqs', icon: 'faqs' },
+    ],
+  },
+  {
+    id: 'business',
+    label: 'Business',
+    items: [{ label: 'Enquiries', path: '/admin/enquiries', icon: 'enquiries' }],
+  },
+  {
+    id: 'system',
+    label: 'System',
+    items: [
+      { label: 'SEO', path: '/admin/seo', icon: 'seo' },
+      { label: 'Settings', path: '/admin/settings', icon: 'settings' },
+    ],
+  },
 ])
 
 export const footerNavigationGroups = Object.freeze([

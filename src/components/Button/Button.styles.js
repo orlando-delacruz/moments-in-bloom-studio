@@ -62,6 +62,26 @@ const variantStyles = {
       background: rgba(245, 240, 232, 0.1);
     }
   `,
+  danger: css`
+    border-color: ${({ theme }) => theme.colors.danger};
+    background: ${({ theme }) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.surface};
+
+    &:hover:not(:disabled) {
+      border-color: #a83a37;
+      background: #a83a37;
+    }
+  `,
+  success: css`
+    border-color: ${({ theme }) => theme.colors.success};
+    background: ${({ theme }) => theme.colors.success};
+    color: ${({ theme }) => theme.colors.surface};
+
+    &:hover:not(:disabled) {
+      border-color: #2f6642;
+      background: #2f6642;
+    }
+  `,
 }
 
 const sizeStyles = {
@@ -125,6 +145,11 @@ export const Button = styled.button`
 
   &:disabled {
     opacity: 0.55;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.focus};
+    outline-offset: 2px;
   }
 `
 

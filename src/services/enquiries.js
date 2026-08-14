@@ -156,3 +156,56 @@ export async function createEnquiry(values) {
 
   return insertIntoSupabase(payload)
 }
+
+export function listDemoEnquiries() {
+  return readDemoQueue()
+}
+
+export async function listEnquiries() {
+  if (!supabase) {
+    const queue = readDemoQueue()
+    const sorted = [...queue].sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at),
+    )
+    return { data: sorted, error: null, demo: true }
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('enquiries')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    if (error) throw error
+    return { data, error: null, demo: false }
+  } catch (error) {
+    return { data: null, error: shapeError(error), demo: false }
+  }
+}
+
+export async function updateEnquiryStatus(id, status) {
+  if (!supabase) {
+    const queue = readDemoQueue()
+    const next = queue.map((record) =>
+      record.id === id
+        ? { ...record, status, updated_at: new Date().toISOString() }
+        : record,
+    )
+    writeDemoQueue(next)
+    return { data: next.find((record) => record.id === id) ?? null, error: null, demo: true }
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('enquiries')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw error
+    return { data, error: null, demo: false }
+  } catch (error) {
+    return { data: null, error: shapeError(error), demo: false }
+  }
+}
