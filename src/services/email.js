@@ -33,9 +33,7 @@ const toTemplateParams = (values) => {
     guestCount: present(values.guestCount),
     services: serviceLabels.length ? serviceLabels.join(', ') : 'Not stated',
     setupRequired: present(values.setupRequired),
-    setupRequests: present(values.setupRequests),
     message: present(values.message),
-    customInquiry: present(values.customInquiry),
   }
 }
 

@@ -44,21 +44,13 @@ const toExternal = (values) => {
     venue: trimToNull(values.venue),
     guest_count: trimToNull(values.guestCount),
     setup_required: trimToNull(values.setupRequired),
-    setup_requests: trimToNull(values.setupRequests),
     message: trimToNull(values.message),
-    custom_inquiry: trimToNull(values.customInquiry),
     status: 'new',
   }
 }
 
 const appendExtrasToMessage = (payload) => {
   const extras = [`Approximate guest count: ${payload.guest_count ?? 'Not stated'}`, `Setup/styling of hired items required: ${payload.setup_required ?? 'Not stated'}`]
-  if (payload.setup_requests) {
-    extras.push(`Other setup & styling requests: ${payload.setup_requests}`)
-  }
-  if (payload.custom_inquiry) {
-    extras.push(`Other custom inquiries or requests: ${payload.custom_inquiry}`)
-  }
   const baseMessage = payload.message ?? ''
   return [...extras, baseMessage].filter(Boolean).join('\n\n')
 }

@@ -71,6 +71,15 @@ const STORAGE_KEY = 'mib_admin_content_v1'
 
 const clone = (value) => JSON.parse(JSON.stringify(value))
 
+const seedCache = {}
+
+export const getSeedContent = (pageKey) => {
+  if (!seedCache[pageKey]) {
+    seedCache[pageKey] = clone(contentSeeds[pageKey] ?? {})
+  }
+  return seedCache[pageKey]
+}
+
 const gallerySeoSeed = Object.freeze({
   title: 'Our Gallery',
   description:
@@ -173,8 +182,6 @@ function writeStored(state) {
     console.warn('[content] storage unavailable', error)
   }
 }
-
-export const getSeedContent = (pageKey) => clone(contentSeeds[pageKey] ?? {})
 
 export const getStoredContent = () => readStored()
 

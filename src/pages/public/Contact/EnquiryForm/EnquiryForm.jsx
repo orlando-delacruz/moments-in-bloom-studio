@@ -12,7 +12,6 @@ import {
 import { footerContact } from '../../../../constants/navigation.js'
 import { createEnquiry } from '../../../../services/enquiries.js'
 import EventDetails from './fieldsets/EventDetails.jsx'
-import MessageField from './fieldsets/MessageField.jsx'
 import PersonalDetails from './fieldsets/PersonalDetails.jsx'
 import RequirementsFieldset from './fieldsets/RequirementsFieldset.jsx'
 import ServiceSelection from './fieldsets/ServiceSelection.jsx'
@@ -39,9 +38,7 @@ const DEFAULT_VALUES = {
   guestCount: '',
   services: [],
   setupRequired: '',
-  setupRequests: '',
   message: '',
-  customInquiry: '',
 }
 
 function EnquiryForm({ content, id }) {
@@ -51,6 +48,7 @@ function EnquiryForm({ content, id }) {
   const successRef = useRef(null)
   const errorRef = useRef(null)
   const activeStep = useRef(0)
+  const submittingRef = useRef(false)
 
   const {
     register,
@@ -104,14 +102,14 @@ function EnquiryForm({ content, id }) {
   const resetEnquiry = () => {
     clearErrors()
     reset(DEFAULT_VALUES)
+    submittingRef.current = false
     setSubmitError(null)
     setStatus('idle')
     setStep(0)
   }
 
   const onSubmit = async (values) => {
-    if (status === 'submitting' || status === 'success') return
-
+    submittingRef.current = true
     setStatus('submitting')
     setSubmitError(null)
 
@@ -131,18 +129,22 @@ function EnquiryForm({ content, id }) {
       venue: values.eventLocation,
       guestCount: values.guestCount,
       setupRequired: values.setupRequired,
-      setupRequests: values.setupRequests,
       message: values.message,
-      customInquiry: values.customInquiry,
     })
 
     if (result.error) {
+      submittingRef.current = false
       setSubmitError(result.error.message)
       setStatus('idle')
       return
     }
 
     setStatus('success')
+  }
+
+  const handleFormSubmit = (event) => {
+    if (submittingRef.current || status === 'success') return
+    handleSubmit(onSubmit)(event)
   }
 
   const handleFormKeyDown = (event) => {
@@ -153,10 +155,9 @@ function EnquiryForm({ content, id }) {
       (target?.tagName === 'INPUT' &&
         !['checkbox', 'radio', 'button', 'submit'].includes(target.type))
     if (!isTextField) return
-    if (step < TOTAL_STEPS - 1) {
-      event.preventDefault()
-      goNext()
-    }
+    if (target?.tagName === 'TEXTAREA' && step >= TOTAL_STEPS - 1) return
+    event.preventDefault()
+    if (step < TOTAL_STEPS - 1) goNext()
   }
 
   return (
@@ -206,9 +207,6 @@ function EnquiryForm({ content, id }) {
                     <Button to="/" variant="primary">
                       Back to the homepage
                     </Button>
-                    <Button to="/gallery" variant="outline">
-                      View the gallery
-                    </Button>
                     <Button variant="ghost" onClick={resetEnquiry}>
                       Send another enquiry
                     </Button>
@@ -217,7 +215,7 @@ function EnquiryForm({ content, id }) {
               ) : (
                 <form
                   noValidate
-                  onSubmit={handleSubmit(onSubmit)}
+                  onSubmit={handleFormSubmit}
                   onKeyDown={handleFormKeyDown}
                 >
                   <StepIndicator currentIndex={step} />
@@ -253,13 +251,6 @@ function EnquiryForm({ content, id }) {
                       errors={errors}
                       watch={watch}
                       titleId="enquiry-step-heading-3"
-                    />
-                  </S.StepPanel>
-
-                  <S.StepPanel hidden={step !== 4} aria-labelledby="enquiry-step-heading-4">
-                    <MessageField
-                      register={register}
-                      titleId="enquiry-step-heading-4"
                     />
                   </S.StepPanel>
 

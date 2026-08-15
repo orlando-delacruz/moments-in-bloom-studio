@@ -3,5 +3,4 @@ export const ENQUIRY_STEPS = Object.freeze([
   { number: '02', label: 'Event Details' },
   { number: '03', label: 'Service Interest' },
   { number: '04', label: 'Setup & Styling' },
-  { number: '05', label: 'Your Event Vision' },
 ])

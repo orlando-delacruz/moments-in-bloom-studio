@@ -53,19 +53,19 @@ function RequirementsFieldset({ register, errors, watch, titleId }) {
       </S.Field>
 
       <S.Field>
-        <S.FieldLabel htmlFor="contact-setup-requests">
-          Other Setup &amp; Styling Requests
+        <S.FieldLabel htmlFor="contact-message">
+          Anything else we should know?
         </S.FieldLabel>
         <S.Textarea
-          id="contact-setup-requests"
-          placeholder="e.g. I'd like the backdrop positioned behind the bridal table, with the florals arranged around the left side. We may also need assistance with setup and pack-down."
-          aria-describedby="contact-setup-requests-hint"
-          {...register('setupRequests')}
+          id="contact-message"
+          placeholder="Describe the mood, colours, or details you have in mind — setup and styling preferences, photobooth or claw machine requests, or anything else the team should know."
+          aria-describedby="contact-message-hint"
+          {...register('message')}
         />
-        <S.HelpText id="contact-setup-requests-hint">
-          Have something specific in mind? Tell us about your preferred setup,
-          styling, placement, access requirements, or anything else you&apos;d like
-          us to know. This field is optional.
+        <S.HelpText id="contact-message-hint">
+          This is your space for everything else — general notes, custom
+          inquiries, or specific setup and styling requests. This field is
+          optional.
         </S.HelpText>
       </S.Field>
     </S.Fieldset>

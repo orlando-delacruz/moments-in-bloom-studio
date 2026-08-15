@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FiAtSign, FiMapPin, FiMenu, FiSliders } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
-import EditorCard from '../../../components/admin/EditorCard/index.js'
+import ContentFormSection from '../../../components/admin/ContentFormSection/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import SaveBar from '../../../components/admin/SaveBar/index.js'
 import { TextAreaField, TextField } from '../../../components/FormField/index.js'
@@ -55,10 +55,10 @@ function Settings() {
       ) : null}
 
       {tab === 'social' ? (
-        <EditorCard
+        <ContentFormSection
           title="Social links"
           description="Links shown in the footer and social buttons across the site."
-          defaultOpen
+          
         >
           <Repeater
             items={values.footerSocialLinks ?? []}
@@ -84,15 +84,15 @@ function Settings() {
               </div>
             )}
           />
-        </EditorCard>
+        </ContentFormSection>
       ) : null}
 
       {tab === 'footer' ? (
         <>
-          <EditorCard
+          <ContentFormSection
             title="Studio contact details"
             description="The phone number, email and location shown in the footer."
-            defaultOpen
+            
           >
             <TextField
               label="Location"
@@ -125,12 +125,12 @@ function Settings() {
                 })
               }
             />
-          </EditorCard>
+          </ContentFormSection>
 
-          <EditorCard
+          <ContentFormSection
             title="Footer navigation"
             description="The link groups listed in the footer columns."
-            defaultOpen
+            
           >
             <Repeater
               items={values.footerGroups ?? []}
@@ -170,7 +170,7 @@ function Settings() {
                 </div>
               )}
             />
-          </EditorCard>
+          </ContentFormSection>
         </>
       ) : null}
 
@@ -191,10 +191,10 @@ function ContactTab({ contact, rail, onChange }) {
 
   return (
     <>
-      <EditorCard
+      <ContentFormSection
         title="Contact section"
         description="The introduction shown on the contact page."
-        defaultOpen
+        
       >
         <TextField
           label="Eyebrow"
@@ -216,12 +216,12 @@ function ContactTab({ contact, rail, onChange }) {
           value={contact?.responseNote ?? ''}
           onChange={(event) => updateContact({ responseNote: event.target.value })}
         />
-      </EditorCard>
+      </ContentFormSection>
 
-      <EditorCard
+      <ContentFormSection
         title="Enquiry form rail"
         description="The 'What happens after you send it?' steps beside the form."
-        defaultOpen
+        
       >
         <TextField
           label="Eyebrow"
@@ -264,7 +264,7 @@ function ContactTab({ contact, rail, onChange }) {
             </div>
           )}
         />
-      </EditorCard>
+      </ContentFormSection>
     </>
   )
 }
@@ -290,15 +290,15 @@ function FormOptionsTab({ values, onChange }) {
 
   return (
     <>
-      <EditorCard
+      <ContentFormSection
         title="Event types"
         description="The event type choices offered in the enquiry form."
-        defaultOpen
+        
       >
         {stringRepeater('Event type', 'eventTypeOptions', 'e.g. Wedding')}
-      </EditorCard>
+      </ContentFormSection>
 
-      <EditorCard
+      <ContentFormSection
         title="Services of interest"
         description="The service options clients can select in the enquiry form."
       >
@@ -323,21 +323,21 @@ function FormOptionsTab({ values, onChange }) {
             </div>
           )}
         />
-      </EditorCard>
+      </ContentFormSection>
 
-      <EditorCard
+      <ContentFormSection
         title="Guest count options"
         description="The guest count choices offered in the enquiry form."
       >
         {stringRepeater('Guest count', 'guestCountOptions', 'e.g. 51–100')}
-      </EditorCard>
+      </ContentFormSection>
 
-      <EditorCard
+      <ContentFormSection
         title="Setup requirement options"
         description="Whether hired items need styling and setup on the day."
       >
         {stringRepeater('Setup option', 'setupRequirementOptions', 'e.g. Yes')}
-      </EditorCard>
+      </ContentFormSection>
     </>
   )
 }

@@ -309,6 +309,10 @@ export const CollectionArrow = styled.span`
     height: 14px;
   }
 
+  svg[data-arrow-icon="mobile"] {
+    display: none;
+  }
+
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: flex;
     position: absolute;
@@ -320,5 +324,13 @@ export const CollectionArrow = styled.span`
     opacity: ${({ $isActive }) => ($isActive ? 1 : 0.55)};
     transition: opacity ${({ theme }) => theme.transitions.standard},
       color ${({ theme }) => theme.transitions.standard};
+
+    svg[data-arrow-icon="desktop"] {
+      display: none;
+    }
+
+    svg[data-arrow-icon="mobile"] {
+      display: block;
+    }
   }
 `;
