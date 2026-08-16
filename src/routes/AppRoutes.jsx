@@ -47,6 +47,8 @@ const SEO = lazy(() => import('../pages/admin/SEO/SEO.jsx'))
 const SeoSectionDetail = lazy(() =>
   import('../pages/admin/SEO/DetailPages.jsx').then((m) => ({ default: m.SeoSectionDetail })))
 const Settings = lazy(() => import('../pages/admin/Settings/Settings.jsx'))
+const SettingsSectionDetail = lazy(() =>
+  import('../pages/admin/Settings/DetailPages.jsx').then((m) => ({ default: m.SettingsSectionDetail })))
 const Login = lazy(() => import('../pages/admin/Login/Login.jsx'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound.jsx'))
 
@@ -124,6 +126,7 @@ const router = createBrowserRouter([
           { path: 'seo', element: <SEO /> },
           { path: 'seo/:sectionKey', element: <SeoSectionDetail /> },
           { path: 'settings', element: <Settings /> },
+          { path: 'settings/:sectionKey', element: <SettingsSectionDetail /> },
           { path: '*', element: <NotFound /> },
         ],
       },

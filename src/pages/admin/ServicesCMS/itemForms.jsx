@@ -1,5 +1,5 @@
 import { FieldRow, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import ToggleSwitch from '../../../components/admin/ToggleSwitch/index.js'
 
@@ -129,8 +129,8 @@ export function BlissfulNestPackageForm({ value, onChange }) {
         addLabel="Add prize"
         placeholder="Premium plush toy"
       />
-      <ImagePicker
-        label="Package image URL"
+      <ImageField
+        label="Package image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />
@@ -159,8 +159,8 @@ export function ServicesGalleryItemForm({ value, onChange }) {
           onChange={(event) => patch({ variant: event.target.value })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Image URL"
+      <ImageField
+        label="Image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -200,8 +200,8 @@ export function ServicesTestimonialForm({ value, onChange }) {
         value={value?.rating ?? 5}
         onChange={(event) => patch({ rating: Number(event.target.value) })}
       />
-      <ImagePicker
-        label="Portrait image URL"
+      <ImageField
+        label="Portrait image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}

@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 
 const GALLERY_SIZES = ['large', 'portrait', 'medium', 'small', 'wide']
@@ -194,8 +194,8 @@ function GalleryItemForm({ value, onChange, errors, values }) {
           options={GALLERY_SIZES}
         />
       </FieldRow>
-      <ImagePicker
-        label="Image URL"
+      <ImageField
+        label="Image"
         value={value?.src ?? ''}
         onChange={(src) => onChange({ ...value, src })}
       />
@@ -261,8 +261,8 @@ function FeaturedStoryForm({ value, onChange, errors }) {
         value={value?.narrative ?? ''}
         onChange={(event) => patch({ narrative: event.target.value })}
       />
-      <ImagePicker
-        label="Cover image URL"
+      <ImageField
+        label="Cover image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />
@@ -273,8 +273,8 @@ function FeaturedStoryForm({ value, onChange, errors }) {
         addLabel="Add gallery image"
         itemTitle={(image, index) => `Gallery image ${index + 1}`}
         renderItem={(image, index, { replace }) => (
-          <ImagePicker
-            label={`Gallery image ${index + 1} URL`}
+          <ImageField
+            label={`Gallery image ${index + 1}`}
             value={image ?? ''}
             onChange={(nextUrl) => replace(nextUrl)}
           />
@@ -307,8 +307,8 @@ function InstagramPostsForm({ value, onChange }) {
       addLabel="Add post"
       itemTitle={(item, index) => `Post ${index + 1}`}
       renderItem={(item, index, { update: patch }) => (
-        <ImagePicker
-          label={`Post ${index + 1} image URL`}
+        <ImageField
+          label={`Post ${index + 1} image`}
           value={item.src ?? ''}
           onChange={(src) => patch({ src })}
         />
@@ -348,8 +348,8 @@ function HeroForm({ value, onChange }) {
           onChange={(event) => patch({ secondaryCTA: event.target.value })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Background image URL"
+      <ImageField
+        label="Background image"
         value={value?.backgroundImage ?? ''}
         onChange={(backgroundImage) => patch({ backgroundImage })}
       />
@@ -429,8 +429,8 @@ function CtaForm({ value, onChange }) {
           onChange={(event) => patch({ secondaryCTA: event.target.value })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Background image URL"
+      <ImageField
+        label="Background image"
         value={value?.backgroundImage ?? ''}
         onChange={(backgroundImage) => patch({ backgroundImage })}
       />

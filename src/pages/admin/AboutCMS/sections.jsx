@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components'
 import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 
 const CORE_VALUE_ICONS = ['FiStar', 'FiAward', 'FiFeather', 'FiHeart', 'FiSparkles', 'FiShield', 'FiGift', 'FiSun']
@@ -190,8 +190,8 @@ function HeroForm({ value, onChange }) {
           onChange={(event) => patch({ secondaryCta: { ...value.secondaryCta, label: event.target.value } })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Hero image URL"
+      <ImageField
+        label="Hero image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -228,8 +228,8 @@ function BrandStoryForm({ value, onChange }) {
           onChange={(event) => patch({ quote: { ...value.quote, role: event.target.value } })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Story image URL"
+      <ImageField
+        label="Story image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -409,8 +409,8 @@ function TestimonialHighlightForm({ value, onChange }) {
           onChange={(event) => patch({ role: event.target.value })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Portrait image URL"
+      <ImageField
+        label="Portrait image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -466,8 +466,8 @@ function SeoForm({ value, onChange }) {
         value={value?.url ?? ''}
         onChange={(event) => patch({ url: event.target.value })}
       />
-      <ImagePicker
-        label="Share image URL"
+      <ImageField
+        label="Share image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />

@@ -52,7 +52,7 @@ const formatDateTime = (isoDate) => {
 }
 
 const toCsv = (rows) => {
-  const header = ['customer_name', 'email', 'phone', 'event_type', 'event_date', 'venue', 'guest_count', 'setup_required', 'selected_services', 'message', 'status', 'created_at']
+  const header = ['customer_name', 'email', 'phone', 'event_type', 'event_date', 'venue', 'guest_count', 'setup_required', 'selected_services', 'custom_inquiry', 'status', 'created_at']
   const escape = (value) => {
     const text = String(value ?? '')
     return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text
@@ -67,6 +67,7 @@ function Enquiries() {
   const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
   const [loadError, setLoadError] = useState(null)
+  const [statusError, setStatusError] = useState(null)
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
 
@@ -106,13 +107,19 @@ function Enquiries() {
   }, [enquiries, filter, search])
 
   const handleStatusChange = async (id, status) => {
+    setStatusError(null)
     const result = await updateEnquiryStatus(id, status)
     if (result.data) {
       setEnquiries((current) =>
         current.map((enquiry) => (enquiry.id === id ? result.data : enquiry)),
       )
       setSelected((current) => (current?.id === id ? result.data : current))
+      return
     }
+    setStatusError(
+      result.error?.message ??
+        "We couldn't update the status. Please try again.",
+    )
   }
 
   const handleExport = () => {
@@ -171,6 +178,7 @@ function Enquiries() {
       </Toolbar>
 
       {loadError ? <LoadError>{loadError}</LoadError> : null}
+      {statusError ? <LoadError>{statusError}</LoadError> : null}
 
       <DataTable
         loading={loading}
@@ -252,7 +260,10 @@ function Enquiries() {
             label="Services of interest"
             value={Array.isArray(selected?.selected_services) ? selected.selected_services.join(', ') : selected?.selected_services}
           />
-          <DetailRow label="Message" value={selected?.message} />
+          <DetailRow
+            label="Anything else we should know?"
+            value={selected?.custom_inquiry}
+          />
           <DetailRow label="Status" value={<StatusBadge status={selected?.status ?? 'new'} />} />
         </DetailGrid>
       </Modal>

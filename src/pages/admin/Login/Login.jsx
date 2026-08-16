@@ -7,6 +7,7 @@ import Button from '../../../components/Button/index.js'
 import { RequiredMark, TextField } from '../../../components/FormField/index.js'
 import { adminLogin } from '../../../constants/admin.js'
 import useAuth from '../../../hooks/useAuth.js'
+import { isSupabaseConfigured } from '../../../services/supabaseClient.js'
 import { EMAIL_PATTERN } from '../../../utils/validation.js'
 import {
   LoginBackLink,
@@ -110,7 +111,11 @@ function Login() {
 
           <LoginDemoNote>
             <FiMail aria-hidden="true" size={15} />
-            <span>{adminLogin.demoHint}</span>
+            <span>
+              {isSupabaseConfigured()
+                ? adminLogin.supabaseHint
+                : adminLogin.demoHint}
+            </span>
           </LoginDemoNote>
         </LoginForm>
 

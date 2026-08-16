@@ -20,6 +20,8 @@ export const adminLogin = Object.freeze({
   submitLabel: 'Sign in',
   loadingLabel: 'Signing in…',
   demoHint: `Demo mode is active. Sign in with ${ADMIN_DEMO_EMAIL} and password ${ADMIN_DEMO_PASSWORD}.`,
+  supabaseHint:
+    'Admin access is managed by Supabase. Sign in with the email and password set up for your admin account.',
   backToSiteLabel: 'Back to the website',
   signOutLabel: 'Sign out',
 })
@@ -104,8 +106,8 @@ export const adminDashboard = Object.freeze({
 export const enquiryStatusLabels = Object.freeze({
   new: 'New',
   contacted: 'Contacted',
-  responded: 'Responded',
-  archived: 'Archived',
+  quoted: 'Quoted',
+  closed: 'Closed',
 })
 
-export const ENQUIRY_STATUSES = Object.freeze(['new', 'contacted', 'responded', 'archived'])
+export const ENQUIRY_STATUSES = Object.freeze(['new', 'contacted', 'quoted', 'closed'])

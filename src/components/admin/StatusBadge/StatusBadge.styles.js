@@ -9,11 +9,11 @@ const statusStyles = {
     background: rgba(165, 137, 116, 0.16);
     color: #6e5745;
   `,
-  responded: `
+  quoted: `
     background: rgba(63, 125, 84, 0.14);
     color: ${({ theme }) => theme.colors.success};
   `,
-  archived: `
+  closed: `
     background: ${({ theme }) => theme.colors.secondary};
     color: ${({ theme }) => theme.colors.textSecondary};
   `,
@@ -30,5 +30,5 @@ export const StatusPill = styled.span`
   letter-spacing: 0.08em;
   text-transform: capitalize;
 
-  ${({ $status }) => statusStyles[$status] ?? statusStyles.archived}
+  ${({ $status }) => statusStyles[$status] ?? statusStyles.closed}
 `

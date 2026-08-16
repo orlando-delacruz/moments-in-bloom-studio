@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 
 function SeoForm({ value, onChange }) {
   const patch = (next) => onChange({ ...value, ...next })
@@ -23,8 +23,8 @@ function SeoForm({ value, onChange }) {
         value={value?.url ?? ''}
         onChange={(event) => patch({ url: event.target.value })}
       />
-      <ImagePicker
-        label="Share image URL"
+      <ImageField
+        label="Share image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />

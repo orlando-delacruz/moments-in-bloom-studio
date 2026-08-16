@@ -5,7 +5,7 @@ import ContentDetailHeader from '../../../components/admin/ContentDetailHeader/i
 import ContentFormSection from '../../../components/admin/ContentFormSection/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
 import { TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import SaveActions from '../../../components/admin/SaveActions/index.js'
 import Toast from '../../../components/admin/Toast/index.js'
@@ -194,8 +194,8 @@ function CollectionSectionDetailPage() {
           value={draft?.featuredItem?.description ?? ''}
           onChange={(event) => patchFeatured({ description: event.target.value })}
         />
-        <ImagePicker
-          label="Featured image URL"
+        <ImageField
+          label="Featured image"
           value={draft?.featuredItem?.image ?? ''}
           onChange={(image) => patchFeatured({ image })}
         />
@@ -229,8 +229,8 @@ function CollectionSectionDetailPage() {
                 value={item.desc ?? ''}
                 onChange={(event) => patchItem({ desc: event.target.value })}
               />
-              <ImagePicker
-                label="Option image URL"
+              <ImageField
+                label="Option image"
                 value={item.image ?? ''}
                 onChange={(image) => patchItem({ image })}
               />
@@ -255,8 +255,8 @@ function CollectionSectionDetailPage() {
                 value={item.title ?? ''}
                 onChange={(event) => patchItem({ title: event.target.value })}
               />
-              <ImagePicker
-                label="Image URL"
+              <ImageField
+                label="Image"
                 value={item.src ?? ''}
                 onChange={(src) => patchItem({ src })}
               />

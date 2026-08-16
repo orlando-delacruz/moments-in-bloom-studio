@@ -41,8 +41,8 @@ Milestone 1 (Foundations) largely complete; Milestone 2 (Public Site) in progres
 - [ ] Site settings screen (contact info, social, default SEO)
 
 ### Milestone 5 — Enquiries
-- [ ] Contact form wired to `enquiries` table
-- [ ] Email notification on new enquiry (Edge Function)
+- [x] Contact form wired to `enquiries` table
+- [x] Email notification on new enquiry (EmailJS)
 - [ ] Admin enquiries list, search, and status
 - [ ] Enquiry notes
 

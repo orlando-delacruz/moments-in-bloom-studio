@@ -47,7 +47,6 @@ export async function sendEnquiryEmail(values) {
     console.warn('[email] sendEnquiryEmail failed', {
       status: error?.status,
       text: error?.text,
-      error,
     })
     return error?.text ?? 'Unknown EmailJS error'
   }

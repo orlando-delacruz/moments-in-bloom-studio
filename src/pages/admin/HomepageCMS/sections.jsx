@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import ToggleSwitch from '../../../components/admin/ToggleSwitch/index.js'
 
@@ -191,8 +191,8 @@ function HeroForm({ value, onChange }) {
           onChange={(event) => patch({ secondaryCta: event.target.value })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Hero image URL"
+      <ImageField
+        label="Hero image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -248,8 +248,8 @@ function ServiceItemForm({ value, onChange, errors }) {
         checked={value?.offset}
         onChange={(offset) => patch({ offset })}
       />
-      <ImagePicker
-        label="Card image URL"
+      <ImageField
+        label="Card image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -271,15 +271,15 @@ function GalleryPreviewItemForm({ value, onChange, errors }) {
         onChange={(event) => patch({ variant: event.target.value })}
         options={GALLERY_VARIANTS}
       />
-      <ImagePicker
-        label="Image URL"
+      <ImageField
+        label="Image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
         onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
         credit={value?.image?.credit ?? ''}
         onCreditChange={(event) => patch({ image: { ...value.image, credit: event.target.value } })}
-        hint={errors.image}
+        error={errors.image}
       />
     </>
   )
@@ -344,8 +344,8 @@ function TestimonialItemForm({ value, onChange, errors }) {
         value={value?.location ?? ''}
         onChange={(event) => patch({ location: event.target.value })}
       />
-      <ImagePicker
-        label="Portrait image URL"
+      <ImageField
+        label="Portrait image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -364,8 +364,8 @@ function InstagramItemsForm({ value, onChange }) {
       addLabel="Add image"
       itemTitle={(item, index) => item.image?.alt?.slice(0, 40) || `Image ${index + 1}`}
       renderItem={(item, index, { update: patch }) => (
-        <ImagePicker
-          label="Image URL"
+        <ImageField
+          label="Image"
           value={item.image?.src ?? ''}
           onChange={(src) => patch({ image: { ...item.image, src } })}
           alt={item.image?.alt ?? ''}
@@ -433,8 +433,8 @@ function SeoForm({ value, onChange }) {
         value={value?.url ?? ''}
         onChange={(event) => patch({ url: event.target.value })}
       />
-      <ImagePicker
-        label="Share image URL"
+      <ImageField
+        label="Share image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />

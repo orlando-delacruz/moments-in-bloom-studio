@@ -1,9 +1,34 @@
-import { useCallback, useMemo, useState } from 'react'
-import { getSession, signIn as signInService, signOut as signOutService } from '../services/auth.js'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  getSession,
+  getSupabaseSession,
+  signIn as signInService,
+  signOut as signOutService,
+  subscribeToAuthChanges,
+} from '../services/auth.js'
+import { isSupabaseConfigured } from '../services/supabaseClient.js'
 import { AuthContext } from './AuthContext.jsx'
 
 function AuthProvider({ children }) {
   const [session, setSession] = useState(() => getSession())
+
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return undefined
+
+    let mounted = true
+    getSupabaseSession().then(({ session: nextSession }) => {
+      if (mounted) setSession(nextSession)
+    })
+
+    const unsubscribe = subscribeToAuthChanges((nextSession) => {
+      if (mounted) setSession(nextSession)
+    })
+
+    return () => {
+      mounted = false
+      unsubscribe()
+    }
+  }, [])
 
   const signIn = useCallback(async (email, password) => {
     const result = await signInService(email, password)

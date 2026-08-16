@@ -1,17 +1,21 @@
-import { isEmailConfigured, sendEnquiryEmail } from './email.js'
-import { supabase } from './supabaseClient.js'
+import { publicSupabase, supabase } from './supabaseClient.js'
+import { sendEnquiryEmail } from './email.js'
 
 const DEMO_STORAGE_KEY = 'mib_demo_public_enquiries'
 
-const DOCUMENTED_COLUMNS = [
+/** Canonical enquiries table columns — keep in sync with the Supabase migration. */
+export const DOCUMENTED_COLUMNS = [
   'customer_name',
   'email',
   'phone',
   'event_date',
   'event_type',
   'venue',
+  'guest_count',
   'selected_services',
-  'message',
+  'setup_required',
+  'setup_requests',
+  'custom_inquiry',
   'status',
 ]
 
@@ -19,7 +23,7 @@ const FALLBACK_ERROR_MESSAGE =
   "We couldn't send your enquiry just yet. Please try again or contact us directly."
 
 const shapeError = (error) => {
-  console.error('[enquiries] createEnquiry failed', error)
+  console.error('[enquiries] operation failed', error)
   return { message: FALLBACK_ERROR_MESSAGE }
 }
 
@@ -44,15 +48,8 @@ const toExternal = (values) => {
     venue: trimToNull(values.venue),
     guest_count: trimToNull(values.guestCount),
     setup_required: trimToNull(values.setupRequired),
-    message: trimToNull(values.message),
-    status: 'new',
+    custom_inquiry: trimToNull(values.message),
   }
-}
-
-const appendExtrasToMessage = (payload) => {
-  const extras = [`Approximate guest count: ${payload.guest_count ?? 'Not stated'}`, `Setup/styling of hired items required: ${payload.setup_required ?? 'Not stated'}`]
-  const baseMessage = payload.message ?? ''
-  return [...extras, baseMessage].filter(Boolean).join('\n\n')
 }
 
 function readDemoQueue() {
@@ -76,6 +73,7 @@ function writeDemoQueue(queue) {
 function storeDemoEnquiry(payload) {
   const record = {
     id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+    status: 'new',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     ...payload,
@@ -94,37 +92,11 @@ function storeDemoEnquiry(payload) {
 
 async function insertIntoSupabase(payload) {
   try {
-    const { data, error } = await supabase
-      .from('enquiries')
-      .insert(payload)
-      .select()
-      .single()
+    const { error } = await publicSupabase.from('enquiries').insert(payload)
 
     if (error) throw error
-    return { data, error: null, demo: false }
+    return { data: null, error: null, demo: false }
   } catch (error) {
-    const isMissingColumn = error?.code === '42703'
-
-    if (isMissingColumn) {
-      const fallback = Object.fromEntries(
-        DOCUMENTED_COLUMNS.map((column) => [column, payload[column]]),
-      )
-      fallback.message = appendExtrasToMessage(payload)
-
-      try {
-        const { data, error: retryError } = await supabase
-          .from('enquiries')
-          .insert(fallback)
-          .select()
-          .single()
-
-        if (retryError) throw retryError
-        return { data, error: null, demo: false }
-      } catch (retryError) {
-        return { data: null, error: shapeError(retryError), demo: false }
-      }
-    }
-
     return { data: null, error: shapeError(error), demo: false }
   }
 }
@@ -132,21 +104,18 @@ async function insertIntoSupabase(payload) {
 export async function createEnquiry(values) {
   const payload = toExternal(values)
 
-  if (isEmailConfigured()) {
+  const result = supabase
+    ? await insertIntoSupabase(payload)
+    : storeDemoEnquiry(payload)
+
+  if (!result.error) {
     const emailError = await sendEnquiryEmail(values)
     if (emailError) {
-      return {
-        data: null,
-        error: { message: `${FALLBACK_ERROR_MESSAGE} (${emailError})` },
-      }
+      console.warn('[enquiries] notification email failed', emailError)
     }
   }
 
-  if (!supabase) {
-    return storeDemoEnquiry(payload)
-  }
-
-  return insertIntoSupabase(payload)
+  return result
 }
 
 export function listDemoEnquiries() {
@@ -167,6 +136,26 @@ export async function listEnquiries() {
       .from('enquiries')
       .select('*')
       .order('created_at', { ascending: false })
+
+    if (error) throw error
+    return { data, error: null, demo: false }
+  } catch (error) {
+    return { data: null, error: shapeError(error), demo: false }
+  }
+}
+
+export async function getEnquiry(id) {
+  if (!supabase) {
+    const record = readDemoQueue().find((entry) => entry.id === id) ?? null
+    return { data: record, error: null, demo: true }
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('enquiries')
+      .select('*')
+      .eq('id', id)
+      .maybeSingle()
 
     if (error) throw error
     return { data, error: null, demo: false }

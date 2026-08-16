@@ -390,27 +390,31 @@ Stores enquiries submitted from the website.
 
 Columns
 
-- id
-- customer_name
-- email
-- phone
-- event_date
-- event_type
-- venue
-- selected_services
-- message
-- setup_requests
-- custom_inquiry
-- status
-- created_at
-- updated_at
+- id — uuid, primary key, default gen_random_uuid()
+- customer_name — text, required
+- email — text, required
+- phone — text
+- event_date — date
+- event_type — text, required
+- venue — text
+- guest_count — text
+- selected_services — text[], required (human-readable labels)
+- setup_required — text, required (Yes / No / Not sure yet)
+- setup_requests — text (reserved for dedicated setup/styling requests)
+- custom_inquiry — text (the "Anything else we should know?" field)
+- status — text, default 'new'
+- created_at — timestamptz, default now()
+- updated_at — timestamptz, default now() (kept current by trigger)
 
 Status
 
-- New
+- New — default, set automatically on insert; never set by the public form
 - Contacted
 - Quoted
 - Closed
+
+Status is admin-only. A BEFORE INSERT trigger forces status = 'new'
+regardless of what the client sends.
 
 ---
 
@@ -533,7 +537,8 @@ Unique
 Indexes
 
 - enquiries.status
-- enquiries.created_at
+- enquiries.created_at (descending — newest first)
+- enquiries.event_date
 - service_items.display_order
 - gallery_items.display_order
 - enquiry_notes.enquiry_id
@@ -558,6 +563,24 @@ Public users may only read published content.
 
 Public users may submit enquiries.
 
+Public enquiry submissions are INSERT-only:
+
+- anon can INSERT into enquiries (table-level grant only — never column-level,
+  which makes RLS unable to evaluate the policy against columns the role has
+  no privilege on; the insert policy's WITH CHECK is `status = 'new'`, and
+  required-field integrity is enforced by the table's NOT NULL constraints,
+  the status CHECK constraint and the blank-name/email checks)
+- anon SELECT/UPDATE/DELETE privileges are explicitly revoked (defense in
+  depth — even without RLS, anon could not read the table)
+- a BEFORE INSERT trigger forces status = 'new' and the column defaults to
+  'new'; the client does NOT send status at all — anon can never set a status
+- anon can NEVER select, update or delete enquiries
+- because anon has no SELECT policy, the client must never request the
+  inserted row back (`.select()` / `Prefer: return=representation`) —
+  PostgreSQL raises 42501 on the RETURNING leg even though the insert
+  itself is allowed. `createEnquiry` performs a plain insert for this
+  reason.
+
 Authenticated administrators may:
 
 - Create
@@ -565,6 +588,11 @@ Authenticated administrators may:
 - Publish
 - Hide
 - Archive
+
+For enquiries specifically, authenticated admins may SELECT and UPDATE
+(including status). The current policies scope to the `authenticated` role;
+tighten them (e.g. via a user-roles table) if public accounts are ever
+introduced. See SUPABASE_SETUP.md for the full Phase 1 setup guide.
 
 Only Owner users may manage other users.
 
@@ -614,13 +642,13 @@ These tables will be introduced during future project phases.
 # Checklist
 
 - [x] Database architecture approved
-- [ ] Create Supabase migrations
-- [ ] Implement RLS policies
+- [x] Create Supabase migrations (enquiries — Phase 1)
+- [x] Implement RLS policies (enquiries — Phase 1)
 - [ ] Configure Storage Buckets
 - [ ] Seed initial CMS data
-- [ ] Test CRUD operations
+- [ ] Test CRUD operations (enquiries tested in Phase 1; rest pending)
 - [ ] Validate relationships
-- [ ] Test role-based permissions
+- [x] Test role-based permissions (enquiries — Phase 1)
 
 ---
 
@@ -630,5 +658,6 @@ These tables will be introduced during future project phases.
 - CMS.md
 - API.md
 - SECURITY.md
+- SUPABASE_SETUP.md (Phase 1 setup guide: migration, RLS, verification)
 - ROADMAP.md
 - FUTURE_UPGRADES.md

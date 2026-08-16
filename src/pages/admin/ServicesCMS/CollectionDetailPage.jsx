@@ -7,7 +7,7 @@ import ContentFormSection from '../../../components/admin/ContentFormSection/ind
 import ContentList from '../../../components/admin/ContentList/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
 import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import SaveActions from '../../../components/admin/SaveActions/index.js'
 import ToggleSwitch from '../../../components/admin/ToggleSwitch/index.js'
 import Toast from '../../../components/admin/Toast/index.js'
@@ -155,8 +155,8 @@ function CollectionDetailPage() {
           checked={Boolean(collection?.featured)}
           onChange={(checked) => patch({ ...collection, featured: checked })}
         />
-        <ImagePicker
-          label="Cover image URL"
+        <ImageField
+          label="Cover image"
           value={collection?.coverImage?.src ?? ''}
           onChange={(src) => patch({ ...collection, coverImage: { ...collection.coverImage, src } })}
           alt={collection?.coverImage?.alt ?? ''}

@@ -28,7 +28,7 @@ Public-facing architecture (routing, shared components, animation layer) is esta
 - Not a third-party product — it's a set of authenticated admin screens that read/write directly to Supabase tables (see `CMS.md`), keeping the stack simple and cost-free beyond Supabase's own pricing.
 
 **Email**
-- Enquiry notifications are sent via a Supabase Edge Function (or a transactional email provider triggered from one) on new-row insert to the enquiries table, rather than handled client-side.
+- Enquiry notifications are sent from the browser via EmailJS (`src/services/email.js`) as a best-effort step after the enquiry row is saved — a failed send never fails the form.
 
 **SEO**
 - Per-page metadata is stored alongside each content type (e.g., a `seo_title`/`seo_description` pair on pages/services) and rendered via React Helmet Async at request time.
@@ -42,7 +42,7 @@ Public-facing architecture (routing, shared components, animation layer) is esta
 `Public page component → service module (src/services/*) → Supabase client → Postgres (RLS: public read on published content) → response mapped to view model → rendered`
 
 **Data Flow (typical write, e.g., enquiry submission):**
-`Contact form → validation → service module → Supabase insert (RLS: public insert-only on enquiries table) → DB trigger/Edge Function → email notification → admin dashboard reflects new row on next fetch`
+`Contact form → validation → service module → Supabase insert (RLS: public insert-only on enquiries table) → EmailJS notification (best-effort) → admin dashboard reflects new row on next fetch`
 
 **Folder Structure:** see `README.md` for the full tree; the key architectural boundary is `src/components/public/` vs `src/components/admin/`, which must never share business logic directly — shared concerns (formatting, validation) live in `src/utils/`, shared visual primitives in `src/components/ui/`.
 
@@ -55,7 +55,7 @@ Public-facing architecture (routing, shared components, animation layer) is esta
 - [x] Public/admin route separation established
 - [x] Shared animation architecture established
 - [ ] `src/services/` layer implemented for all Supabase-backed tables
-- [ ] Edge Function for enquiry email notification implemented
+- [x] EmailJS notification on new enquiry implemented (`src/services/email.js`)
 - [ ] Code-splitting confirmed for `/admin/*` bundle
 
 ## Future Improvements

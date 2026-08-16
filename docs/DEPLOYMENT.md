@@ -24,6 +24,9 @@ Required at build/runtime:
 |---|---|
 | `VITE_SUPABASE_URL` | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase public anon key (safe for client exposure; protected by RLS) |
+| `VITE_EMAILJS_PUBLIC_KEY` | EmailJS public key (Account → API Keys) — needed for enquiry email notifications |
+| `VITE_EMAILJS_SERVICE_ID` | EmailJS service ID (Email Services) |
+| `VITE_EMAILJS_TEMPLATE_ID` | EmailJS template ID (Email Templates) |
 
 These are configured in the hosting provider's environment variable settings for production, and in a local `.env` (git-ignored) for development — see `ENVIRONMENT_SETUP.md`.
 

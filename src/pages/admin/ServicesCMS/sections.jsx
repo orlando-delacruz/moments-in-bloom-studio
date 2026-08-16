@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components'
 import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
-import ImagePicker from '../../../components/admin/ImagePicker/index.js'
+import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import {
   BlissfulNestPackageForm,
@@ -293,8 +293,8 @@ function HeroForm({ value, onChange }) {
           onChange={(event) => patch({ badge: { ...value.badge, subtitle: event.target.value } })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Hero image URL"
+      <ImageField
+        label="Hero image"
         value={value?.image?.src ?? ''}
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
@@ -349,15 +349,15 @@ function IntroForm({ value, onChange }) {
           onChange={(event) => patch({ quote: { ...value.quote, role: event.target.value } })}
         />
       </FieldRow>
-      <ImagePicker
-        label="Primary image URL"
+      <ImageField
+        label="Primary image"
         value={value?.primaryImage?.src ?? ''}
         onChange={(src) => patch({ primaryImage: { ...value.primaryImage, src } })}
         alt={value?.primaryImage?.alt ?? ''}
         onAltChange={(event) => patch({ primaryImage: { ...value.primaryImage, alt: event.target.value } })}
       />
-      <ImagePicker
-        label="Secondary image URL"
+      <ImageField
+        label="Secondary image"
         value={value?.secondaryImage?.src ?? ''}
         onChange={(src) => patch({ secondaryImage: { ...value.secondaryImage, src } })}
         alt={value?.secondaryImage?.alt ?? ''}
@@ -386,8 +386,8 @@ function HighlightsForm({ value, onChange }) {
         value={value?.[key]?.description ?? ''}
         onChange={(event) => patch({ [key]: { ...value[key], description: event.target.value } })}
       />
-      <ImagePicker
-        label="Image URL"
+      <ImageField
+        label="Image"
         value={value?.[key]?.image?.src ?? ''}
         onChange={(src) => patch({ [key]: { ...value[key], image: { ...value[key]?.image, src } } })}
         alt={value?.[key]?.image?.alt ?? ''}
@@ -617,8 +617,8 @@ function SeoForm({ value, onChange }) {
         value={value?.url ?? ''}
         onChange={(event) => patch({ url: event.target.value })}
       />
-      <ImagePicker
-        label="Share image URL"
+      <ImageField
+        label="Share image"
         value={value?.image ?? ''}
         onChange={(image) => patch({ image })}
       />
