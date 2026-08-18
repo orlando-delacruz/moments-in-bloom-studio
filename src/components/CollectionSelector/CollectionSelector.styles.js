@@ -145,11 +145,6 @@ export const CollectionItem = styled.button`
         $isActive ? theme.colors.primary : theme.colors.blushSoft};
     }
 
-    &:hover [data-arrow] {
-      opacity: ${({ $isActive }) => ($isActive ? 1 : 0.55)};
-      transform: translateY(-50%);
-    }
-
     &:focus-visible {
       outline: 2px solid
         ${({ $isActive, theme }) =>
@@ -229,7 +224,6 @@ export const CollectionTextGroup = styled.span`
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     gap: 0.3rem;
     padding: 0;
-    padding-right: 2.25rem;
     background: transparent;
     border-radius: 0;
     box-shadow: none;
@@ -309,28 +303,7 @@ export const CollectionArrow = styled.span`
     height: 14px;
   }
 
-  svg[data-arrow-icon="mobile"] {
-    display: none;
-  }
-
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    right: 1.1rem;
-    transform: translateY(-50%);
-    color: ${({ $isActive, theme }) =>
-      $isActive ? theme.colors.gold : theme.colors.textSecondary};
-    opacity: ${({ $isActive }) => ($isActive ? 1 : 0.55)};
-    transition: opacity ${({ theme }) => theme.transitions.standard},
-      color ${({ theme }) => theme.transitions.standard};
-
-    svg[data-arrow-icon="desktop"] {
-      display: none;
-    }
-
-    svg[data-arrow-icon="mobile"] {
-      display: block;
-    }
+    display: none;
   }
 `;

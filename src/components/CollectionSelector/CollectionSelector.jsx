@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { FiArrowDown, FiArrowRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import { MotionConfig } from "framer-motion";
 import { COLLECTION_INSTRUCTION } from "../../constants/ui.js";
 import {
@@ -100,8 +100,7 @@ function CollectionSelector({
                   data-arrow
                   aria-hidden="true"
                 >
-                  <FiArrowRight data-arrow-icon="desktop" />
-                  <FiArrowDown data-arrow-icon="mobile" />
+                  <FiArrowRight />
                 </CollectionArrow>
               </CollectionItem>
             );
