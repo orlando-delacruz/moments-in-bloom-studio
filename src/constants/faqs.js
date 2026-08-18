@@ -209,6 +209,31 @@ export const faqItems = Object.freeze([
   },
 ])
 
+export const faqPageContent = Object.freeze({
+  section: Object.freeze({
+    eyebrow: 'Browse by topic',
+    title: 'Find the answer you need.',
+    description:
+      'Choose a category to see the questions couples and hosts ask most often before they book.',
+  }),
+  hero: Object.freeze({
+    eyebrow: 'Frequently Asked Questions',
+    title: 'Everything you need to know.',
+    description:
+      'Answers about services, styling, planning, travel and the journey from first enquiry to your final celebration.',
+  }),
+  cta: Object.freeze({
+    eyebrow: 'Still have questions?',
+    title: "Let's talk about your celebration.",
+    description:
+      'If you cannot find the answer you are looking for, our team is happy to help with anything specific to your date, venue or vision.',
+    primaryLabel: 'Enquire Now',
+    primaryUrl: '/contact',
+    secondaryLabel: 'Explore Services',
+    secondaryUrl: '/services',
+  }),
+})
+
 export const getActiveFaqs = () => faqItems.filter((item) => item.active)
 
 export const getFaqsByCategory = (categoryId) =>

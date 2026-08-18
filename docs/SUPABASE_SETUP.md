@@ -1,7 +1,8 @@
-# Supabase Setup — Phase 1 (Enquiries)
+# Supabase Setup — Phase 1 (Enquiries + FAQ CMS)
 
 This guide walks through configuring Supabase for the Moments in Blooms
-enquiry system. It assumes you have never opened the Supabase dashboard.
+enquiry system and CMS-driven FAQ content. It assumes you have never opened
+the Supabase dashboard.
 
 Everything below is manual, browser-based setup — no Supabase CLI required.
 
@@ -35,24 +36,32 @@ Everything below is manual, browser-based setup — no Supabase CLI required.
 
 ---
 
-## 3. Run the migration
+## 3. Run the migrations
 
-The migration file lives at:
+The migration files live at:
 
 ```
 supabase/migrations/20260816000000_create_enquiries.sql
+supabase/migrations/20260816000001_create_faqs.sql
 ```
 
 1. Open the **SQL Editor** in the Supabase dashboard (sidebar → SQL Editor).
 2. Click **New query**.
-3. Paste the entire contents of the migration file.
+3. Paste the entire contents of the first migration file.
 4. Click **Run**.
+5. Repeat for the second migration file.
 
-The script creates the `enquiries` table, its indexes, the `updated_at`
-trigger, the status guard trigger, enables RLS, and creates the policies.
+The enquiries script creates the `enquiries` table, its indexes, the
+`updated_at` trigger, the status guard trigger, enables RLS, and creates
+the policies.
 
-The script is **safe to re-run** — every statement is idempotent, and
-re-running it repairs any broken RLS/privilege state (including the
+The FAQ script creates `faq_categories`, `faqs` and the single-row
+`faq_page` table (hero + CTA copy), enables RLS, creates the policies and
+seeds the initial categories, questions and page copy (seed only runs when
+the tables are empty, so it never overwrites client edits).
+
+Both scripts are **safe to re-run** — every statement is idempotent, and
+re-running them repairs any broken RLS/privilege state (including the
 42501 insert error below) instead of failing partway.
 
 ---
@@ -79,11 +88,54 @@ re-running it repairs any broken RLS/privilege state (including the
    - `Public can submit enquiries` — INSERT to `anon`
    - `Admins can view enquiries` — SELECT to `authenticated`
    - `Admins can update enquiries` — UPDATE to `authenticated`
+   - `Admins can delete enquiries` — DELETE to `authenticated`
 3. There must be NO policy that lets `anon` select, update or delete.
+
+4. Repeat for `faq_categories`, `faqs` and `faq_page` — each must show:
+   - Row Level Security: **enabled**
+   - Public read policies (anon SELECT):
+     - `Public can view published FAQ categories` — SELECT to `anon`
+     - `Public can view published FAQs` — SELECT to `anon`
+     - `Public can view FAQ page content` — SELECT to `anon`
+   - Admin policies (authenticated SELECT/INSERT/UPDATE/DELETE per table).
+5. There must be NO policy that lets `anon` insert, update or delete FAQ
+   content (anon write privileges are also revoked at the grant level).
 
 ---
 
-## 6. Test an enquiry
+## 6. Verify the FAQ public flow
+
+1. Run the site locally: `npm run dev` → open `http://localhost:3000/faqs`.
+2. The page should show the seeded hero, category filter (General first),
+   the accordion groups and the CTA.
+3. Sign in at `/admin/login` (real admin account from step 7).
+4. **FAQs → FAQ items** — edit a question or answer and save.
+5. Reload the public `/faqs` page — the change appears immediately (no
+   rebuild/deploy needed; the page reads the database on every load).
+6. Unpublish a FAQ and reload — it disappears from the public page.
+7. Reorder FAQs within a category (up/down arrows) and reload — the public
+   order follows the CMS order.
+8. **FAQ categories** — create a category, publish it, assign FAQs, reload
+   — the filter updates automatically. Deleting a category that still has
+   FAQs asks you to move them to another category first (nothing is
+   orphaned).
+9. **FAQ page content** — change the hero/CTA copy and reload `/faqs` to
+   confirm.
+
+You can also test the raw SQL path (anon-role test of the public read):
+
+```sql
+-- True anon-role test of the public path (runs exactly as the page's client):
+set role anon;
+select id, name, slug from public.faq_categories; -- expected: the categories
+select question from public.faqs;                 -- expected: the questions
+-- anon must NOT see archived/unpublished rows after an admin archives one.
+reset role;
+```
+
+---
+
+## 7. Test an enquiry
 
 1. Run the site locally: `npm run dev` → open `http://localhost:3000/contact`.
 2. Complete the four steps and submit the form.
@@ -128,7 +180,7 @@ reset role;
 
 ---
 
-## 7. Create the admin account
+## 8. Create the admin account
 
 The admin panel signs in with **real Supabase auth** when Supabase is
 configured (demo credentials are only used when `.env` is missing).
@@ -140,7 +192,7 @@ configured (demo credentials are only used when `.env` is missing).
    confirmation link before the first sign-in.
 5. Sign in at `/admin/login` with that email and password.
 
-## 8. Verify in the admin dashboard
+## 9. Verify in the admin dashboard
 
 1. Open `http://localhost:3000/admin/login` and sign in with the admin
    account from step 7.
@@ -208,6 +260,10 @@ placeholder name differs from the list in step 3.
   Run the SQL from step 3.
 - **`42501` / RLS errors:** the migration was partially applied; re-run
   the whole file.
+- **Public `/faqs` page empty or FAQs missing:** the FAQ migration has not
+  been run (or anon RLS policies are missing). Re-run
+  `20260816000001_create_faqs.sql` — it is idempotent and re-seeds only
+  when the tables are empty.
 - **`42501` new row violates row-level security (inserts):** two known
   causes:
   1. **Requesting the inserted row back with `.select()`.** anon has no

@@ -22,6 +22,7 @@ import {
 import {
   faqCategories,
   faqItems,
+  faqPageContent,
 } from '../constants/faqs.js'
 import {
   homepageCta,
@@ -141,6 +142,8 @@ export const contentSeeds = Object.freeze({
   faqs: Object.freeze({
     categories: faqCategories,
     items: faqItems,
+    hero: faqPageContent.hero,
+    cta: faqPageContent.cta,
   }),
   settings: Object.freeze({
     contactInformation,

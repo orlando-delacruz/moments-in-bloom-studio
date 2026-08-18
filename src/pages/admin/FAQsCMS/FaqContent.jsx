@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { FiArrowLeft } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
 import { adminPageMeta } from '../../../constants/admin.js'
 import { fetchFaqPageAdmin, fetchFaqsAdmin } from '../../../services/faqs.js'
 import {
+  FaqBackLink,
   FaqHubAction,
   FaqHubArrow,
   FaqHubCard,
@@ -27,7 +29,7 @@ function FaqHubSummarySlot({ status, children }) {
   return <FaqHubSummary>{children}</FaqHubSummary>
 }
 
-function FAQsCMS() {
+function FaqContent() {
   const [summary, setSummary] = useState(null)
   const [status, setStatus] = useState('loading')
 
@@ -54,39 +56,44 @@ function FAQsCMS() {
   const categoryCount =
     summary?.faqs.categories.filter(isActive).length ?? 0
   const itemCount = summary?.faqs.faqs.filter(isActive).length ?? 0
-  const heroTitle = summary?.page.hero.title
-  const ctaTitle = summary?.page.cta.title
+  const sectionTitle = summary?.page.section.title
 
   const cards = [
     {
-      to: '/admin/faqs/hero',
-      title: 'FAQ Hero',
+      to: '/admin/faqs/content/heading',
+      title: 'Section Heading',
       description:
-        'Manage the hero section displayed at the top of the public FAQ page.',
-      action: 'Manage Hero',
-      summary: heroTitle ? `Currently: ${heroTitle}` : null,
+        'Manage the heading shown above the category filter on the public FAQ page.',
+      action: 'Manage Heading',
+      summary: sectionTitle ? `Currently: ${sectionTitle}` : null,
     },
     {
-      to: '/admin/faqs/content',
-      title: 'FAQ Content',
+      to: '/admin/faqs/content/categories',
+      title: 'FAQ Categories',
       description:
-        'Manage the main FAQ section, including its section heading, categories, and FAQ questions.',
-      action: 'Manage FAQ Content',
-      summary: `${categoryCount} categories · ${itemCount} FAQs`,
+        'Manage the categories used to organise and filter your FAQ questions.',
+      action: 'Manage Categories',
+      summary: `${categoryCount} categor${categoryCount === 1 ? 'y' : 'ies'}`,
     },
     {
-      to: '/admin/faqs/cta',
-      title: 'FAQ CTA',
+      to: '/admin/faqs/content/items',
+      title: 'FAQ Items',
       description:
-        'Manage the call-to-action section displayed at the bottom of the FAQ page.',
-      action: 'Manage CTA',
-      summary: ctaTitle ? `Currently: ${ctaTitle}` : null,
+        'Manage the questions and answers shown within each category.',
+      action: 'Manage FAQ Items',
+      summary: `${itemCount} FAQ${itemCount === 1 ? '' : 's'}`,
     },
   ]
 
   return (
     <FAQsCMSPage>
-      <AdminPageHeader {...adminPageMeta.faqsHub} />
+      <FaqBackLink to="/admin/faqs">
+        <FiArrowLeft aria-hidden="true" size={14} />
+        FAQ Management
+      </FaqBackLink>
+
+      <AdminPageHeader {...adminPageMeta.faqsContent} />
+
       <FaqHubGrid>
         {cards.map((card) => (
           <FaqHubCard key={card.to} to={card.to}>
@@ -108,4 +115,4 @@ function FAQsCMS() {
   )
 }
 
-export default FAQsCMS
+export default FaqContent

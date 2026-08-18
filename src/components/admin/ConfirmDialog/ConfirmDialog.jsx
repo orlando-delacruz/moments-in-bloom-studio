@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { FiAlertTriangle } from 'react-icons/fi'
 import Button from '../../Button/index.js'
 import {
@@ -25,16 +26,36 @@ function ConfirmDialog({
     if (!open) return undefined
 
     const previousActive = document.activeElement
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     cardRef.current?.querySelector('[data-cancel]')?.focus()
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         onCancel?.()
+        return
+      }
+      if (event.key !== 'Tab') return
+      const card = cardRef.current
+      if (!card) return
+      const focusable = card.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      )
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = previousOverflow
       if (previousActive instanceof HTMLElement) {
         previousActive.focus()
       }
@@ -43,7 +64,7 @@ function ConfirmDialog({
 
   if (!open) return null
 
-  return (
+  return createPortal(
     <ConfirmOverlay role="presentation">
       <ConfirmCard
         ref={cardRef}
@@ -68,7 +89,8 @@ function ConfirmDialog({
           </Button>
         </ConfirmActions>
       </ConfirmCard>
-    </ConfirmOverlay>
+    </ConfirmOverlay>,
+    document.body,
   )
 }
 

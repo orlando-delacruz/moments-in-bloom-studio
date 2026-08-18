@@ -7,6 +7,7 @@ export const ConfirmOverlay = styled.div`
   display: grid;
   place-items: center;
   padding: ${({ theme }) => theme.spacing.lg};
+  overflow-y: auto;
   background: rgba(26, 26, 26, 0.45);
   backdrop-filter: blur(4px);
 `
@@ -17,6 +18,7 @@ export const ConfirmCard = styled.div`
   gap: ${({ theme }) => theme.spacing.md};
   width: 100%;
   max-width: 24rem;
+  margin: auto;
   padding: ${({ theme }) => theme.spacing.xl};
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surface};

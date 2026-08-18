@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FiArrowLeft, FiMail } from 'react-icons/fi'
+import { FiArrowLeft, FiEye, FiEyeOff, FiMail } from 'react-icons/fi'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import logoPrimary from '../../../assets/images/logo-old-primary.png'
 import Button from '../../../components/Button/index.js'
-import { RequiredMark, TextField } from '../../../components/FormField/index.js'
+import {
+  ErrorText,
+  Field,
+  FieldLabel,
+  RequiredMark,
+  TextField,
+} from '../../../components/FormField/index.js'
 import { adminLogin } from '../../../constants/admin.js'
 import useAuth from '../../../hooks/useAuth.js'
 import { isSupabaseConfigured } from '../../../services/supabaseClient.js'
@@ -18,8 +24,11 @@ import {
   LoginError,
   LoginEyebrow,
   LoginForm,
+  LoginPasswordInput,
   LoginShell,
   LoginTitle,
+  PasswordFieldWrap,
+  PasswordToggle,
 } from './Login.styles.js'
 
 function Login() {
@@ -28,6 +37,8 @@ function Login() {
   const location = useLocation()
   const [authError, setAuthError] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const passwordId = useId()
 
   const {
     register,
@@ -81,20 +92,38 @@ function Login() {
               pattern: { value: EMAIL_PATTERN, message: 'Please enter a valid email address.' },
             })}
           />
-          <TextField
-            label={
-              <>
-                {adminLogin.passwordLabel}
-                <RequiredMark aria-hidden="true"> *</RequiredMark>
-              </>
-            }
-            type="password"
-            error={errors.password?.message}
-            {...register('password', {
-              required: 'Please enter your password.',
-              minLength: { value: 6, message: 'Your password must be at least 6 characters.' },
-            })}
-          />
+          <Field>
+            <FieldLabel htmlFor={passwordId}>
+              {adminLogin.passwordLabel}
+              <RequiredMark aria-hidden="true"> *</RequiredMark>
+            </FieldLabel>
+            <PasswordFieldWrap>
+              <LoginPasswordInput
+                id={passwordId}
+                type={passwordVisible ? 'text' : 'password'}
+                $error={Boolean(errors.password)}
+                {...register('password', {
+                  required: 'Please enter your password.',
+                  minLength: { value: 6, message: 'Your password must be at least 6 characters.' },
+                })}
+              />
+              <PasswordToggle
+                type="button"
+                aria-label={passwordVisible ? 'Hide password' : 'Show password'}
+                aria-pressed={passwordVisible}
+                onClick={() => setPasswordVisible((visible) => !visible)}
+              >
+                {passwordVisible ? (
+                  <FiEyeOff aria-hidden="true" size={18} />
+                ) : (
+                  <FiEye aria-hidden="true" size={18} />
+                )}
+              </PasswordToggle>
+            </PasswordFieldWrap>
+            {errors.password?.message ? (
+              <ErrorText>{errors.password.message}</ErrorText>
+            ) : null}
+          </Field>
 
           {authError ? <LoginError role="alert">{authError}</LoginError> : null}
 

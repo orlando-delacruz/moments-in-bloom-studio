@@ -10,6 +10,13 @@ export const TopbarShell = styled.header`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   background: ${({ theme }) => theme.surfaces.headerScrolled};
   backdrop-filter: blur(${({ theme }) => theme.effects.headerBlur});
+
+  ${mobileBreak} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 `
 
 export const TopbarContainer = styled.div`
@@ -184,5 +191,11 @@ export const TopbarSignOut = styled.button`
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.focus};
     outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
   }
 `

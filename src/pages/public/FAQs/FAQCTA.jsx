@@ -17,7 +17,7 @@ import {
   CtaTitle,
 } from './FAQCTA.styles.js'
 
-function FAQCTA() {
+function FAQCTA({ cta }) {
   return (
     <CtaRoot>
       <Container>
@@ -28,30 +28,47 @@ function FAQCTA() {
             viewport={VIEWPORT_DEFAULT}
             transition={{ duration: 0.6, ease: EASE_LUXE }}
           >
-            <CtaEyebrow>Still have questions?</CtaEyebrow>
+            <CtaEyebrow>{cta.eyebrow}</CtaEyebrow>
           </motion.div>
           <CtaTitle>
-            <TitleReveal>Let's talk about your celebration.</TitleReveal>
+            <TitleReveal>{cta.title}</TitleReveal>
           </CtaTitle>
           <SafeReveal from={{ y: 24 }} duration={0.6}>
-            <CtaDescription>
-              If you cannot find the answer you are looking for, our team is happy to
-              help with anything specific to your date, venue or vision.
-            </CtaDescription>
+            <CtaDescription>{cta.description}</CtaDescription>
           </SafeReveal>
           <SafeReveal from={{ y: 24 }} duration={0.6} delay={0.15}>
             <CtaActions>
-              <Button as={NavLink} to="/contact" variant={BUTTON_VARIANTS.LIGHT}>
-                Enquire Now
-                <FiArrowRight aria-hidden="true" color="currentColor" size={17} />
-              </Button>
-              <Button
-                as={NavLink}
-                to="/services"
-                variant={BUTTON_VARIANTS.OUTLINE_LIGHT}
-              >
-                Explore Services
-              </Button>
+              {cta.primaryUrl ? (
+                <Button
+                  as={NavLink}
+                  to={cta.primaryUrl}
+                  variant={BUTTON_VARIANTS.LIGHT}
+                >
+                  {cta.primaryLabel}
+                  <FiArrowRight
+                    aria-hidden="true"
+                    color="currentColor"
+                    size={17}
+                  />
+                </Button>
+              ) : (
+                <Button type="button" variant={BUTTON_VARIANTS.LIGHT}>
+                  {cta.primaryLabel}
+                </Button>
+              )}
+              {cta.secondaryUrl ? (
+                <Button
+                  as={NavLink}
+                  to={cta.secondaryUrl}
+                  variant={BUTTON_VARIANTS.OUTLINE_LIGHT}
+                >
+                  {cta.secondaryLabel}
+                </Button>
+              ) : (
+                <Button type="button" variant={BUTTON_VARIANTS.OUTLINE_LIGHT}>
+                  {cta.secondaryLabel}
+                </Button>
+              )}
             </CtaActions>
           </SafeReveal>
         </CtaContent>

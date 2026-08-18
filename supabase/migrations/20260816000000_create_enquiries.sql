@@ -12,6 +12,7 @@
 --   authenticated (admin panel session):
 --     SELECT  → allowed (policy "Admins can view enquiries")
 --     UPDATE  → allowed (policy "Admins can update enquiries")
+--     DELETE  → allowed (policy "Admins can delete enquiries")
 --
 --   `status` is database-controlled: column DEFAULT 'new' plus a BEFORE
 --   INSERT trigger that forces 'new'. The public client never submits it.
@@ -166,6 +167,12 @@ create policy "Admins can update enquiries"
   to authenticated
   using (true)
   with check (true);
+
+create policy "Admins can delete enquiries"
+  on public.enquiries
+  for delete
+  to authenticated
+  using (true);
 
 -- -----------------------------------------------------------------------------
 -- 9. Grants — anon gets INSERT only; anon SELECT/UPDATE/DELETE are revoked

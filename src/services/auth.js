@@ -7,6 +7,7 @@ import {
 
 const DEMO_SIGN_IN_ERROR = 'Invalid email or password. Please try again.'
 const SUPABASE_SIGN_IN_ERROR = 'Invalid email or password. Please try again.'
+const SUPABASE_SIGN_OUT_ERROR = 'We couldn\'t sign you out right now. Please try again.'
 
 const normalizeSupabaseSession = (session) =>
   session?.user
@@ -101,13 +102,15 @@ export async function signOut() {
     } catch (error) {
       console.warn('[auth] session removal failed', error)
     }
-    return
+    return { error: null }
   }
 
   const { error } = await supabase.auth.signOut()
   if (error) {
     console.warn('[auth] signOut failed', error)
+    return { error: { message: SUPABASE_SIGN_OUT_ERROR } }
   }
+  return { error: null }
 }
 
 /**

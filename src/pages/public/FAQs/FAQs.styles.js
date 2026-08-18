@@ -48,3 +48,19 @@ export const FaqContentSection = styled.section`
 `
 
 export const FaqContainer = styled(PageContainer)``
+
+export const FaqErrorBlock = styled.div`
+  display: grid;
+  justify-items: center;
+  gap: ${({ theme }) => theme.spacing.sm};
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+`
+
+export const FaqErrorMessage = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: 0.95rem;
+  line-height: 1.7;
+`

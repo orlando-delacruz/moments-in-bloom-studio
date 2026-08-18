@@ -22,6 +22,9 @@ export const DOCUMENTED_COLUMNS = [
 const FALLBACK_ERROR_MESSAGE =
   "We couldn't send your enquiry just yet. Please try again or contact us directly."
 
+const DELETE_FALLBACK_ERROR_MESSAGE =
+  "We couldn't delete the enquiry. Please try again."
+
 const shapeError = (error) => {
   console.error('[enquiries] operation failed', error)
   return { message: FALLBACK_ERROR_MESSAGE }
@@ -188,5 +191,22 @@ export async function updateEnquiryStatus(id, status) {
     return { data, error: null, demo: false }
   } catch (error) {
     return { data: null, error: shapeError(error), demo: false }
+  }
+}
+
+export async function deleteEnquiry(id) {
+  if (!supabase) {
+    const queue = readDemoQueue()
+    writeDemoQueue(queue.filter((record) => record.id !== id))
+    return { data: { id }, error: null, demo: true }
+  }
+
+  try {
+    const { error } = await supabase.from('enquiries').delete().eq('id', id)
+    if (error) throw error
+    return { data: { id }, error: null, demo: false }
+  } catch (error) {
+    console.error('[enquiries] delete failed', error)
+    return { data: null, error: { message: DELETE_FALLBACK_ERROR_MESSAGE }, demo: false }
   }
 }

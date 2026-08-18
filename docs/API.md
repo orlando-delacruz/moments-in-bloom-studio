@@ -7,7 +7,7 @@ To document how the frontend talks to the backend — there is no custom REST/Gr
 All data access goes through the Supabase JS client, wrapped in per-table service modules under `src/services/`. There is no separately hosted API server; Supabase's auto-generated PostgREST layer, combined with RLS, is the API.
 ## Current Status
 
-Service-module pattern established on prior projects (e.g., `patients.js`, `branches.js`, `appointments.js` conventions); being applied here per the `DATABASE.md` schema as each CMS screen is built. Phase 1 (enquiries) is live: `src/services/enquiries.js` is the only data-access layer for the public contact form and the admin Enquiries module, backed by the Supabase `enquiries` table (see SUPABASE_SETUP.md).
+Service-module pattern established on prior projects (e.g., `patients.js`, `branches.js`, `appointments.js` conventions); being applied here per the `DATABASE.md` schema as each CMS screen is built. Phase 1 (enquiries + FAQ CMS) is live: `src/services/enquiries.js` is the data-access layer for the public contact form and the admin Enquiries module; `src/services/faqs.js` is the single source of truth for the public `/faqs` page and the admin FAQ module (categories, accordion items, hero + CTA copy via the `faq_categories`, `faqs` and `faq_page` tables — see SUPABASE_SETUP.md).
 
 ## Responsibilities
 
@@ -53,7 +53,7 @@ Every service function must throw or return a typed error shape consistently (`{
 ## Checklist
 
 - [x] `supabaseClient.js` initialized with env-based config
-- [x] Service module created per table (`enquiries.js` — Phase 1; `services.js`, `gallery.js`, `faqs.js`, `siteSettings.js` still pending)
+- [x] Service module created per table (`enquiries.js` + `faqs.js` — Phase 1; `services.js`, `gallery.js`, `siteSettings.js` still pending)
 - [x] Consistent error handling pattern applied across service modules (`{ data, error, demo }`, never throws)
 
 ## Future Improvements

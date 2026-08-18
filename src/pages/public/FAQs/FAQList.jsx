@@ -12,6 +12,12 @@ function FAQList({ categories, selected }) {
     ? categories.filter((category) => category.id === selected)
     : categories
 
+  const [lastSelected, setLastSelected] = useState(selected)
+  if (lastSelected !== selected) {
+    setLastSelected(selected)
+    setOpenIds(new Set())
+  }
+
   const handleToggle = useCallback((itemId) => {
     setOpenIds((currentIds) => {
       const nextIds = new Set(currentIds)
@@ -73,7 +79,7 @@ function FAQList({ categories, selected }) {
     <ListRoot>
       {visibleGroups.map((group, groupIndex) => (
         <div key={group.id}>
-          {!isFiltering ? <ListHeading>{group.label}</ListHeading> : null}
+          {!isFiltering ? <ListHeading>{group.name}</ListHeading> : null}
           <ListGroup
             ref={(node) => {
               triggerRefs.current[groupIndex] = node

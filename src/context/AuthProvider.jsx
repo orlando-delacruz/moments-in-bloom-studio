@@ -38,9 +38,12 @@ function AuthProvider({ children }) {
     return result
   }, [])
 
-  const signOut = useCallback(() => {
-    signOutService()
-    setSession(null)
+  const signOut = useCallback(async () => {
+    const result = await signOutService()
+    if (!result.error) {
+      setSession(null)
+    }
+    return result
   }, [])
 
   const value = useMemo(

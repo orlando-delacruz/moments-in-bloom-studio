@@ -1,5 +1,8 @@
+import { useRef, useState } from 'react'
 import { FiExternalLink, FiLogOut, FiMenu } from 'react-icons/fi'
 import { useLocation, useNavigate } from 'react-router-dom'
+import ConfirmDialog from '../admin/ConfirmDialog/index.js'
+import Toast from '../admin/Toast/index.js'
 import { adminLogin } from '../../constants/admin.js'
 import { adminNavigationGroups, routeMetadata } from '../../constants/navigation.js'
 import useAuth from '../../hooks/useAuth.js'
@@ -21,6 +24,10 @@ function Topbar({ onMenuClick, menuOpen = false }) {
   const { session, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
+  const [signOutError, setSignOutError] = useState(null)
+  const errorTimerRef = useRef(null)
 
   const currentGroup = adminNavigationGroups.find((group) =>
     group.items.some(
@@ -35,8 +42,35 @@ function Topbar({ onMenuClick, menuOpen = false }) {
       location.pathname.startsWith(`${item.path}/`),
   )
 
+  const showSignOutError = (message) => {
+    setSignOutError(message)
+    window.clearTimeout(errorTimerRef.current)
+    errorTimerRef.current = window.setTimeout(() => setSignOutError(null), 3200)
+  }
+
   const handleSignOut = () => {
-    signOut()
+    setConfirmOpen(true)
+  }
+
+  const handleCancelSignOut = () => {
+    if (isSigningOut) return
+    setConfirmOpen(false)
+  }
+
+  const handleConfirmSignOut = async () => {
+    if (isSigningOut) return
+    setIsSigningOut(true)
+
+    const result = await signOut()
+    setIsSigningOut(false)
+
+    if (result?.error) {
+      setConfirmOpen(false)
+      showSignOutError(result.error.message)
+      return
+    }
+
+    setConfirmOpen(false)
     navigate('/admin/login', { replace: true })
   }
 
@@ -87,6 +121,8 @@ function Topbar({ onMenuClick, menuOpen = false }) {
           <TopbarSignOut
             type="button"
             onClick={handleSignOut}
+            disabled={isSigningOut}
+            aria-busy={isSigningOut}
             aria-label={adminLogin.signOutLabel}
             title={adminLogin.signOutLabel}
           >
@@ -94,6 +130,18 @@ function Topbar({ onMenuClick, menuOpen = false }) {
           </TopbarSignOut>
         </TopbarActions>
       </TopbarContainer>
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Log out?"
+        description="Are you sure you want to log out of the admin dashboard?"
+        confirmLabel="Yes, Log Out"
+        cancelLabel="Cancel"
+        onConfirm={handleConfirmSignOut}
+        onCancel={handleCancelSignOut}
+      />
+
+      <Toast visible={Boolean(signOutError)} message={signOutError} tone="error" />
     </TopbarShell>
   )
 }

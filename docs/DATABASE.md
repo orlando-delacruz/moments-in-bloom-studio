@@ -368,19 +368,84 @@ Many Images
 
 ---
 
-# faqs
+# faq_categories
 
-Stores Frequently Asked Questions.
+Stores the FAQ category filter shown on the public /faqs page.
 
 Columns
 
-- id
-- question
-- answer
-- display_order
-- is_published
-- created_at
-- updated_at
+- id — uuid, primary key, default gen_random_uuid()
+- name — text, required
+- slug — text, required, unique (used in the category URL)
+- description — text, optional
+- display_order — integer, default 0
+- is_published — boolean, default true
+- created_at — timestamptz, default now()
+- updated_at — timestamptz, default now() (kept current by trigger)
+- deleted_at — timestamptz (soft delete)
+
+Relationship
+
+One Category
+
+↓
+
+Many FAQs
+
+---
+
+# faqs
+
+Stores Frequently Asked Questions (the accordion content on /faqs).
+
+Columns
+
+- id — uuid, primary key, default gen_random_uuid()
+- question — text, required
+- answer — text, required
+- category_id — uuid, required, FK → faq_categories(id), ON UPDATE CASCADE, ON DELETE RESTRICT
+- display_order — integer, default 0 (ordering is per category)
+- is_published — boolean, default true
+- created_at — timestamptz, default now()
+- updated_at — timestamptz, default now() (kept current by trigger)
+- deleted_at — timestamptz (soft delete)
+
+Relationship
+
+One Category
+
+↓
+
+Many FAQs
+
+---
+
+# faq_page
+
+Single-row (id = 1) section heading + hero + call-to-action copy for the
+public /faqs page. This is the CMS source for the FAQ section heading (the
+intro above the category filter), the hero section and the CTA section below
+the accordion. Columns are flat snake_case (section_eyebrow, hero_eyebrow,
+cta_primary_label, ...) and are mapped to `{ section, hero, cta }` objects by
+`src/services/faqs.js`.
+
+Columns
+
+- id — integer, primary key, check (id = 1)
+- section_eyebrow — text, required (default from seed copy)
+- section_title — text, required
+- section_description — text, required
+- hero_eyebrow — text, required
+- hero_title — text, required
+- hero_description — text, required
+- cta_eyebrow — text, required
+- cta_title — text, required
+- cta_description — text, required
+- cta_primary_label — text, required
+- cta_primary_url — text, required (site-relative, e.g. /contact)
+- cta_secondary_label — text, required
+- cta_secondary_url — text, required
+- updated_at — timestamptz, default now() (kept current by trigger)
 
 ---
 
@@ -513,6 +578,12 @@ gallery_albums
 
 gallery_items
 
+faq_categories
+
+↓
+
+faqs
+
 enquiries
 
 ↓
@@ -539,6 +610,11 @@ Indexes
 - enquiries.status
 - enquiries.created_at (descending — newest first)
 - enquiries.event_date
+- faq_categories.display_order
+- faq_categories published filter (partial: where deleted_at is null)
+- faqs.category_id
+- faqs published filter (partial: where deleted_at is null)
+- faqs (category_id, display_order)
 - service_items.display_order
 - gallery_items.display_order
 - enquiry_notes.enquiry_id
@@ -589,8 +665,22 @@ Authenticated administrators may:
 - Hide
 - Archive
 
-For enquiries specifically, authenticated admins may SELECT and UPDATE
-(including status). The current policies scope to the `authenticated` role;
+FAQ content (faq_categories, faqs, faq_page) — implemented in Phase 1:
+
+- anon can SELECT only; the read policy filters to
+  `is_published = true AND deleted_at IS NULL` (plus anon INSERT/UPDATE/DELETE
+  privileges are revoked as defense in depth). The public page reads through
+  the session-less publicSupabase client so it always runs as anon.
+- authenticated admins have full CRUD on all three tables (soft delete via
+  `deleted_at`; the FAQ admin UI never hard-deletes).
+- archiving a category with FAQs assigned is blocked by the app unless the
+  FAQs are first reassigned to another category (never orphaned); the service
+  layer (src/services/faqs.js) enforces this.
+
+For enquiries specifically, authenticated admins may SELECT, UPDATE
+(including status) and DELETE (permanent record removal — there is no
+soft-delete for enquiries; the admin UI always confirms before
+deleting). The current policies scope to the `authenticated` role;
 tighten them (e.g. via a user-roles table) if public accounts are ever
 introduced. See SUPABASE_SETUP.md for the full Phase 1 setup guide.
 
@@ -642,13 +732,13 @@ These tables will be introduced during future project phases.
 # Checklist
 
 - [x] Database architecture approved
-- [x] Create Supabase migrations (enquiries — Phase 1)
-- [x] Implement RLS policies (enquiries — Phase 1)
+- [x] Create Supabase migrations (enquiries + FAQ content — Phase 1)
+- [x] Implement RLS policies (enquiries + FAQ content — Phase 1)
 - [ ] Configure Storage Buckets
-- [ ] Seed initial CMS data
-- [ ] Test CRUD operations (enquiries tested in Phase 1; rest pending)
+- [x] Seed initial CMS data (FAQ seed in the faqs migration; rest pending)
+- [ ] Test CRUD operations (enquiries + FAQ CRUD tested in Phase 1; rest pending)
 - [ ] Validate relationships
-- [x] Test role-based permissions (enquiries — Phase 1)
+- [x] Test role-based permissions (enquiries + FAQ content — Phase 1)
 
 ---
 

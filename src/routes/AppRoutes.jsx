@@ -38,10 +38,18 @@ const GallerySectionDetail = lazy(() =>
 const GalleryItemDetail = lazy(() =>
   import('../pages/admin/GalleryCMS/DetailPages.jsx').then((m) => ({ default: m.GalleryItemDetail })))
 const FAQsCMS = lazy(() => import('../pages/admin/FAQsCMS/FAQsCMS.jsx'))
-const FaqsSectionDetail = lazy(() =>
-  import('../pages/admin/FAQsCMS/DetailPages.jsx').then((m) => ({ default: m.FaqsSectionDetail })))
-const FaqsItemDetail = lazy(() =>
-  import('../pages/admin/FAQsCMS/DetailPages.jsx').then((m) => ({ default: m.FaqsItemDetail })))
+const FaqItemDetail = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqItemDetail.jsx'))
+const FaqCategoryDetail = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqCategoryDetail.jsx'))
+const FaqPageDetail = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqPageDetail.jsx'))
+const FaqContent = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqContent.jsx'))
+const FaqItems = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqItems.jsx'))
+const FaqCategories = lazy(() =>
+  import('../pages/admin/FAQsCMS/FaqCategories.jsx'))
 const Enquiries = lazy(() => import('../pages/admin/Enquiries/Enquiries.jsx'))
 const SEO = lazy(() => import('../pages/admin/SEO/SEO.jsx'))
 const SeoSectionDetail = lazy(() =>
@@ -116,12 +124,35 @@ const router = createBrowserRouter([
           { path: 'gallery/:sectionKey/new', element: <GalleryItemDetail /> },
           { path: 'gallery/:sectionKey/:itemId', element: <GalleryItemDetail /> },
           { path: 'faqs', element: <FAQsCMS /> },
-          { path: 'faqs/items', element: <FAQsCMS /> },
-          { path: 'faqs/items/new', element: <FaqsItemDetail /> },
-          { path: 'faqs/items/:faqId', element: <FaqsItemDetail /> },
-          { path: 'faqs/:sectionKey', element: <FaqsSectionDetail /> },
-          { path: 'faqs/:sectionKey/new', element: <FaqsItemDetail /> },
-          { path: 'faqs/:sectionKey/:itemId', element: <FaqsItemDetail /> },
+          { path: 'faqs/hero', element: <FaqPageDetail section="hero" /> },
+          { path: 'faqs/content', element: <FaqContent /> },
+          {
+            path: 'faqs/content/heading',
+            element: <FaqPageDetail section="heading" />,
+          },
+          {
+            path: 'faqs/content/categories',
+            element: <FaqCategories />,
+          },
+          {
+            path: 'faqs/content/categories/new',
+            element: <FaqCategoryDetail />,
+          },
+          {
+            path: 'faqs/content/categories/:categoryId',
+            element: <FaqCategoryDetail />,
+          },
+          { path: 'faqs/content/items', element: <FaqItems /> },
+          {
+            path: 'faqs/content/items/new',
+            element: <FaqItemDetail />,
+          },
+          {
+            path: 'faqs/content/items/:faqId',
+            element: <FaqItemDetail />,
+          },
+          { path: 'faqs/cta', element: <FaqPageDetail section="cta" /> },
+          { path: 'faqs/page', element: <FaqPageDetail /> },
           { path: 'enquiries', element: <Enquiries /> },
           { path: 'seo', element: <SEO /> },
           { path: 'seo/:sectionKey', element: <SeoSectionDetail /> },

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { Input } from '../../../components/FormField/index.js'
 
 export const LoginShell = styled.main`
   display: grid;
@@ -57,6 +58,40 @@ export const LoginTitle = styled.h1`
 export const LoginForm = styled.form`
   display: grid;
   gap: ${({ theme }) => theme.spacing.lg};
+`
+
+export const PasswordFieldWrap = styled.div`
+  position: relative;
+`
+
+export const LoginPasswordInput = styled(Input)`
+  padding-right: 3rem;
+`
+
+export const PasswordToggle = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem;
+  border: none;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  cursor: pointer;
+  transition: color ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primaryHover};
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.colors.focus};
+    outline-offset: 2px;
+    border-radius: ${({ theme }) => theme.radii.sm};
+  }
 `
 
 export const LoginError = styled.p`

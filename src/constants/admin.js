@@ -63,6 +63,30 @@ export const adminPageMeta = Object.freeze({
     description:
       'Keep your frequently asked questions up to date so enquiries spend less time asking.',
   },
+  faqsHub: {
+    eyebrow: 'Content management',
+    title: 'FAQ Management',
+    description:
+      'Manage the different sections of your public FAQ page — the hero, the questions and the call-to-action.',
+  },
+  faqsContent: {
+    eyebrow: 'FAQs · Content',
+    title: 'FAQ Content',
+    description:
+      'Manage the main FAQ section: the section heading, categories and FAQ questions shown on your public FAQ page.',
+  },
+  faqsCategories: {
+    eyebrow: 'FAQs · FAQ categories',
+    title: 'FAQ Categories',
+    description:
+      'Manage the categories used to organize frequently asked questions on the public website.',
+  },
+  faqsItems: {
+    eyebrow: 'FAQs · FAQ items',
+    title: 'FAQ Items',
+    description:
+      'Manage the questions and answers displayed in the FAQ section of the public website.',
+  },
   enquiries: {
     eyebrow: 'Lead inbox',
     title: 'Enquiries',

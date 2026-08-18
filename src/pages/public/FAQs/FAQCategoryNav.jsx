@@ -60,7 +60,7 @@ function FAQCategoryNav({ categories, selected, onSelect }) {
               onClick={() => onSelect(category.id)}
               onKeyDown={(event) => handleOptionKeyDown(event, index)}
             >
-              <CategoryLabel>{category.label}</CategoryLabel>
+              <CategoryLabel>{category.name}</CategoryLabel>
               <CategoryCount $selected={isSelected}>{category.faqs.length}</CategoryCount>
             </CategoryOption>
           )

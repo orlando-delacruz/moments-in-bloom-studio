@@ -27,23 +27,23 @@ Milestone 1 (Foundations) largely complete; Milestone 2 (Public Site) in progres
 - [ ] Contact section (form UI, pre-Supabase wiring)
 
 ### Milestone 3 — Supabase Backend
-- [ ] Finalize schema per `DATABASE.md`
-- [ ] Write and apply migrations
-- [ ] Implement RLS policies for every table
+- [x] Finalize schema per `DATABASE.md`
+- [x] Write and apply migrations (enquiries + FAQ content)
+- [x] Implement RLS policies (enquiries + FAQ content)
 - [ ] Set up Storage bucket(s) for media
 
 ### Milestone 4 — CMS & Admin Dashboard
-- [ ] `AdminLayout`, `SideBar`, `TopBar`
+- [x] `AdminLayout`, `SideBar`, `TopBar`
 - [ ] Services CMS screen
 - [ ] Gallery CMS screen
-- [ ] FAQs CMS screen
-- [ ] Home/About content editing screens
+- [x] FAQs CMS screen (fully CMS-driven — categories, FAQs, hero/CTA)
+- [ ] Home/About content editing screens (demo-only persistence)
 - [ ] Site settings screen (contact info, social, default SEO)
 
 ### Milestone 5 — Enquiries
 - [x] Contact form wired to `enquiries` table
 - [x] Email notification on new enquiry (EmailJS)
-- [ ] Admin enquiries list, search, and status
+- [x] Admin enquiries list, search, and status (incl. delete)
 - [ ] Enquiry notes
 
 ### Milestone 6 — QA, SEO Pass & Handover

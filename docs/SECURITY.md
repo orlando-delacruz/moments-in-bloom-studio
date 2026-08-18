@@ -22,6 +22,7 @@ Baseline security model defined; RLS policy implementation tracked alongside `DA
 - Enabled on every table, no exceptions.
 - Content tables: public `SELECT` limited to `is_published = true` rows; all writes require an authenticated session.
 - `enquiries`: public `INSERT` only (the contact form); all reads/updates/deletes require authentication.
+- `faq_categories`, `faqs`, `faq_page` (CMS-driven FAQ content): public `SELECT` of published, non-archived rows only; admin full CRUD (soft delete via `deleted_at` — nothing is hard-deleted from the UI).
 - `enquiry_notes`: fully authenticated-only, both read and write.
 
 **Environment Variables**
