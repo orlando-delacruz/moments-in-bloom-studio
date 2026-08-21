@@ -19,6 +19,10 @@ export const SectionShell = styled.section`
     flex-wrap: wrap;
     gap: ${({ theme }) => theme.spacing.sm};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 export const SectionTitle = styled.h3`

@@ -23,6 +23,10 @@ export const ToolbarRow = styled.div`
 
 export const ToolbarFilter = styled.div`
   flex: 0 1 13rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex: 1 1 100%;
+  }
 `
 
 export const ToolbarCount = styled.span`

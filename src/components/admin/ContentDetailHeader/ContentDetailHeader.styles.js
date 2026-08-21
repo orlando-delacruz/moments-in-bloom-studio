@@ -91,5 +91,14 @@ export const HeaderMeta = styled.span`
 export const HeaderActions = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+
+    > * {
+      flex: 1 1 auto;
+    }
+  }
 `

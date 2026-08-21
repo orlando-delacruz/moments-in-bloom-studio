@@ -188,17 +188,19 @@ function FaqCategories() {
           title="FAQ categories"
           description="Groups shown as the filter on the FAQ page. The first category appears selected by default."
           emptyState={
-            <EmptyState
-              icon={<FiHelpCircle aria-hidden="true" />}
-              title="No categories yet"
-              description="Create your first category to organize your questions."
-              action={
-                <Button to="/admin/faqs/content/categories/new" variant="outline">
-                  <FiPlus aria-hidden="true" size={15} />
-                  Add category
-                </Button>
-              }
-            />
+            categories.length === 0 ? (
+              <EmptyState
+                icon={<FiHelpCircle aria-hidden="true" />}
+                title="No categories yet"
+                description="Create your first category to organize your questions."
+                action={
+                  <Button to="/admin/faqs/content/categories/new" variant="outline">
+                    <FiPlus aria-hidden="true" size={15} />
+                    Add category
+                  </Button>
+                }
+              />
+            ) : null
           }
         >
           {[...categories].sort(byOrder).map((category, index, list) => {

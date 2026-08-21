@@ -11,6 +11,8 @@ import {
   aboutWhyChooseUs,
 } from '../constants/about.js'
 import {
+  contactCta,
+  contactHero,
   contactInformation,
   contactSeo,
   enquiryFormRail,
@@ -99,10 +101,8 @@ export const contentSeeds = Object.freeze({
     testimonials: homepageTestimonials,
     instagramItems: homepageInstagramItems,
     cta: homepageCta,
-    seo: homepageSeo,
   }),
   about: Object.freeze({
-    seo: aboutSeo,
     hero: aboutHero,
     brandStory: aboutBrandStory,
     missionVision: aboutMissionVision,
@@ -114,7 +114,6 @@ export const contentSeeds = Object.freeze({
     cta: aboutCta,
   }),
   services: Object.freeze({
-    seo: servicesSeo,
     hero: servicesHero,
     intro: servicesIntro,
     photoboothPackages,
@@ -145,16 +144,22 @@ export const contentSeeds = Object.freeze({
     hero: faqPageContent.hero,
     cta: faqPageContent.cta,
   }),
-  settings: Object.freeze({
-    contactInformation,
+  contact: Object.freeze({
+    hero: contactHero,
+    information: contactInformation,
     enquiryFormRail,
+    cta: contactCta,
+    enquiryFormOptions: Object.freeze({
+      eventTypeOptions,
+      serviceInterestOptions,
+      guestCountOptions,
+      setupRequirementOptions,
+    }),
+  }),
+  settings: Object.freeze({
     footerGroups: footerNavigationGroups,
     footerContact,
     footerSocialLinks,
-    eventTypeOptions,
-    serviceInterestOptions,
-    guestCountOptions,
-    setupRequirementOptions,
   }),
   seo: Object.freeze({
     site: routeMetadata.public,

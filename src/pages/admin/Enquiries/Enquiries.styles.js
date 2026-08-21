@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { adminPulse } from '../../../styles/animations.js'
 import { pageShellStyles } from '../../pageStyles.js'
 
 const mobileBreak = ({ theme }) => `@media (max-width: ${theme.breakpoints.tablet})`
@@ -288,15 +289,5 @@ export const EnquiryCardSkeletonLine = styled.span`
   height: 0.9rem;
   border-radius: ${({ theme }) => theme.radii.sm};
   background: ${({ theme }) => theme.colors.secondary};
-  animation: admin-pulse 1.4s ease-in-out infinite;
-
-  @keyframes admin-pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.45;
-    }
-  }
+  animation: ${adminPulse} 1.4s ease-in-out infinite;
 `

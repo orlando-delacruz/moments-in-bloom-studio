@@ -86,18 +86,26 @@ const variantStyles = {
 
 const sizeStyles = {
   small: css`
-    min-height: ${({ theme }) => theme.controls.tapTarget};
+    min-height: ${({ theme }) => theme.controls.height.sm};
     padding-inline: 1rem;
     font-size: 0.8125rem;
   `,
   medium: css`
-    min-height: ${({ theme }) => theme.controls.tapTarget};
+    min-height: ${({ theme }) => theme.controls.height.md};
     padding-inline: 1.25rem;
   `,
   large: css`
-    min-height: 3.25rem;
+    min-height: ${({ theme }) => theme.controls.height.lg};
     padding-inline: 1.75rem;
   `,
+}
+
+const radiusStyles = {
+  sm: ({ theme }) => theme.radii.sm,
+  md: ({ theme }) => theme.radii.md,
+  lg: ({ theme }) => theme.radii.lg,
+  xl: ({ theme }) => theme.radii.xl,
+  pill: ({ theme }) => theme.radii.pill,
 }
 
 export const Button = styled.button`
@@ -105,10 +113,11 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.xs};
-  min-height: ${({ theme }) => theme.controls.tapTarget};
+  min-height: ${({ theme }) => theme.controls.height.md};
   padding-block: ${({ theme }) => theme.spacing.sm};
   border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.radii.pill};
+  border-radius: ${({ theme, $radius }) =>
+    (radiusStyles[$radius] ?? radiusStyles.pill)({ theme })};
   font-family: ${({ theme }) => theme.typography.uiFont};
   font-size: 0.875rem;
   font-weight: 700;
@@ -148,7 +157,7 @@ export const Button = styled.button`
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.focus};
+    outline: 3px solid ${({ theme }) => theme.colors.focus};
     outline-offset: 2px;
   }
 `

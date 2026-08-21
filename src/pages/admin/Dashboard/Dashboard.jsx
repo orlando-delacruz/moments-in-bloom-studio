@@ -12,6 +12,7 @@ import { isSupabaseConfigured } from '../../../services/supabaseClient.js'
 import { listEnquiries } from '../../../services/enquiries.js'
 import {
   ContentIcon,
+  ContentLabel,
   ContentLink,
   ContentRow,
   ContentStatus,
@@ -24,6 +25,7 @@ import {
   StatBlock,
   StatBlocks,
   StatLabel,
+  StatSkeleton,
   StatValue,
 } from './Dashboard.styles.js'
 
@@ -101,7 +103,7 @@ function Dashboard() {
           return (
             <StatBlock key={block.label}>
               <Icon aria-hidden="true" size={17} />
-              <StatValue>{block.value}</StatValue>
+              <StatValue>{enquiriesLoading ? <StatSkeleton aria-label="Loading" /> : block.value}</StatValue>
               <StatLabel>{block.label}</StatLabel>
             </StatBlock>
           )
@@ -124,7 +126,7 @@ function Dashboard() {
               <ContentLink key={item.path} to={item.path}>
                 <ContentRow>
                   <ContentIcon aria-hidden="true" />
-                  <span>{item.label}</span>
+                  <ContentLabel>{item.label}</ContentLabel>
                   <ContentStatus $tone={status.tone}>{status.label}</ContentStatus>
                   <FiChevronRight aria-hidden="true" size={16} />
                 </ContentRow>
@@ -164,11 +166,9 @@ function Dashboard() {
               />
             }
           />
-          {!enquiriesLoading && enquiries.length > 0 ? (
-            <Button to="/admin/enquiries" variant="ghost">
-              {adminDashboard.viewAllLabel}
-            </Button>
-          ) : null}
+          <Button to="/admin/enquiries" variant="ghost">
+            {adminDashboard.viewAllLabel}
+          </Button>
         </PageSection>
       </PageGrid>
     </DashboardPage>

@@ -58,7 +58,7 @@ export const homepageSections = [
       description: '',
       path: '/services',
       offset: false,
-      image: { src: '', alt: '', credit: '' },
+      image: { src: '', alt: '' },
     }),
     itemTitle: (item) => item.title || 'Untitled service',
     itemDescription: (item) => item.description,
@@ -83,7 +83,7 @@ export const homepageSections = [
     createInitial: () => ({
       id: createGalleryId(),
       variant: 'detail',
-      image: { src: '', alt: '', credit: '' },
+      image: { src: '', alt: '' },
     }),
     itemTitle: (item) => item.image?.alt?.slice(0, 60) || 'Untitled image',
     itemDescription: (item) => `Layout: ${item.variant ?? 'detail'}`,
@@ -151,13 +151,6 @@ export const homepageSections = [
     type: 'object',
     form: CtaForm,
   },
-  {
-    key: 'seo',
-    title: 'Search & sharing',
-    description: 'How this page appears in search results and when shared.',
-    type: 'object',
-    form: SeoForm,
-  },
 ]
 
 function HeroForm({ value, onChange }) {
@@ -197,8 +190,6 @@ function HeroForm({ value, onChange }) {
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
         onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
-        credit={value?.image?.credit ?? ''}
-        onCreditChange={(event) => patch({ image: { ...value.image, credit: event.target.value } })}
       />
     </>
   )
@@ -254,8 +245,6 @@ function ServiceItemForm({ value, onChange, errors }) {
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
         onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
-        credit={value?.image?.credit ?? ''}
-        onCreditChange={(event) => patch({ image: { ...value.image, credit: event.target.value } })}
       />
     </>
   )
@@ -277,8 +266,6 @@ function GalleryPreviewItemForm({ value, onChange, errors }) {
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
         onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
-        credit={value?.image?.credit ?? ''}
-        onCreditChange={(event) => patch({ image: { ...value.image, credit: event.target.value } })}
         error={errors.image}
       />
     </>
@@ -360,7 +347,7 @@ function InstagramItemsForm({ value, onChange }) {
     <Repeater
       items={value ?? []}
       onChange={onChange}
-      createItem={() => ({ id: `insta-${Date.now()}`, image: { src: '', alt: '', credit: '' } })}
+      createItem={() => ({ id: `insta-${Date.now()}`, image: { src: '', alt: '' } })}
       addLabel="Add image"
       itemTitle={(item, index) => item.image?.alt?.slice(0, 40) || `Image ${index + 1}`}
       renderItem={(item, index, { update: patch }) => (
@@ -370,8 +357,6 @@ function InstagramItemsForm({ value, onChange }) {
           onChange={(src) => patch({ image: { ...item.image, src } })}
           alt={item.image?.alt ?? ''}
           onAltChange={(event) => patch({ image: { ...item.image, alt: event.target.value } })}
-          credit={item.image?.credit ?? ''}
-          onCreditChange={(event) => patch({ image: { ...item.image, credit: event.target.value } })}
         />
       )}
     />
@@ -413,31 +398,3 @@ function CtaForm({ value, onChange }) {
   )
 }
 
-function SeoForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
-  return (
-    <>
-      <TextField
-        label="SEO title"
-        value={value?.title ?? ''}
-        onChange={(event) => patch({ title: event.target.value })}
-      />
-      <TextAreaField
-        label="SEO description"
-        value={value?.description ?? ''}
-        onChange={(event) => patch({ description: event.target.value })}
-      />
-      <TextField
-        label="URL"
-        type="url"
-        value={value?.url ?? ''}
-        onChange={(event) => patch({ url: event.target.value })}
-      />
-      <ImageField
-        label="Share image"
-        value={value?.image ?? ''}
-        onChange={(image) => patch({ image })}
-      />
-    </>
-  )
-}

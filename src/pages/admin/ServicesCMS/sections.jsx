@@ -33,13 +33,6 @@ const HighlightBlock = styled.div`
 
 export const servicesSections = [
   {
-    key: 'seo',
-    title: 'Search & sharing',
-    description: 'How this page appears in search results and when shared.',
-    type: 'object',
-    form: SeoForm,
-  },
-  {
     key: 'hero',
     title: 'Hero',
     description: 'The opening of the services page.',
@@ -166,8 +159,12 @@ export const servicesSections = [
       }
       return errors
     },
-    collectionDetail: CollectionDetailPage,
-    collectionSectionDetail: CollectionSectionDetailPage,
+    get collectionDetail() {
+      return CollectionDetailPage
+    },
+    get collectionSectionDetail() {
+      return CollectionSectionDetailPage
+    },
   },
   {
     key: 'whatsIncluded',
@@ -299,8 +296,6 @@ function HeroForm({ value, onChange }) {
         onChange={(src) => patch({ image: { ...value.image, src } })}
         alt={value?.image?.alt ?? ''}
         onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
-        credit={value?.image?.credit ?? ''}
-        onCreditChange={(event) => patch({ image: { ...value.image, credit: event.target.value } })}
       />
     </>
   )
@@ -597,31 +592,3 @@ function CtaForm({ value, onChange }) {
   )
 }
 
-function SeoForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
-  return (
-    <>
-      <TextField
-        label="SEO title"
-        value={value?.title ?? ''}
-        onChange={(event) => patch({ title: event.target.value })}
-      />
-      <TextAreaField
-        label="SEO description"
-        value={value?.description ?? ''}
-        onChange={(event) => patch({ description: event.target.value })}
-      />
-      <TextField
-        label="URL"
-        type="url"
-        value={value?.url ?? ''}
-        onChange={(event) => patch({ url: event.target.value })}
-      />
-      <ImageField
-        label="Share image"
-        value={value?.image ?? ''}
-        onChange={(image) => patch({ image })}
-      />
-    </>
-  )
-}

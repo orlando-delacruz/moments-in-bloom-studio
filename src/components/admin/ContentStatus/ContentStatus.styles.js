@@ -1,33 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const toneStyles = {
-  success: `
-    background: rgba(63, 125, 84, 0.14);
-    color: ${({ theme }) => theme.colors.success};
-  `,
-  muted: `
-    background: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.textSecondary};
-  `,
-  neutral: `
-    background: rgba(165, 137, 116, 0.16);
-    color: ${({ theme }) => theme.colors.taupeText};
-  `,
-  gold: `
-    background: rgba(200, 154, 94, 0.14);
-    color: #8a6626;
-  `,
-  warning: `
-    background: rgba(201, 138, 46, 0.14);
-    color: ${({ theme }) => theme.colors.warning};
-  `,
-  danger: `
-    background: rgba(201, 74, 70, 0.12);
-    color: ${({ theme }) => theme.colors.danger};
-  `,
-}
-
-export const StatusPill = styled.span`
+const statusStyle = css`
   display: inline-flex;
   align-items: center;
   padding: 0.3rem 0.7rem;
@@ -39,5 +12,44 @@ export const StatusPill = styled.span`
   text-transform: capitalize;
   white-space: nowrap;
 
-  ${({ $tone }) => toneStyles[$tone] ?? toneStyles.muted}
+  ${({ theme, $tone }) => {
+    const toneMap = {
+      success: {
+        background: 'rgba(63, 125, 84, 0.14)',
+        color: theme.colors.success,
+      },
+      warning: {
+        background: 'rgba(201, 138, 46, 0.14)',
+        color: theme.colors.warning,
+      },
+      danger: {
+        background: 'rgba(201, 74, 70, 0.12)',
+        color: theme.colors.danger,
+      },
+      info: {
+        background: 'rgba(59, 110, 143, 0.14)',
+        color: theme.colors.info,
+      },
+      neutral: {
+        background: 'rgba(165, 137, 116, 0.16)',
+        color: theme.colors.taupeText,
+      },
+      gold: {
+        background: 'rgba(200, 154, 94, 0.14)',
+        color: '#8a6626',
+      },
+    }
+    const style = toneMap[$tone]
+    if (style) {
+      return css`
+        background: ${style.background};
+        color: ${style.color};
+      `
+    }
+    return ''
+  }}
+`
+
+export const StatusPill = styled.span`
+  ${statusStyle}
 `

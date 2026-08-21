@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { FiAlertTriangle } from 'react-icons/fi'
 import Button from '../../Button/index.js'
@@ -21,6 +21,8 @@ function ConfirmDialog({
   onCancel,
 }) {
   const cardRef = useRef(null)
+  const titleId = useId()
+  const descriptionId = useId()
 
   useEffect(() => {
     if (!open) return undefined
@@ -70,21 +72,21 @@ function ConfirmDialog({
         ref={cardRef}
         role="alertdialog"
         aria-modal="true"
-        aria-labelledby="confirm-title"
-        aria-describedby="confirm-description"
+        aria-labelledby={titleId}
+        aria-describedby={description ? descriptionId : undefined}
       >
         <ConfirmIcon>
           <FiAlertTriangle aria-hidden="true" size={22} />
         </ConfirmIcon>
-        <ConfirmTitle id="confirm-title">{title}</ConfirmTitle>
+        <ConfirmTitle id={titleId}>{title}</ConfirmTitle>
         {description ? (
-          <ConfirmDescription id="confirm-description">{description}</ConfirmDescription>
+          <ConfirmDescription id={descriptionId}>{description}</ConfirmDescription>
         ) : null}
         <ConfirmActions>
-          <Button type="button" variant="outline" onClick={onCancel} data-cancel>
+          <Button type="button" variant="outline" radius="md" onClick={onCancel} data-cancel>
             {cancelLabel}
           </Button>
-          <Button type="button" variant="danger" onClick={onConfirm}>
+          <Button type="button" variant="danger" radius="md" onClick={onConfirm}>
             {confirmLabel}
           </Button>
         </ConfirmActions>

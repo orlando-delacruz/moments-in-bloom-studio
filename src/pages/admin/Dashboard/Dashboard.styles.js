@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { adminPulse } from '../../../styles/animations.js'
 import { pageShellStyles } from '../../pageStyles.js'
 
 export const DashboardPage = styled.div`
@@ -70,6 +71,15 @@ export const StatLabel = styled.span`
   font-size: 0.72rem;
 `
 
+export const StatSkeleton = styled.span`
+  display: block;
+  width: 2.4rem;
+  height: 1.5rem;
+  border-radius: ${({ theme }) => theme.radii.sm};
+  background: ${({ theme }) => theme.colors.border};
+  animation: ${adminPulse} 1.4s ease-in-out infinite;
+`
+
 export const PageGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -125,13 +135,6 @@ export const ContentRow = styled.div`
   transition: border-color ${({ theme }) => theme.transitions.fast},
     background ${({ theme }) => theme.transitions.fast};
 
-  > span:nth-child(2) {
-    flex: 0 0 auto;
-    color: ${({ theme }) => theme.colors.textPrimary};
-    font-weight: 700;
-    font-size: 0.86rem;
-  }
-
   > svg:last-child {
     flex: 0 0 auto;
     color: ${({ theme }) => theme.colors.textSecondary};
@@ -146,6 +149,13 @@ export const ContentRow = styled.div`
       transform: translateX(2px);
     }
   }
+`
+
+export const ContentLabel = styled.span`
+  flex: 0 0 auto;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-weight: 700;
+  font-size: 0.86rem;
 `
 
 export const ContentIcon = styled.span`

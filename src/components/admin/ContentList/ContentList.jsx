@@ -1,6 +1,8 @@
+import { Children } from 'react'
 import { ContentGroupBody, ContentGroupDescription, ContentGroupHeading, ContentGroupShell, ContentGroupTitle } from './ContentList.styles.js'
 
 function ContentList({ title, description, emptyState, children }) {
+  const isEmpty = Children.count(children) === 0
   return (
     <ContentGroupShell>
       {title ? (
@@ -11,7 +13,7 @@ function ContentList({ title, description, emptyState, children }) {
           ) : null}
         </ContentGroupHeading>
       ) : null}
-      {emptyState ? (
+      {emptyState && isEmpty ? (
         emptyState
       ) : (
         <ContentGroupBody>{children}</ContentGroupBody>

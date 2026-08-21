@@ -9,6 +9,11 @@ export const ModalOverlay = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};
   background: rgba(26, 26, 26, 0.45);
   backdrop-filter: blur(4px);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0;
+    align-items: end;
+  }
 `
 
 export const ModalCard = styled.div`
@@ -22,6 +27,13 @@ export const ModalCard = styled.div`
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surface};
   box-shadow: ${({ theme }) => theme.shadows.soft};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-height: 90vh;
+    padding: ${({ theme }) => theme.spacing.lg};
+    border-radius: ${({ theme }) => theme.radii.lg} ${({ theme }) => theme.radii.lg} 0 0;
+    box-shadow: ${({ theme }) => theme.shadows.drawer};
+  }
 `
 
 export const ModalHeader = styled.header`
@@ -66,6 +78,11 @@ export const ModalClose = styled.button`
   &:hover {
     border-color: ${({ theme }) => theme.colors.taupe};
     color: ${({ theme }) => theme.colors.primaryHover};
+  }
+
+  &:focus-visible {
+    outline: 3px solid ${({ theme }) => theme.colors.focus};
+    outline-offset: 2px;
   }
 `
 

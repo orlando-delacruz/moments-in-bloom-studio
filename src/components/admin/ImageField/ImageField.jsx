@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FiEdit3, FiPlus, FiTrash2 } from 'react-icons/fi'
-import { FieldRow, TextField } from '../../FormField/index.js'
+import { TextField } from '../../FormField/index.js'
 import ImageFieldModal from './ImageFieldModal.jsx'
 import {
   ActionBox,
@@ -21,8 +21,6 @@ function ImageField({
   onChange,
   alt,
   onAltChange,
-  credit,
-  onCreditChange,
   error,
   maxSizeMb = 5,
 }) {
@@ -76,21 +74,12 @@ function ImageField({
       {error ? <FieldError role="alert">{error}</FieldError> : null}
 
       {onAltChange ? (
-        <FieldRow>
-          <TextField
-            label="Alt text"
-            value={alt ?? ''}
-            onChange={(event) => onAltChange(event.target.value)}
-            hint="Describes the image for accessibility and SEO."
-          />
-          {onCreditChange ? (
-            <TextField
-              label="Credit"
-              value={credit ?? ''}
-              onChange={(event) => onCreditChange(event.target.value)}
-            />
-          ) : null}
-        </FieldRow>
+        <TextField
+          label="Alt text"
+          value={alt ?? ''}
+          onChange={(event) => onAltChange(event.target.value)}
+          hint="Describes the image for accessibility and SEO."
+        />
       ) : null}
 
       <ImageFieldModal

@@ -24,6 +24,7 @@ export const adminNavigationGroups = Object.freeze([
       { label: 'Services', path: '/admin/services', icon: 'services' },
       { label: 'Gallery', path: '/admin/gallery', icon: 'gallery' },
       { label: 'FAQs', path: '/admin/faqs', icon: 'faqs' },
+      { label: 'Contact', path: '/admin/contact', icon: 'contact' },
     ],
   },
   {
@@ -32,12 +33,14 @@ export const adminNavigationGroups = Object.freeze([
     items: [{ label: 'Enquiries', path: '/admin/enquiries', icon: 'enquiries' }],
   },
   {
+    id: 'search',
+    label: 'Search & Sharing',
+    items: [{ label: 'SEO', path: '/admin/seo', icon: 'seo' }],
+  },
+  {
     id: 'system',
     label: 'System',
-    items: [
-      { label: 'SEO', path: '/admin/seo', icon: 'seo' },
-      { label: 'Settings', path: '/admin/settings', icon: 'settings' },
-    ],
+    items: [{ label: 'Settings', path: '/admin/settings', icon: 'settings' }],
   },
 ])
 

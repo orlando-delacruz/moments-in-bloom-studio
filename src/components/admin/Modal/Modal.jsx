@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { FiX } from 'react-icons/fi'
 import { ModalBody, ModalCard, ModalClose, ModalFooter, ModalHeader, ModalOverlay, ModalTitle } from './Modal.styles.js'
 
 function Modal({ open = false, title, description, onClose, children, footer }) {
   const cardRef = useRef(null)
   const closeRef = useRef(null)
+  const titleId = useId()
+  const descriptionId = useId()
 
   useEffect(() => {
     if (!open) return undefined
@@ -58,10 +60,16 @@ function Modal({ open = false, title, description, onClose, children, footer }) 
         }
       }}
     >
-      <ModalCard ref={cardRef} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <ModalCard
+        ref={cardRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={description ? descriptionId : undefined}
+      >
         <ModalHeader>
-          <ModalTitle id="modal-title">{title}</ModalTitle>
-          {description ? <p>{description}</p> : null}
+          <ModalTitle id={titleId}>{title}</ModalTitle>
+          {description ? <p id={descriptionId}>{description}</p> : null}
           <ModalClose ref={closeRef} type="button" onClick={onClose} aria-label="Close dialog">
             <FiX aria-hidden="true" size={18} />
           </ModalClose>

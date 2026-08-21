@@ -8,24 +8,14 @@ import { SettingsPage } from './Settings.styles.js'
 
 const SETTINGS_GROUPS = [
   {
-    title: 'Contact details',
-    description: 'The introduction, enquiry rail and footer contact information.',
-    keys: ['contactInformation', 'enquiryFormRail', 'footerContact'],
+    title: 'Footer contact details',
+    description: 'The phone number, email and location shown in the footer.',
+    keys: ['footerContact'],
   },
   {
     title: 'Links & navigation',
     description: 'Social links and the footer navigation columns.',
     keys: ['footerSocialLinks', 'footerGroups'],
-  },
-  {
-    title: 'Enquiry form options',
-    description: 'The choices offered to clients in the enquiry form.',
-    keys: [
-      'eventTypeOptions',
-      'serviceInterestOptions',
-      'guestCountOptions',
-      'setupRequirementOptions',
-    ],
   },
 ]
 

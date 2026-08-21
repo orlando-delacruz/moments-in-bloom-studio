@@ -49,7 +49,7 @@ function CollectionDetailPage() {
   const [toast, setToast] = useState(null)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [saving, setSaving] = useState(false)
-  const { guard, GuardDialog } = useUnsavedGuard({ active: dirty })
+  const { guard, bypass } = useUnsavedGuard({ active: dirty })
 
   useEffect(() => {
     if (!toast) return undefined
@@ -71,6 +71,7 @@ function CollectionDetailPage() {
     setSaving(false)
     setToast({ tone: 'success', message: 'Changes saved successfully.' })
     if (creating) {
+      bypass()
       navigate(`/admin/services/serviceCollections/${draft.id}`, { state: { mibSaved: true } })
     }
   }
@@ -223,7 +224,6 @@ function CollectionDetailPage() {
         onCancel={() => navigate('/admin/services')}
         onSave={handleSave}
       />
-      {GuardDialog}
       {toast && (
         <Toast
           visible

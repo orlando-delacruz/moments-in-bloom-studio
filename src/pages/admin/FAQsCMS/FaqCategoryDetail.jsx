@@ -39,7 +39,7 @@ const isActive = (row) => !row.deleted_at
 function FaqCategoryDetail() {
   const { categoryId } = useParams()
   const navigate = useNavigate()
-  const creating = categoryId === 'new'
+  const creating = categoryId === 'new' || categoryId === undefined
 
   const [data, setData] = useState(null)
   const [loadError, setLoadError] = useState(false)
@@ -53,9 +53,9 @@ function FaqCategoryDetail() {
   const [feedbackTone, setFeedbackTone] = useState('success')
   const feedbackTimer = useRef(null)
   const slugEdited = useRef(false)
-  const syncedDataRef = useRef(null)
+  const syncedDataRef = useRef({ data: null, creating: null, existing: null })
 
-  const guard = useUnsavedGuard({ active: dirty })
+  const { guard, bypass } = useUnsavedGuard({ active: dirty })
 
   const showFeedback = useCallback((message, tone = 'success') => {
     setFeedback(message)
@@ -104,9 +104,14 @@ function FaqCategoryDetail() {
   )
 
   useEffect(() => {
+    if (data === null) return undefined
     const previous = syncedDataRef.current
-    if (previous !== data) {
-      syncedDataRef.current = data
+    if (
+      previous.data !== data ||
+      previous.creating !== creating ||
+      previous.existing !== existing
+    ) {
+      syncedDataRef.current = { data, creating, existing }
       const nextDraft = creating
         ? {
             name: '',
@@ -265,6 +270,7 @@ function FaqCategoryDetail() {
           ? { ...current, categories: [...current.categories, created] }
           : current,
       )
+      bypass()
       navigate(`/admin/faqs/content/categories/${created.id}`, {
         replace: true,
       })

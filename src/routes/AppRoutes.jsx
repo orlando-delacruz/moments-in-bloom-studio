@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion'
 import { lazy, Suspense } from 'react'
 import { Navigate, Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AdminLayout from '../layout/AdminLayout.jsx'
@@ -50,6 +51,9 @@ const FaqItems = lazy(() =>
   import('../pages/admin/FAQsCMS/FaqItems.jsx'))
 const FaqCategories = lazy(() =>
   import('../pages/admin/FAQsCMS/FaqCategories.jsx'))
+const ContactCMS = lazy(() => import('../pages/admin/ContactCMS/ContactCMS.jsx'))
+const ContactSectionDetail = lazy(() =>
+  import('../pages/admin/ContactCMS/DetailPages.jsx').then((m) => ({ default: m.ContactSectionDetail })))
 const Enquiries = lazy(() => import('../pages/admin/Enquiries/Enquiries.jsx'))
 const SEO = lazy(() => import('../pages/admin/SEO/SEO.jsx'))
 const SeoSectionDetail = lazy(() =>
@@ -62,10 +66,12 @@ const NotFound = lazy(() => import('../pages/NotFound/NotFound.jsx'))
 
 function AppShell() {
   return (
-    <Suspense fallback={<LoadingScreen />}>
-      <ScrollToTop />
-      <Outlet />
-    </Suspense>
+    <AnimatePresence>
+      <Suspense fallback={<LoadingScreen />}>
+        <ScrollToTop />
+        <Outlet />
+      </Suspense>
+    </AnimatePresence>
   )
 }
 
@@ -105,9 +111,6 @@ const router = createBrowserRouter([
           { path: 'about/:sectionKey/new', element: <AboutItemDetail /> },
           { path: 'about/:sectionKey/:itemId', element: <AboutItemDetail /> },
           { path: 'services', element: <ServicesCMS /> },
-          { path: 'services/:sectionKey', element: <ServicesSectionDetail /> },
-          { path: 'services/:sectionKey/new', element: <ServicesItemDetail /> },
-          { path: 'services/:sectionKey/:itemId', element: <ServicesItemDetail /> },
           {
             path: 'services/serviceCollections/:collectionId',
             element: <CollectionDetailPage />,
@@ -116,6 +119,9 @@ const router = createBrowserRouter([
             path: 'services/serviceCollections/:collectionId/sections/:sectionId',
             element: <CollectionSectionDetailPage />,
           },
+          { path: 'services/:sectionKey', element: <ServicesSectionDetail /> },
+          { path: 'services/:sectionKey/new', element: <ServicesItemDetail /> },
+          { path: 'services/:sectionKey/:itemId', element: <ServicesItemDetail /> },
           { path: 'gallery', element: <GalleryCMS /> },
           { path: 'gallery/items', element: <GalleryCMS /> },
           { path: 'gallery/items/new', element: <GalleryItemDetail /> },
@@ -153,6 +159,8 @@ const router = createBrowserRouter([
           },
           { path: 'faqs/cta', element: <FaqPageDetail section="cta" /> },
           { path: 'faqs/page', element: <FaqPageDetail /> },
+          { path: 'contact', element: <ContactCMS /> },
+          { path: 'contact/:sectionKey', element: <ContactSectionDetail /> },
           { path: 'enquiries', element: <Enquiries /> },
           { path: 'seo', element: <SEO /> },
           { path: 'seo/:sectionKey', element: <SeoSectionDetail /> },

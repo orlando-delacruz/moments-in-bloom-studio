@@ -6,6 +6,14 @@ export const EmptyShell = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
   padding: ${({ theme }) => theme.spacing.xl};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.lg};
+
+    > * {
+      width: 100%;
+    }
+  }
 `
 
 export const EmptyIcon = styled.div`

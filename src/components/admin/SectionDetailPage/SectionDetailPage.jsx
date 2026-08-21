@@ -25,7 +25,7 @@ function SectionDetailPage({ pageKey, basePath, pageTitle, sections }) {
   const { values, savedAt, draft, dirty, patch, saveDraft, discardDraft, exists } =
     useContentDetail(pageKey, { sectionKey })
 
-  const guard = useUnsavedGuard({ active: dirty })
+  const { guard } = useUnsavedGuard({ active: dirty })
 
   if (!section || !exists) {
     return (

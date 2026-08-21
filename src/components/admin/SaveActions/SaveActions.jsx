@@ -85,7 +85,7 @@ function SaveActions({
   return (
     <SaveBarShell>
       <div>
-        <SaveStatus $dirty={dirty}>
+        <SaveStatus $dirty={dirty} role="status" aria-live="polite">
           {dirty ? (
             <>
               <span className="status-dot" aria-hidden="true" />
@@ -115,6 +115,7 @@ function SaveActions({
           <Button
             type="button"
             variant="ghost"
+            radius="md"
             disabled={!dirty || isSaving}
             onClick={handleReset}
           >
@@ -125,6 +126,7 @@ function SaveActions({
           <Button
             type="button"
             variant="outline"
+            radius="md"
             disabled={isSaving}
             onClick={onCancel}
           >
@@ -134,6 +136,7 @@ function SaveActions({
         <Button
           type="button"
           variant="primary"
+          radius="md"
           disabled={!dirty || isSaving}
           loading={isSaving}
           onClick={handleSave}
@@ -142,7 +145,12 @@ function SaveActions({
           {isSaving ? 'Saving…' : submitLabel}
         </Button>
       </SaveActionsRow>
-      <Toast visible={Boolean(feedback)} message={feedback} tone={feedbackTone} />
+      <Toast
+        visible={Boolean(feedback)}
+        message={feedback}
+        tone={feedbackTone}
+        position="fixed"
+      />
     </SaveBarShell>
   )
 }

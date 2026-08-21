@@ -85,6 +85,7 @@ function Login() {
               </>
             }
             type="email"
+            required
             placeholder={adminLogin.emailPlaceholder}
             error={errors.email?.message}
             {...register('email', {
@@ -101,6 +102,7 @@ function Login() {
               <LoginPasswordInput
                 id={passwordId}
                 type={passwordVisible ? 'text' : 'password'}
+                required
                 $error={Boolean(errors.password)}
                 {...register('password', {
                   required: 'Please enter your password.',

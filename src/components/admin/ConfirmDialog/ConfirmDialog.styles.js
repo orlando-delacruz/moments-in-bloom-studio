@@ -10,6 +10,11 @@ export const ConfirmOverlay = styled.div`
   overflow-y: auto;
   background: rgba(26, 26, 26, 0.45);
   backdrop-filter: blur(4px);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0;
+    align-items: end;
+  }
 `
 
 export const ConfirmCard = styled.div`
@@ -24,6 +29,14 @@ export const ConfirmCard = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   box-shadow: ${({ theme }) => theme.shadows.soft};
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: none;
+    margin: 0;
+    padding: ${({ theme }) => theme.spacing.lg};
+    border-radius: ${({ theme }) => theme.radii.lg} ${({ theme }) => theme.radii.lg} 0 0;
+    box-shadow: ${({ theme }) => theme.shadows.drawer};
+  }
 `
 
 export const ConfirmIcon = styled.div`
@@ -57,4 +70,13 @@ export const ConfirmActions = styled.div`
   justify-content: center;
   gap: ${({ theme }) => theme.spacing.sm};
   margin-top: ${({ theme }) => theme.spacing.xs};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+    flex-direction: column;
+
+    > * {
+      width: 100%;
+    }
+  }
 `

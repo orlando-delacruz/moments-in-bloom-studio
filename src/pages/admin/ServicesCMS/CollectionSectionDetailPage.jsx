@@ -62,7 +62,7 @@ function CollectionSectionDetailPage() {
   const [toast, setToast] = useState(null)
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [saving, setSaving] = useState(false)
-  const { guard, GuardDialog } = useUnsavedGuard({ active: dirty })
+  const { guard, bypass } = useUnsavedGuard({ active: dirty })
 
   useEffect(() => {
     if (!toast) return undefined
@@ -101,6 +101,7 @@ function CollectionSectionDetailPage() {
     setSaving(false)
     setToast({ tone: 'success', message: 'Changes saved successfully.' })
     if (creating) {
+      bypass()
       navigate(`${backPath}/sections/${draft.id}`, { state: { mibSaved: true } })
     }
   }
@@ -270,7 +271,6 @@ function CollectionSectionDetailPage() {
         onCancel={() => navigate(backPath)}
         onSave={handleSave}
       />
-      {GuardDialog}
       {toast && (
         <Toast
           visible

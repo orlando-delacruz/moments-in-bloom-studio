@@ -38,7 +38,7 @@ const isActive = (row) => !row.deleted_at
 function FaqItemDetail() {
   const { faqId } = useParams()
   const navigate = useNavigate()
-  const creating = faqId === 'new'
+  const creating = faqId === 'new' || faqId === undefined
 
   const [data, setData] = useState(null)
   const [loadError, setLoadError] = useState(false)
@@ -51,9 +51,9 @@ function FaqItemDetail() {
   const [feedback, setFeedback] = useState(null)
   const [feedbackTone, setFeedbackTone] = useState('success')
   const feedbackTimer = useRef(null)
-  const syncedDataRef = useRef(null)
+  const syncedDataRef = useRef({ data: null, creating: null, existing: null })
 
-  const guard = useUnsavedGuard({ active: dirty })
+  const { guard, bypass } = useUnsavedGuard({ active: dirty })
 
   const showFeedback = useCallback((message, tone = 'success') => {
     setFeedback(message)
@@ -102,9 +102,14 @@ function FaqItemDetail() {
   )
 
   useEffect(() => {
+    if (data === null) return undefined
     const previous = syncedDataRef.current
-    if (previous !== data) {
-      syncedDataRef.current = data
+    if (
+      previous.data !== data ||
+      previous.creating !== creating ||
+      previous.existing !== existing
+    ) {
+      syncedDataRef.current = { data, creating, existing }
       const nextDraft = creating
         ? {
             question: '',
@@ -235,6 +240,7 @@ function FaqItemDetail() {
       setData((current) =>
         current ? { ...current, faqs: [...current.faqs, created] } : current,
       )
+      bypass()
       navigate(`/admin/faqs/content/items/${created.id}`, { replace: true })
     }
     return { ok: true }

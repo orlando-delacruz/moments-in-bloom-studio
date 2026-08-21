@@ -6,6 +6,12 @@ export const PageHeaderShell = styled.header`
   align-items: flex-end;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing.lg};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 export const PageHeaderCopy = styled.div`
@@ -44,5 +50,14 @@ export const PageHeaderDescription = styled.p`
 export const PageHeaderActions = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing.sm};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 100%;
+
+    > * {
+      flex: 1 1 auto;
+    }
+  }
 `

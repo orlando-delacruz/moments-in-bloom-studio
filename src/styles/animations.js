@@ -1,4 +1,17 @@
+import { keyframes } from 'styled-components'
+
 export const EASE_LUXE = [0.22, 1, 0.36, 1]
+
+// Shared admin skeleton pulse — respects prefers-reduced-motion via GlobalStyles
+export const adminPulse = keyframes`
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+`
 
 export const MOTION = Object.freeze({
   FAST: 0.25,

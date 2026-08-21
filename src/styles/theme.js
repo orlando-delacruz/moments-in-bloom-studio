@@ -44,7 +44,17 @@ const theme = {
     success: "#3F7D54",
     warning: "#C98A2E",
     danger: "#C94A46",
+    info: "#3B6E8F",
     focus: taupe,
+    // Semantic status tones (shared by badges, toasts and alerts)
+    status: {
+      success: "#3F7D54",
+      warning: "#C98A2E",
+      danger: "#C94A46",
+      info: "#3B6E8F",
+      neutral: "#6E6761",
+      gold: "#C89A5E",
+    },
   },
   typography: {
     headingFont: garamond,
@@ -75,6 +85,8 @@ const theme = {
     xl: "1.75rem",
     "2xl": "2.25rem",
     pill: "999px",
+    // Admin control radius — replaces the marketing-style pill for application UI
+    control: "0.5rem",
   },
   transitions: {
     fast: "150ms ease",
@@ -89,6 +101,9 @@ const theme = {
     header: "0 8px 30px rgba(26, 26, 26, 0.07)",
     ctaHover: "0 4px 18px rgba(26, 26, 26, 0.25)",
     imageCard: "0 18px 45px rgba(26, 26, 26, 0.16)",
+    dialog: "0 24px 64px rgba(26, 26, 26, 0.18)",
+    drawer: "0 0 48px rgba(26, 26, 26, 0.22)",
+    popover: "0 8px 24px rgba(26, 26, 26, 0.12)",
   },
   gradients: {
     darkSection: "linear-gradient(135deg, #262626 0%, #1A1A1A 100%)",
@@ -120,6 +135,11 @@ const theme = {
     loading: 200,
   },
   controls: {
+    height: {
+      sm: "2.25rem",
+      md: "2.75rem",
+      lg: "3.25rem",
+    },
     tapTarget: "44px",
     dotHitTarget: "44px",
     backToTopSize: "48px",
@@ -129,6 +149,9 @@ const theme = {
     containerMaxWidth: "1200px",
     contentMaxWidth: "760px",
     adminSidebarWidth: "260px",
+    adminContentMaxWidth: "72rem",
+    adminPageGap: "2.5rem",
+    adminCardPadding: "1.5rem",
     headerHeight: "5rem",
     mobileHeaderHeight: "4.5rem",
   },

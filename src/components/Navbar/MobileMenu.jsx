@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/images/logo-old.png'
-import { publicNavigation } from '../../constants/navigation.js'
+import { footerContact, footerSocialLinks, publicNavigation } from '../../constants/navigation.js'
 import Button from '../Button/index.js'
 import * as S from './MobileMenu.styles.js'
 
@@ -113,16 +113,15 @@ function MobileMenu({ isOpen, onClose }) {
                 Enquire Now
               </Button>
               <S.MenuContact>
-                <span>Melbourne, Australia</span>
-                <a href="mailto:hello@momentsinblooms.com">hello@momentsinblooms.com</a>
+                <span>{footerContact.location}</span>
+                <a href={`mailto:${footerContact.email}`}>{footerContact.email}</a>
               </S.MenuContact>
               <S.MenuSocials aria-label="Social links">
-                <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
-                  Instagram
-                </a>
-                <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
-                  Facebook
-                </a>
+                {footerSocialLinks.map((social) => (
+                  <a key={social.label} href={social.href} target="_blank" rel="noreferrer">
+                    {social.label}
+                  </a>
+                ))}
               </S.MenuSocials>
             </S.MenuFooter>
           </S.MenuPanel>

@@ -19,38 +19,7 @@ Milestone 1 established the application architecture, public/admin shells, routi
 
 ## Project architecture
 
-```text
-src/
-├── assets/                  Static project assets
-├── components/              Reusable UI primitives and application chrome
-│   ├── BackToTop/            Scroll-aware return-to-top control
-│   ├── Badge/               Compact status or category label
-│   ├── Button/              Primary, secondary, outline, and ghost actions
-│   ├── Card/                Surface container for future content
-│   ├── Container/           Responsive max-width wrapper
-│   ├── Divider/             Theme-aware separator
-│   ├── Footer/              Public shell footer and enquiry CTA
-│   ├── Heading/             Theme-aware heading primitive
-│   ├── Loading/             Route loading and branded loading screen
-│   ├── Navbar/              Desktop and animated mobile public navigation
-│   ├── PageContainer/       Semantic alias for page-level container spacing
-│   ├── ScrollToTop/         Route-change scroll restoration
-│   ├── SEO/                 Helmet metadata boundary
-│   ├── Section/             Vertical section layout primitive
-│   ├── Sidebar/             Admin navigation
-│   ├── Text/                Body-copy primitive
-│   └── Topbar/              Admin workspace header
-├── constants/               Navigation metadata and UI variants
-├── hooks/                   Shared React hooks boundary
-├── layout/                  Public and admin route shells
-├── pages/                   Route-level modules, each with page-owned styles
-│   ├── public/              Home, About, Services, Gallery, FAQs, Contact
-│   └── admin/               Dashboard and CMS route foundations
-├── routes/                  Browser router and lazy route declarations
-├── services/                Future API/client boundary
-├── styles/                  Theme, global styles, and motion variants
-└── utils/                   Pure helper boundary
-```
+
 
 Every reusable component keeps its implementation and styled-components stylesheet together. Every route page owns a corresponding `*.styles.js` file, even while the route renders a restrained placeholder. This keeps the project ready for page-by-page implementation without coupling feature logic to layouts.
 

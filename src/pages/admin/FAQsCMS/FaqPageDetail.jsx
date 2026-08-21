@@ -29,7 +29,7 @@ function FaqPageDetail({ section }) {
   const [savedAt, setSavedAt] = useState(null)
   const initialRef = useRef(null)
 
-  const guard = useUnsavedGuard({ active: dirty })
+  const { guard } = useUnsavedGuard({ active: dirty })
 
   useEffect(() => {
     let cancelled = false

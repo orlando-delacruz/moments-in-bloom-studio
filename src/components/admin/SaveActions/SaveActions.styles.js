@@ -11,11 +11,19 @@ export const SaveBarShell = styled.div`
   gap: ${({ theme }) => theme.spacing.md};
   margin-top: ${({ theme }) => theme.spacing.xxl};
   padding: 0.9rem ${({ theme }) => theme.spacing.lg};
+  padding-bottom: calc(0.9rem + env(safe-area-inset-bottom));
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.surfaces.headerScrolled};
   box-shadow: ${({ theme }) => theme.shadows.header};
   backdrop-filter: blur(${({ theme }) => theme.effects.headerBlur});
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md};
+    padding-bottom: calc(${({ theme }) => theme.spacing.md} + env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: stretch;
+  }
 `
 
 export const SaveStatus = styled.span`
@@ -59,4 +67,15 @@ export const SaveActionsRow = styled.div`
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.sm};
   margin-left: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+
+    > * {
+      width: 100%;
+    }
+  }
 `

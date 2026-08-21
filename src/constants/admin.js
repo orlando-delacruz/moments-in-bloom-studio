@@ -63,6 +63,12 @@ export const adminPageMeta = Object.freeze({
     description:
       'Keep your frequently asked questions up to date so enquiries spend less time asking.',
   },
+  contact: {
+    eyebrow: 'Content management',
+    title: 'Contact',
+    description:
+      'Edit the hero, enquiry form steps, contact information and call-to-action of your contact page.',
+  },
   faqsHub: {
     eyebrow: 'Content management',
     title: 'FAQ Management',

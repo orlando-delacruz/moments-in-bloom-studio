@@ -47,6 +47,10 @@ export const CardLink = styled(Link)`
     outline: 3px solid ${({ theme }) => theme.colors.focus};
     outline-offset: 2px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md};
+  }
 `
 
 export const CardBody = styled.div`
@@ -69,6 +73,7 @@ export const CardBody = styled.div`
 export const CardTitleRow = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing.md};
   min-width: 0;
 `

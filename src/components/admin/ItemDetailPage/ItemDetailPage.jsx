@@ -54,7 +54,7 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
   })
 
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const guard = useUnsavedGuard({ active: dirty })
+  const { guard, bypass } = useUnsavedGuard({ active: dirty })
 
   if (!section || (section.type !== 'list' && section.type !== 'collections')) {
     return <Navigate replace to={basePath} />
@@ -98,6 +98,7 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
     }
     saveDraft(draft)
     if (creating) {
+      bypass()
       navigate(`${basePath}/${sectionKey}/${draft.id}`, {
         state: { mibSaved: true },
       })

@@ -52,6 +52,12 @@ const fieldBase = css`
     border-color: ${({ theme }) => theme.colors.taupe};
   }
 
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background: ${({ theme }) => theme.colors.secondary};
+  }
+
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.focus};
@@ -85,6 +91,7 @@ export const Select = styled.select`
   ${fieldBase}
   cursor: pointer;
   appearance: none;
+  padding-right: 2.5rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237D5F49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
