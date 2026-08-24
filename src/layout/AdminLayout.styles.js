@@ -15,6 +15,7 @@ export const AdminShell = styled.div`
 
 export const AdminWorkspace = styled.div`
   min-width: 0;
+  padding-top: 4.5rem;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     padding-top: ${({ theme }) => theme.layout.mobileHeaderHeight};

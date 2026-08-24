@@ -154,7 +154,7 @@ export const homepageSections = [
 ]
 
 function HeroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...next }))
   return (
     <>
       <TextField
@@ -187,9 +187,9 @@ function HeroForm({ value, onChange }) {
       <ImageField
         label="Hero image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
@@ -208,7 +208,7 @@ function TrustMarksForm({ value, onChange }) {
 }
 
 function ServiceItemForm({ value, onChange, errors }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -227,12 +227,6 @@ function ServiceItemForm({ value, onChange, errors }) {
         value={value?.description ?? ''}
         onChange={(event) => patch({ description: event.target.value })}
       />
-      <TextField
-        label="Link path"
-        value={value?.path ?? ''}
-        onChange={(event) => patch({ path: event.target.value })}
-        hint="Where this card links to on the website."
-      />
       <ToggleSwitch
         label="Offset layout"
         hint="Alternates the card layout on the homepage."
@@ -242,16 +236,16 @@ function ServiceItemForm({ value, onChange, errors }) {
       <ImageField
         label="Card image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function GalleryPreviewItemForm({ value, onChange, errors }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SelectField
@@ -263,9 +257,9 @@ function GalleryPreviewItemForm({ value, onChange, errors }) {
       <ImageField
         label="Image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
         error={errors.image}
       />
     </>
@@ -304,7 +298,7 @@ function ReasonsForm({ value, onChange }) {
 }
 
 function TestimonialItemForm({ value, onChange, errors }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextAreaField
@@ -334,29 +328,38 @@ function TestimonialItemForm({ value, onChange, errors }) {
       <ImageField
         label="Portrait image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function InstagramItemsForm({ value, onChange }) {
+  const items = value ?? []
   return (
     <Repeater
-      items={value ?? []}
+      items={items}
       onChange={onChange}
       createItem={() => ({ id: `insta-${Date.now()}`, image: { src: '', alt: '' } })}
       addLabel="Add image"
       itemTitle={(item, index) => item.image?.alt?.slice(0, 40) || `Image ${index + 1}`}
-      renderItem={(item, index, { update: patch }) => (
+      renderItem={(item, index) => (
         <ImageField
           label="Image"
           value={item.image?.src ?? ''}
-          onChange={(src) => patch({ image: { ...item.image, src } })}
+          onChange={(src) => {
+            const next = [...items]
+            next[index] = { ...next[index], image: { src, alt: next[index]?.image?.alt ?? '' } }
+            onChange(next)
+          }}
           alt={item.image?.alt ?? ''}
-          onAltChange={(event) => patch({ image: { ...item.image, alt: event.target.value } })}
+          onAltChange={(event) => {
+            const next = [...items]
+            next[index] = { ...next[index], image: { src: next[index]?.image?.src ?? '', alt: event.target.value } }
+            onChange(next)
+          }}
         />
       )}
     />
@@ -364,7 +367,7 @@ function InstagramItemsForm({ value, onChange }) {
 }
 
 function CtaForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField

@@ -11,6 +11,21 @@ import Testimonials from './Testimonials/Testimonials.jsx'
 import TrustedBy from './TrustedBy/TrustedBy.jsx'
 import WhyChooseUs from './WhyChooseUs/WhyChooseUs.jsx'
 
+const localBusinessJsonLd = Object.freeze({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Moments in Blooms',
+  url: 'https://www.momentsinblooms.com.au/',
+  telephone: '+61 3 0000 0000',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Melbourne',
+    addressRegion: 'VIC',
+    addressCountry: 'AU',
+  },
+  areaServed: 'Melbourne',
+})
+
 function Home() {
   const { values, loading } = useContent('homepage')
   const { values: seoValues } = useContent('seo')
@@ -25,6 +40,7 @@ function Home() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
+        jsonLd={localBusinessJsonLd}
       />
       <Hero content={values.hero} id={HOME_SECTION_IDS.HERO} />
       <TrustedBy marks={values.trustMarks} id={HOME_SECTION_IDS.TRUST} />

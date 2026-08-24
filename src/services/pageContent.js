@@ -126,4 +126,29 @@ export async function resetPageContentRemote(pageKey) {
   return { error: null }
 }
 
+export function subscribeToPageContent(onChange) {
+  if (!isSupabaseConfigured() || !publicSupabase) return () => {}
+  const channel = publicSupabase
+    .channel('page-content-all')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'page_content' },
+      (payload) => {
+        if (payload.eventType === 'DELETE') {
+          const oldKey = payload.old?.page_key
+          if (!oldKey || !SUPABASE_CONTENT_PAGES.has(oldKey)) return
+          onChange({ pageKey: oldKey, values: null, savedAt: null, deleted: true })
+          return
+        }
+        const row = payload.new
+        if (!row?.page_key || !SUPABASE_CONTENT_PAGES.has(row.page_key)) return
+        onChange({ pageKey: row.page_key, values: row.content, savedAt: row.updated_at })
+      },
+    )
+    .subscribe()
+  return () => {
+    publicSupabase.removeChannel(channel)
+  }
+}
+
 export { hasValues }

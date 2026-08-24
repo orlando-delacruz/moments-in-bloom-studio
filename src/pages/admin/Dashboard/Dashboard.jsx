@@ -50,7 +50,7 @@ function Dashboard() {
 
   useEffect(() => {
     let mounted = true
-    listEnquiries().then((result) => {
+    listEnquiries(5).then((result) => {
       if (!mounted) return
       const list = result.data ?? []
       setEnquiries(list)

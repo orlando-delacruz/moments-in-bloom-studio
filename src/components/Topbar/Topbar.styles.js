@@ -4,18 +4,17 @@ import { Link } from 'react-router-dom'
 const mobileBreak = ({ theme }) => `@media (max-width: ${theme.breakpoints.desktop})`
 
 export const TopbarShell = styled.header`
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: var(--admin-sidebar-width);
+  right: 0;
   z-index: ${({ theme }) => theme.layers.header};
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
   background: ${({ theme }) => theme.surfaces.headerScrolled};
   backdrop-filter: blur(${({ theme }) => theme.effects.headerBlur});
 
   ${mobileBreak} {
-    position: fixed;
-    top: 0;
     left: 0;
-    right: 0;
   }
 `
 

@@ -407,6 +407,41 @@ export async function archiveFaq(id) {
   return { data: result.data, error: null }
 }
 
+export async function deleteFaq(id) {
+  if (!isSupabaseConfigured()) {
+    updateDemoStore((current) => ({
+      ...current,
+      faqs: current.faqs.filter((faq) => faq.id !== id),
+    }))
+    return { data: { id }, error: null }
+  }
+
+  const result = await supabase.from('faqs').delete().eq('id', id)
+
+  if (result.error) {
+    console.error('[faqs] delete failed', result.error)
+    return { data: null, error: { message: DELETE_ERROR_MESSAGE } }
+  }
+  return { data: { id }, error: null }
+}
+
+export async function deleteFaqs(ids) {
+  if (!Array.isArray(ids) || ids.length === 0) return { data: [], error: null }
+  if (!isSupabaseConfigured()) {
+    updateDemoStore((current) => ({
+      ...current,
+      faqs: current.faqs.filter((faq) => !ids.includes(faq.id)),
+    }))
+    return { data: ids.map((id) => ({ id })), error: null }
+  }
+  const result = await supabase.from('faqs').delete().in('id', ids)
+  if (result.error) {
+    console.error('[faqs] bulk delete failed', result.error)
+    return { data: null, error: { message: DELETE_ERROR_MESSAGE } }
+  }
+  return { data: ids.map((id) => ({ id })), error: null }
+}
+
 export async function restoreFaq(id) {
   if (!isSupabaseConfigured()) {
     updateDemoStore((current) => ({
@@ -607,6 +642,48 @@ export async function restoreCategory(id) {
     return { data: null, error: { message: SAVE_ERROR_MESSAGE } }
   }
   return { data: result.data, error: null }
+}
+
+export async function deleteCategory(id) {
+  if (!isSupabaseConfigured()) {
+    const current = demoData()
+    const assigned = current.faqs.filter((faq) => faq.category_id === id && isActive(faq))
+    if (assigned.length > 0) {
+      return {
+        data: null,
+        error: { message: `This category still has ${assigned.length} FAQ${assigned.length === 1 ? '' : 's'}. Reassign them before deleting.` },
+      }
+    }
+    updateDemoStore((current) => ({
+      ...current,
+      categories: current.categories.filter((category) => category.id !== id),
+    }))
+    return { data: { id }, error: null }
+  }
+
+  // Block if category still has active FAQs
+  const { data: assigned, error: checkError } = await supabase
+    .from('faqs')
+    .select('id')
+    .eq('category_id', id)
+    .is('deleted_at', null)
+  if (checkError) {
+    console.error('[faqs] category delete check failed', checkError)
+    return { data: null, error: { message: DELETE_ERROR_MESSAGE } }
+  }
+  if (assigned && assigned.length > 0) {
+    return {
+      data: null,
+      error: { message: `This category still has ${assigned.length} FAQ${assigned.length === 1 ? '' : 's'}. Reassign them before deleting.` },
+    }
+  }
+
+  const result = await supabase.from('faq_categories').delete().eq('id', id)
+  if (result.error) {
+    console.error('[faqs] category delete failed', result.error)
+    return { data: null, error: { message: DELETE_ERROR_MESSAGE } }
+  }
+  return { data: { id }, error: null }
 }
 
 export async function setCategoryOrder(id, displayOrder) {

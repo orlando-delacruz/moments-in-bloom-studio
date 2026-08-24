@@ -12,6 +12,7 @@ import {
   isSupabaseContentPage,
   resetPageContentRemote,
   savePageContentRemote,
+  subscribeToPageContent,
 } from '../services/pageContent.js'
 import { isSupabaseConfigured } from '../services/supabaseClient.js'
 import { ContentContext } from './ContentContext.jsx'
@@ -95,6 +96,28 @@ function ContentProvider({ children }) {
     return () => {
       cancelled = true
     }
+  }, [commit, markLoading])
+
+  // Realtime: keep all 7 pages in sync across tabs/devices without refresh.
+  // Supabase Realtime pushes INSERT/UPDATE/DELETE on page_content to every client.
+  useEffect(() => {
+    if (!isSupabaseConfigured()) return undefined
+    const unsubscribe = subscribeToPageContent(({ pageKey, values, savedAt, deleted }) => {
+      if (dirtyPagesRef.current.has(pageKey)) return
+      if (deleted || !hasValues(values)) {
+        const next = { ...storedRef.current }
+        delete next[pageKey]
+        commit(next)
+        markLoading(pageKey, false)
+        return
+      }
+      commit({
+        ...storedRef.current,
+        [pageKey]: { values, savedAt },
+      })
+      markLoading(pageKey, false)
+    })
+    return unsubscribe
   }, [commit, markLoading])
 
   const updatePage = useCallback(

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useContent } from './useContent.js'
+import { deleteImage, isStorageUrl } from '../services/storage.js'
 
 const clone = (value) =>
   value == null ? null : JSON.parse(JSON.stringify(value))
@@ -50,6 +51,22 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
     setDirty(true)
   }
 
+  const collectStorageUrls = (value, acc = new Set()) => {
+    if (!value) return acc
+    if (typeof value === 'string') {
+      if (isStorageUrl(value)) acc.add(value)
+      return acc
+    }
+    if (Array.isArray(value)) {
+      value.forEach((entry) => collectStorageUrls(entry, acc))
+      return acc
+    }
+    if (typeof value === 'object') {
+      Object.values(value).forEach((entry) => collectStorageUrls(entry, acc))
+    }
+    return acc
+  }
+
   const persist = (nextValue) => {
     update((current) => {
       if (listKey) {
@@ -60,21 +77,40 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
     return save()
   }
 
+  const cleanupStorage = (oldValue, newValue) => {
+    const oldUrls = collectStorageUrls(oldValue)
+    const newUrls = collectStorageUrls(newValue)
+    oldUrls.forEach((url) => {
+      if (!newUrls.has(url)) {
+        deleteImage(url).catch(() => {})
+      }
+    })
+  }
+
   const saveDraft = async (next = draft) => {
     let result
+    let oldForCleanup
+    let newForCleanup
     if (listKey) {
       const items = values[listKey] ?? []
       const existsInList = items.some((entry) => String(entry.id) === String(next.id))
       const nextItems = existsInList
         ? items.map((entry) => (String(entry.id) === String(next.id) ? next : entry))
         : [...items, next]
+      oldForCleanup = existsInList ? items.find((entry) => String(entry.id) === String(next.id)) : null
+      newForCleanup = next
       result = await persist(nextItems)
     } else {
+      oldForCleanup = values[sectionKey]
+      newForCleanup = next
       result = await persist(next)
     }
     // Only settle the draft as "saved" when the write actually succeeded, so a
     // failed save keeps the page dirty and the editor can retry.
     if (!result?.error) {
+      if (oldForCleanup && newForCleanup) {
+        cleanupStorage(oldForCleanup, newForCleanup)
+      }
       setDraft(clone(next))
       setDirty(false)
     }
@@ -86,10 +122,16 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
     setDirty(false)
   }
 
-  const removeItem = () => {
+  const removeItem = async () => {
     if (!listKey || creating) return
-    persist((values[listKey] ?? []).filter((entry) => String(entry.id) !== String(itemId)))
+    const oldItem = (values[listKey] ?? []).find((entry) => String(entry.id) === String(itemId))
+    const result = await persist((values[listKey] ?? []).filter((entry) => String(entry.id) !== String(itemId)))
+    if (!result?.error && oldItem) {
+      const oldUrls = collectStorageUrls(oldItem)
+      oldUrls.forEach((url) => deleteImage(url).catch(() => {}))
+    }
     setDirty(false)
+    return result
   }
 
   return {

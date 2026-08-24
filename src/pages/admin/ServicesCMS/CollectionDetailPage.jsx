@@ -115,19 +115,19 @@ function CollectionDetailPage({ itemId }) {
         <TextField
           label="Title"
           value={collection?.title ?? ''}
-          onChange={(event) => patch({ ...collection, title: event.target.value })}
+          onChange={(event) => patch((prev) => ({ ...prev, title: event.target.value }))}
           error={errors.title}
         />
         <FieldRow>
           <TextField
             label="Navigation subtitle"
             value={collection?.navSub ?? ''}
-            onChange={(event) => patch({ ...collection, navSub: event.target.value })}
+            onChange={(event) => patch((prev) => ({ ...prev, navSub: event.target.value }))}
           />
           <TextField
             label="Navigation meta"
             value={collection?.navMeta ?? ''}
-            onChange={(event) => patch({ ...collection, navMeta: event.target.value })}
+            onChange={(event) => patch((prev) => ({ ...prev, navMeta: event.target.value }))}
             placeholder="4 Collections"
           />
         </FieldRow>
@@ -135,26 +135,26 @@ function CollectionDetailPage({ itemId }) {
           label="Description"
           rows={4}
           value={collection?.description ?? ''}
-          onChange={(event) => patch({ ...collection, description: event.target.value })}
+          onChange={(event) => patch((prev) => ({ ...prev, description: event.target.value }))}
         />
         <TextField
           label="Tagline"
           value={collection?.tagline ?? ''}
-          onChange={(event) => patch({ ...collection, tagline: event.target.value })}
+          onChange={(event) => patch((prev) => ({ ...prev, tagline: event.target.value }))}
         />
         <ToggleSwitch
           label="Featured"
           hint="Adds a Featured badge to this collection inside the admin content lists."
           checked={Boolean(collection?.featured)}
-          onChange={(checked) => patch({ ...collection, featured: checked })}
+          onChange={(checked) => patch((prev) => ({ ...prev, featured: checked }))}
         />
         <ImageField
           label="Cover image"
           value={collection?.coverImage?.src ?? ''}
-          onChange={(src) => patch({ ...collection, coverImage: { ...collection.coverImage, src } })}
+          onChange={(src) => patch((prev) => ({ ...prev, coverImage: { ...(prev.coverImage ?? {}), src } }))}
           alt={collection?.coverImage?.alt ?? ''}
           onAltChange={(event) =>
-            patch({ ...collection, coverImage: { ...collection.coverImage, alt: event.target.value } })
+            patch((prev) => ({ ...prev, coverImage: { ...(prev.coverImage ?? {}), alt: event.target.value } }))
           }
         />
       </ContentFormSection>

@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FiArrowLeft, FiHelpCircle, FiPlus } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
 import ContentList from '../../../components/admin/ContentList/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
 import Modal from '../../../components/admin/Modal/index.js'
-import Toast from '../../../components/admin/Toast/index.js'
 import Button from '../../../components/Button/index.js'
 import { SelectField } from '../../../components/FormField/index.js'
 import { adminPageMeta } from '../../../constants/admin.js'
 import {
-  archiveCategory,
+  deleteCategory,
   fetchFaqsAdmin,
   restoreCategory,
   setCategoryOrder,
 } from '../../../services/faqs.js'
+import { showError, showSuccess } from '../../../utils/sweetAlert.js'
 import {
   FaqBackLink,
   FaqModalHint,
@@ -33,18 +33,6 @@ function FaqCategories() {
   const [busy, setBusy] = useState(false)
   const [categoryDelete, setCategoryDelete] = useState(null)
   const [moveTarget, setMoveTarget] = useState('')
-  const [feedback, setFeedback] = useState(null)
-  const [feedbackTone, setFeedbackTone] = useState('success')
-  const feedbackTimer = useRef(null)
-
-  const showFeedback = useCallback((message, tone = 'success') => {
-    setFeedback(message)
-    setFeedbackTone(tone)
-    if (feedbackTimer.current) {
-      window.clearTimeout(feedbackTimer.current)
-    }
-    feedbackTimer.current = window.setTimeout(() => setFeedback(null), 3200)
-  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -75,14 +63,6 @@ function FaqCategories() {
     setReloadKey((key) => key + 1)
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (feedbackTimer.current) {
-        window.clearTimeout(feedbackTimer.current)
-      }
-    }
-  }, [])
-
   const categories = useMemo(() => data?.categories ?? [], [data])
   const faqs = data?.faqs ?? []
 
@@ -97,11 +77,11 @@ function FaqCategories() {
     ])
     setBusy(false)
     if (firstResult.error || secondResult.error) {
-      showFeedback(
+      showError(
+        'Reorder failed',
         firstResult.error?.message ??
           secondResult.error?.message ??
           "We couldn't reorder the categories. Please try again.",
-        'error',
       )
       return false
     }
@@ -116,7 +96,7 @@ function FaqCategories() {
     const neighbor = siblings[index + direction]
     if (!neighbor) return
     if (await runOrderSwap(category, neighbor)) {
-      showFeedback('Category order updated.')
+      showSuccess('Moved', 'Category order updated.')
     }
   }
 
@@ -128,18 +108,16 @@ function FaqCategories() {
   const handleDeleteCategory = async () => {
     if (!categoryDelete) return
     setBusy(true)
-    const result = await archiveCategory(categoryDelete.id, {
-      moveFaqsTo: moveTarget || undefined,
-    })
+    const result = await deleteCategory(categoryDelete.id)
     setBusy(false)
     setCategoryDelete(null)
     setMoveTarget('')
     if (result.error) {
-      showFeedback(result.error.message, 'error')
+      showError('Delete failed', result.error.message)
       return
     }
     await loadData()
-    showFeedback('Category archived.')
+    showSuccess('Deleted', 'Category deleted permanently.')
   }
 
   const handleRestoreCategory = async (category) => {
@@ -148,11 +126,11 @@ function FaqCategories() {
     const result = await restoreCategory(category.id)
     setBusy(false)
     if (result.error) {
-      showFeedback(result.error.message, 'error')
+      showError('Restore failed', result.error.message)
       return
     }
     await loadData()
-    showFeedback('Category restored.')
+    showSuccess('Restored', 'Category restored.')
   }
 
   const pendingCategoryFaqs = categoryDelete
@@ -230,8 +208,8 @@ function FaqCategories() {
         title="Delete category?"
         description={
           pendingCategoryFaqs > 0
-            ? `This category still has ${pendingCategoryFaqs} FAQ${pendingCategoryFaqs === 1 ? '' : 's'}. Choose a category to move them into before deleting — nothing will be lost.`
-            : 'This archives the category and removes it from the public filter.'
+            ? `This category still has ${pendingCategoryFaqs} FAQ${pendingCategoryFaqs === 1 ? '' : 's'}. Reassign them before deleting — deletion will be blocked until empty.`
+            : 'This permanently deletes the category. This cannot be undone.'
         }
         onClose={() => setCategoryDelete(null)}
         footer={
@@ -247,7 +225,7 @@ function FaqCategories() {
             <Button
               type="button"
               variant="danger"
-              disabled={busy || (pendingCategoryFaqs > 0 && !moveTarget)}
+              disabled={busy || pendingCategoryFaqs > 0}
               onClick={handleDeleteCategory}
             >
               {busy ? 'Deleting…' : 'Delete Category'}
@@ -262,15 +240,12 @@ function FaqCategories() {
             onChange={(event) => setMoveTarget(event.target.value)}
             options={moveOptions}
             placeholder="Choose a category…"
+            hint="You must move FAQs before deleting. This is blocked until empty."
           />
         ) : (
-          <FaqModalHint>
-            The category's questions are archived with it.
-          </FaqModalHint>
+          <FaqModalHint>This will permanently delete the category.</FaqModalHint>
         )}
       </Modal>
-
-      <Toast visible={Boolean(feedback)} message={feedback} tone={feedbackTone} />
     </FAQsCMSPage>
   )
 }

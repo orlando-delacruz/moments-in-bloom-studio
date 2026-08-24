@@ -244,7 +244,7 @@ export const servicesSections = [
 ]
 
 function HeroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -289,16 +289,16 @@ function HeroForm({ value, onChange }) {
       <ImageField
         label="Hero image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function IntroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -343,46 +343,46 @@ function IntroForm({ value, onChange }) {
       <ImageField
         label="Primary image"
         value={value?.primaryImage?.src ?? ''}
-        onChange={(src) => patch({ primaryImage: { ...value.primaryImage, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, primaryImage: { ...(prev.primaryImage ?? {}), src } }))}
         alt={value?.primaryImage?.alt ?? ''}
-        onAltChange={(event) => patch({ primaryImage: { ...value.primaryImage, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, primaryImage: { ...(prev.primaryImage ?? {}), alt: event.target.value } }))}
       />
       <ImageField
         label="Secondary image"
         value={value?.secondaryImage?.src ?? ''}
-        onChange={(src) => patch({ secondaryImage: { ...value.secondaryImage, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, secondaryImage: { ...(prev.secondaryImage ?? {}), src } }))}
         alt={value?.secondaryImage?.alt ?? ''}
-        onAltChange={(event) => patch({ secondaryImage: { ...value.secondaryImage, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, secondaryImage: { ...(prev.secondaryImage ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function HighlightsForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   const baseFields = (key) => (
     <>
       <TextField
         label="Badge"
         value={value?.[key]?.badge ?? ''}
-        onChange={(event) => patch({ [key]: { ...value[key], badge: event.target.value } })}
+        onChange={(event) => onChange((prev) => ({ ...prev, [key]: { ...(prev[key] ?? {}), badge: event.target.value } }))}
       />
       <TextField
         label="Title"
         value={value?.[key]?.title ?? ''}
-        onChange={(event) => patch({ [key]: { ...value[key], title: event.target.value } })}
+        onChange={(event) => onChange((prev) => ({ ...prev, [key]: { ...(prev[key] ?? {}), title: event.target.value } }))}
       />
       <TextAreaField
         label="Description"
         value={value?.[key]?.description ?? ''}
-        onChange={(event) => patch({ [key]: { ...value[key], description: event.target.value } })}
+        onChange={(event) => onChange((prev) => ({ ...prev, [key]: { ...(prev[key] ?? {}), description: event.target.value } }))}
       />
       <ImageField
         label="Image"
         value={value?.[key]?.image?.src ?? ''}
-        onChange={(src) => patch({ [key]: { ...value[key], image: { ...value[key]?.image, src } } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, [key]: { ...(prev[key] ?? {}), image: { ...((prev[key]?.image) ?? {}), src } } }))}
         alt={value?.[key]?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ [key]: { ...value[key], image: { ...value[key]?.image, alt: event.target.value } } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, [key]: { ...(prev[key] ?? {}), image: { ...((prev[key]?.image) ?? {}), alt: event.target.value } } }))}
       />
     </>
   )
@@ -455,7 +455,7 @@ function BlissfulNestIntroForm({ value, onChange }) {
 }
 
 function ExperienceTimelineForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -504,7 +504,7 @@ function ExperienceTimelineForm({ value, onChange }) {
 }
 
 function CtaForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField

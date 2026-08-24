@@ -43,13 +43,16 @@ export const contactSections = [
     type: 'object',
     sectionMeta: (values) => [
       `${(values.eventTypeOptions ?? []).length} event types`,
+      `${(values.serviceInterestOptions ?? []).length} services`,
+      `${(values.guestCountOptions ?? []).length} guest`,
+      `${(values.setupRequirementOptions ?? []).length} setup`,
     ],
     form: EnquiryFormOptionsForm,
   },
 ]
 
 function HeroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -77,16 +80,16 @@ function HeroForm({ value, onChange }) {
       <ImageField
         label="Hero image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function InformationForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -116,7 +119,7 @@ function InformationForm({ value, onChange }) {
 }
 
 function EnquiryFormRailForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -168,13 +171,7 @@ function EnquiryFormRailForm({ value, onChange }) {
 }
 
 function CtaForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
-
-  const validatePath = (path) => {
-    if (!path) return undefined
-    if (/^\//.test(path) || /^https?:\/\//.test(path)) return undefined
-    return 'Start with / for internal pages (e.g. /services) or https:// for external links.'
-  }
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
 
   return (
     <>
@@ -200,23 +197,9 @@ function CtaForm({ value, onChange }) {
         onChange={(event) => patch({ primaryCta: event.target.value })}
       />
       <TextField
-        label="Primary link"
-        hint="Internal path (e.g. /services) or full URL (e.g. https://...)."
-        value={value?.primaryPath ?? ''}
-        onChange={(event) => patch({ primaryPath: event.target.value })}
-        error={validatePath(value?.primaryPath ?? '')}
-      />
-      <TextField
         label="Secondary button"
         value={value?.secondaryCta ?? ''}
         onChange={(event) => patch({ secondaryCta: event.target.value })}
-      />
-      <TextField
-        label="Secondary link"
-        hint="Internal path (e.g. /gallery) or full URL (e.g. https://...)."
-        value={value?.secondaryPath ?? ''}
-        onChange={(event) => patch({ secondaryPath: event.target.value })}
-        error={validatePath(value?.secondaryPath ?? '')}
       />
     </>
   )
@@ -241,14 +224,29 @@ const StringsRepeater = ({ label, items, onChange, addLabel, placeholder }) => (
 )
 
 function EnquiryFormOptionsForm({ value, onChange }) {
+  const eventTypes = value?.eventTypeOptions ?? []
+  const serviceOptions = value?.serviceInterestOptions ?? []
+
+  const isDuplicateEventType = (current) => {
+    const normalized = String(current ?? '').trim().toLowerCase()
+    if (!normalized) return false
+    return eventTypes.filter((entry) => String(entry ?? '').trim().toLowerCase() === normalized).length > 1
+  }
+
+  const isDuplicateServiceValue = (current) => {
+    const normalized = String(current ?? '').trim().toLowerCase()
+    if (!normalized) return false
+    return serviceOptions.filter((entry) => String(entry.value ?? '').trim().toLowerCase() === normalized).length > 1
+  }
+
   return (
     <>
       <HelpText>
         These are the choices shown in the enquiry form on the public Contact page.
-        Add or remove options to match the services and events you offer.
+        Add or remove options to match the services and events you offer. Drag to reorder — order here is the order in the public dropdown.
       </HelpText>
       <Repeater
-        items={value?.eventTypeOptions ?? []}
+        items={eventTypes}
         onChange={(eventTypeOptions) => onChange({ ...value, eventTypeOptions })}
         createItem={() => ''}
         addLabel="Add event type"
@@ -259,14 +257,17 @@ function EnquiryFormOptionsForm({ value, onChange }) {
             value={item ?? ''}
             onChange={(event) => replace(event.target.value)}
             placeholder="e.g. Wedding"
+            error={isDuplicateEventType(item, index) ? 'Duplicate — must be unique.' : undefined}
+            hint={index === 0 ? 'Order = dropdown order. Drag to reorder.' : undefined}
           />
         )}
       />
       <HelpText style={{ marginTop: '1.5rem' }}>
-        Options shown in the Service Interest step — clients can select multiple.
+        Options shown in the Service Interest step — clients can select multiple. <strong>Label</strong> is shown to clients,{' '}
+        <strong>value</strong> is stored in the database (use <code>kebab-case</code>, unique, e.g. <code>event-decor-hire</code>).
       </HelpText>
       <Repeater
-        items={value?.serviceInterestOptions ?? []}
+        items={serviceOptions}
         onChange={(serviceInterestOptions) => onChange({ ...value, serviceInterestOptions })}
         createItem={() => ({ value: 'new-service', label: 'New service' })}
         addLabel="Add service option"
@@ -277,17 +278,21 @@ function EnquiryFormOptionsForm({ value, onChange }) {
               label="Label"
               value={item.label ?? ''}
               onChange={(event) => patch({ label: event.target.value })}
+              placeholder="e.g. Event Decor Hire"
             />
             <TextField
               label="Value"
               value={item.value ?? ''}
               onChange={(event) => patch({ value: event.target.value })}
+              placeholder="e.g. event-decor-hire"
+              hint="kebab-case, unique"
+              error={isDuplicateServiceValue(item.value, index) ? 'Duplicate value — must be unique.' : undefined}
             />
           </>
         )}
       />
       <HelpText style={{ marginTop: '1.5rem' }}>
-        Options shown in the Guest Count dropdown during event details.
+        Options shown in the Guest Count dropdown during event details. Drag to reorder.
       </HelpText>
       <StringsRepeater
         label="Guest count"
@@ -297,7 +302,7 @@ function EnquiryFormOptionsForm({ value, onChange }) {
         placeholder="e.g. 51–100"
       />
       <HelpText style={{ marginTop: '1.5rem' }}>
-        Options shown in the Setup &amp; Styling step — clients pick one.
+        Options shown in the Setup &amp; Styling step — clients pick one. Drag to reorder.
       </HelpText>
       <StringsRepeater
         label="Setup option"
@@ -306,6 +311,9 @@ function EnquiryFormOptionsForm({ value, onChange }) {
         addLabel="Add setup option"
         placeholder="e.g. Yes"
       />
+      <HelpText style={{ marginTop: '1.5rem' }}>
+        Preview: <a href="/contact" target="_blank" rel="noreferrer">View Contact form</a> (opens public form with your options).
+      </HelpText>
     </>
   )
 }

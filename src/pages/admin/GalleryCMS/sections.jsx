@@ -223,7 +223,7 @@ function GalleryCategoryForm({ value, onChange, errors }) {
 }
 
 function FeaturedStoryForm({ value, onChange, errors }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <FieldRow>
@@ -317,7 +317,7 @@ function InstagramPostsForm({ value, onChange }) {
 }
 
 function HeroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -357,7 +357,7 @@ function HeroForm({ value, onChange }) {
 }
 
 function IntroductionForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -380,7 +380,7 @@ function IntroductionForm({ value, onChange }) {
 }
 
 function InstagramSectionForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -398,7 +398,7 @@ function InstagramSectionForm({ value, onChange }) {
 }
 
 function CtaForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -438,7 +438,7 @@ function CtaForm({ value, onChange }) {
 }
 
 function FeaturedStoriesSectionForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField

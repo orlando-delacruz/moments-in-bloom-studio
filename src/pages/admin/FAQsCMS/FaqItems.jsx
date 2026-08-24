@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { FiArrowLeft, FiHelpCircle, FiPlus } from 'react-icons/fi'
+import { FiArrowLeft, FiHelpCircle, FiPlus, FiTrash2 } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
 import ConfirmDialog from '../../../components/admin/ConfirmDialog/index.js'
 import ContentList from '../../../components/admin/ContentList/index.js'
@@ -9,7 +9,8 @@ import Button from '../../../components/Button/index.js'
 import { showError, showSuccess } from '../../../utils/sweetAlert.js'
 import { adminPageMeta } from '../../../constants/admin.js'
 import {
-  archiveFaq,
+  deleteFaq,
+  deleteFaqs,
   fetchFaqsAdmin,
   restoreFaq,
   setFaqOrder,
@@ -34,6 +35,8 @@ function FaqItems() {
   const [categoryFilter, setCategoryFilter] = useState('')
   const [busy, setBusy] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
+  const [selectedIds, setSelectedIds] = useState(() => new Set())
+  const [bulkConfirm, setBulkConfirm] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -62,6 +65,7 @@ function FaqItems() {
   const loadData = useCallback(() => {
     setStatus('loading')
     setReloadKey((key) => key + 1)
+    setSelectedIds(new Set())
   }, [])
 
   const categories = useMemo(() => data?.categories ?? [], [data])
@@ -102,6 +106,23 @@ function FaqItems() {
     return true
   })
 
+  const toggleSelect = (id) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === filteredFaqs.length) {
+      setSelectedIds(new Set())
+    } else {
+      setSelectedIds(new Set(filteredFaqs.map((f) => f.id)))
+    }
+  }
+
   const runOrderSwap = async (first, second) => {
     setBusy(true)
     const [firstResult, secondResult] = await Promise.all([
@@ -138,15 +159,36 @@ function FaqItems() {
   const handleDeleteFaq = async () => {
     if (!deleteTarget) return
     setBusy(true)
-    const result = await archiveFaq(deleteTarget.id)
+    const result = await deleteFaq(deleteTarget.id)
     setBusy(false)
     setDeleteTarget(null)
     if (result.error) {
-      showError('Archive failed', result.error.message)
+      showError('Delete failed', result.error.message)
       return
     }
     await loadData()
-    showSuccess('Archived', 'FAQ archived. It is now hidden from visitors.')
+    setSelectedIds((prev) => {
+      const next = new Set(prev)
+      next.delete(deleteTarget.id)
+      return next
+    })
+    showSuccess('Deleted', 'FAQ deleted permanently.')
+  }
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.size === 0) return
+    setBusy(true)
+    const ids = [...selectedIds]
+    const result = await deleteFaqs(ids)
+    setBusy(false)
+    setBulkConfirm(false)
+    if (result.error) {
+      showError('Delete failed', result.error.message)
+      return
+    }
+    await loadData()
+    setSelectedIds(new Set())
+    showSuccess('Deleted', `${ids.length} FAQs deleted permanently.`)
   }
 
   const handleRestoreFaq = async (faq) => {
@@ -172,10 +214,18 @@ function FaqItems() {
       <AdminPageHeader
         {...adminPageMeta.faqsItems}
         actions={
-          <Button to="/admin/faqs/content/items/new" variant="primary">
-            <FiPlus aria-hidden="true" size={15} />
-            Add FAQ
-          </Button>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {selectedIds.size > 0 ? (
+              <Button variant="danger" onClick={() => setBulkConfirm(true)} disabled={busy}>
+                <FiTrash2 aria-hidden="true" size={15} />
+                Delete {selectedIds.size}
+              </Button>
+            ) : null}
+            <Button to="/admin/faqs/content/items/new" variant="primary">
+              <FiPlus aria-hidden="true" size={15} />
+              Add FAQ
+            </Button>
+          </div>
         }
       />
 
@@ -218,6 +268,23 @@ function FaqItems() {
               },
             ]}
           />
+
+          {filteredFaqs.length > 0 ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+              <input
+                type="checkbox"
+                checked={selectedIds.size === filteredFaqs.length && filteredFaqs.length > 0}
+                onChange={toggleSelectAll}
+                aria-label="Select all FAQs"
+              />
+              <span style={{ fontSize: '0.82rem', color: '#6E6761' }}>
+                Select all ({filteredFaqs.length})
+              </span>
+              {selectedIds.size > 0 ? (
+                <span style={{ fontSize: '0.82rem', color: '#6E6761' }}>{selectedIds.size} selected</span>
+              ) : null}
+            </div>
+          ) : null}
 
           <ContentList
             title="FAQ items"
@@ -270,18 +337,27 @@ function FaqItems() {
                 .sort(byOrder)
               const index = siblings.findIndex((entry) => entry.id === faq.id)
               return (
-                <FaqRow
-                  key={faq.id}
-                  faq={faq}
-                  categoryName={categoryName(faq.category_id)}
-                  categorySlug={categorySlug(faq.category_id)}
-                  first={index === 0}
-                  last={index === siblings.length - 1}
-                  busy={busy}
-                  onMove={handleMoveFaq}
-                  onDelete={setDeleteTarget}
-                  onRestore={handleRestoreFaq}
-                />
+                <div key={faq.id} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.has(faq.id)}
+                    onChange={() => toggleSelect(faq.id)}
+                    aria-label={`Select ${faq.question}`}
+                  />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <FaqRow
+                      faq={faq}
+                      categoryName={categoryName(faq.category_id)}
+                      categorySlug={categorySlug(faq.category_id)}
+                      first={index === 0}
+                      last={index === siblings.length - 1}
+                      busy={busy}
+                      onMove={handleMoveFaq}
+                      onDelete={setDeleteTarget}
+                      onRestore={handleRestoreFaq}
+                    />
+                  </div>
+                </div>
               )
             })}
           </ContentList>
@@ -290,12 +366,22 @@ function FaqItems() {
 
       <ConfirmDialog
         open={Boolean(deleteTarget)}
-        title="Archive FAQ?"
-        description="This archives the question and hides it from visitors. You can restore it later from the FAQ editor."
-        confirmLabel="Archive FAQ"
+        title="Delete FAQ?"
+        description="This permanently deletes the question. This cannot be undone."
+        confirmLabel="Delete FAQ"
         cancelLabel="Cancel"
         onConfirm={handleDeleteFaq}
         onCancel={() => setDeleteTarget(null)}
+      />
+
+      <ConfirmDialog
+        open={bulkConfirm}
+        title={`Delete ${selectedIds.size} FAQs?`}
+        description="This permanently deletes the selected questions. This cannot be undone."
+        confirmLabel={`Delete ${selectedIds.size} FAQs`}
+        cancelLabel="Cancel"
+        onConfirm={handleBulkDelete}
+        onCancel={() => setBulkConfirm(false)}
       />
     </FAQsCMSPage>
   )

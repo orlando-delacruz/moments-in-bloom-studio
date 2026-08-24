@@ -153,7 +153,7 @@ export const aboutSections = [
 ]
 
 function HeroForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -186,16 +186,16 @@ function HeroForm({ value, onChange }) {
       <ImageField
         label="Hero image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function BrandStoryForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />
@@ -222,16 +222,16 @@ function BrandStoryForm({ value, onChange }) {
       <ImageField
         label="Story image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function MissionVisionForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   const panel = (key, label) => (
     <PanelFieldset>
       <strong>{label}</strong>
@@ -294,7 +294,7 @@ function CoreValuesForm({ value, onChange }) {
 }
 
 function WhyChooseUsForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />
@@ -314,7 +314,7 @@ function WhyChooseUsForm({ value, onChange }) {
 }
 
 function BehindExperienceForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />
@@ -335,7 +335,7 @@ function BehindExperienceForm({ value, onChange }) {
 }
 
 function StatsForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />
@@ -377,7 +377,7 @@ function StatsForm({ value, onChange }) {
 }
 
 function TestimonialHighlightForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />
@@ -401,16 +401,16 @@ function TestimonialHighlightForm({ value, onChange }) {
       <ImageField
         label="Portrait image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 function CtaForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <SubtitleTitleFields value={value} onChange={patch} />

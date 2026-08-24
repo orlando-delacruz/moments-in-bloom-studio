@@ -125,20 +125,20 @@ export function listDemoEnquiries() {
   return readDemoQueue()
 }
 
-export async function listEnquiries() {
+export async function listEnquiries(limit) {
   if (!supabase) {
     const queue = readDemoQueue()
     const sorted = [...queue].sort(
       (a, b) => new Date(b.created_at) - new Date(a.created_at),
     )
-    return { data: sorted, error: null, demo: true }
+    const sliced = Number.isInteger(limit) ? sorted.slice(0, limit) : sorted
+    return { data: sliced, error: null, demo: true }
   }
 
   try {
-    const { data, error } = await supabase
-      .from('enquiries')
-      .select('*')
-      .order('created_at', { ascending: false })
+    let query = supabase.from('enquiries').select('*').order('created_at', { ascending: false })
+    if (Number.isInteger(limit)) query = query.limit(limit)
+    const { data, error } = await query
 
     if (error) throw error
     return { data, error: null, demo: false }

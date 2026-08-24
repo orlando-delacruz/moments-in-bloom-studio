@@ -26,8 +26,11 @@ function SEO({
       <meta property="og:description" content={resolvedDescription} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={siteName} />
+      <meta property="og:locale" content="en_AU" />
       {resolvedUrl ? <meta property="og:url" content={resolvedUrl} /> : null}
       {image ? <meta property="og:image" content={image} /> : null}
+      {image ? <meta property="og:image:width" content="1200" /> : null}
+      {image ? <meta property="og:image:height" content="630" /> : null}
       <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={resolvedDescription} />

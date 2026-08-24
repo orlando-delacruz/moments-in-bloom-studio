@@ -22,7 +22,7 @@ const StringsRepeater = ({ label, items, onChange, addLabel, placeholder }) => (
 )
 
 export function PhotoboothPackageForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -97,7 +97,7 @@ export function PhotoboothPackageForm({ value, onChange }) {
 }
 
 export function BlissfulNestPackageForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -139,7 +139,7 @@ export function BlissfulNestPackageForm({ value, onChange }) {
 }
 
 export function ServicesGalleryItemForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextField
@@ -162,16 +162,16 @@ export function ServicesGalleryItemForm({ value, onChange }) {
       <ImageField
         label="Image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
 }
 
 export function ServicesTestimonialForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
+  const patch = (next) => onChange((prev) => ({ ...prev, ...(typeof next === 'function' ? next(prev) : next) }))
   return (
     <>
       <TextAreaField
@@ -203,9 +203,9 @@ export function ServicesTestimonialForm({ value, onChange }) {
       <ImageField
         label="Portrait image"
         value={value?.image?.src ?? ''}
-        onChange={(src) => patch({ image: { ...value.image, src } })}
+        onChange={(src) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), src } }))}
         alt={value?.image?.alt ?? ''}
-        onAltChange={(event) => patch({ image: { ...value.image, alt: event.target.value } })}
+        onAltChange={(event) => onChange((prev) => ({ ...prev, image: { ...(prev.image ?? {}), alt: event.target.value } }))}
       />
     </>
   )
