@@ -15,7 +15,11 @@ export const supabase = isConfigured ? createClient(supabaseUrl, supabaseAnonKey
  */
 export const publicSupabase = isConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        storageKey: 'mib-public-auth',
+      },
     })
   : null
 
