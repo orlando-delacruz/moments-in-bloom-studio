@@ -15,12 +15,21 @@ function AdminLayout() {
         setDrawerOpen(false)
       }
     }
-    const previousOverflow = document.body.style.overflow
+    const handleTouchMove = (event) => {
+      if (event.target.closest('aside')) return
+      event.preventDefault()
+    }
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    const previousBodyOverflow = document.body.style.overflow
+    document.documentElement.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
     return () => {
-      document.body.style.overflow = previousOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+      document.body.style.overflow = previousBodyOverflow
       window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('touchmove', handleTouchMove)
     }
   }, [drawerOpen])
 
