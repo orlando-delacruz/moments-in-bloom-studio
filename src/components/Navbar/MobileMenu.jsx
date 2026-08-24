@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/images/logo-old.png'
 import { footerContact, footerSocialLinks, publicNavigation } from '../../constants/navigation.js'
+import useAuth from '../../hooks/useAuth.js'
 import Button from '../Button/index.js'
 import * as S from './MobileMenu.styles.js'
 
@@ -25,6 +26,7 @@ const focusableSelector =
   'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 function MobileMenu({ isOpen, onClose }) {
+  const { session } = useAuth()
   const panelRef = useRef(null)
   const firstLinkRef = useRef(null)
 
@@ -109,6 +111,11 @@ function MobileMenu({ isOpen, onClose }) {
             </S.MenuLinks>
 
             <S.MenuFooter>
+              {session ? (
+                <Button as={NavLink} to="/admin/dashboard" onClick={onClose}>
+                  Dashboard
+                </Button>
+              ) : null}
               <Button as={NavLink} to="/contact" onClick={onClose}>
                 Enquire Now
               </Button>

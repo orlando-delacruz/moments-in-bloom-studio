@@ -9,6 +9,7 @@ import {
   NAVBAR_SCROLL_THRESHOLD,
   NAVBAR_THEMES,
 } from '../../constants/ui.js'
+import useAuth from '../../hooks/useAuth.js'
 import useBodyScrollLock from '../../hooks/useBodyScrollLock.js'
 import useScrolled from '../../hooks/useScrolled.js'
 import Button from '../Button/index.js'
@@ -17,6 +18,7 @@ import * as S from './Navbar.styles.js'
 import * as M from './MobileMenu.styles.js'
 
 function Navbar({ variant = NAVBAR_THEMES.LIGHT }) {
+  const { session } = useAuth()
   const isScrolled = useScrolled(NAVBAR_SCROLL_THRESHOLD)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const menuButtonRef = useRef(null)
@@ -80,6 +82,15 @@ function Navbar({ variant = NAVBAR_THEMES.LIGHT }) {
             ))}
           </S.PrimaryNav>
           <S.DesktopActions>
+            {session ? (
+              <Button
+                as={NavLink}
+                to="/admin/dashboard"
+                variant={isDark ? BUTTON_VARIANTS.LIGHT : BUTTON_VARIANTS.PRIMARY}
+              >
+                Dashboard
+              </Button>
+            ) : null}
             <Button
               as={NavLink}
               to="/contact"
