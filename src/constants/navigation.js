@@ -33,14 +33,12 @@ export const adminNavigationGroups = Object.freeze([
     items: [{ label: 'Enquiries', path: '/admin/enquiries', icon: 'enquiries' }],
   },
   {
-    id: 'search',
-    label: 'Search & Sharing',
-    items: [{ label: 'SEO', path: '/admin/seo', icon: 'seo' }],
-  },
-  {
     id: 'system',
     label: 'System',
-    items: [{ label: 'Settings', path: '/admin/settings', icon: 'settings' }],
+    items: [
+      { label: 'SEO', path: '/admin/seo', icon: 'seo' },
+      { label: 'Settings', path: '/admin/settings', icon: 'settings' },
+    ],
   },
 ])
 

@@ -1,9 +1,6 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
-import {
-  SERVICES_SECTION_IDS,
-  servicesSeo,
-} from '../../../constants/services.js'
+import { SERVICES_SECTION_IDS } from '../../../constants/services.js'
 import FaqSection from './FaqSection/index.js'
 import ServiceCollectionsShowcase from './ServiceCollectionsShowcase/index.js'
 import { ServicesPage } from './Services.styles.js'
@@ -12,16 +9,19 @@ import ServicesExperience from './ServicesExperience/index.js'
 import ServicesHero from './ServicesHero/index.js'
 
 function Services() {
-  const { values } = useContent('services')
+  const { values, loading } = useContent('services')
+  const { values: seoValues } = useContent('seo')
+  const seo = seoValues.services ?? seoValues.site ?? {}
 
   return (
-    <ServicesPage>
+    <ServicesPage aria-busy={loading ? 'true' : undefined}>
       <SEO
-        title={servicesSeo.title}
-        description={servicesSeo.description}
-        canonical={servicesSeo.url}
-        image={servicesSeo.image}
-        url={servicesSeo.url}
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        image={seo.image}
+        keywords={seo.keywords}
+        url={seo.url}
       />
       <ServicesHero content={values.hero} id={SERVICES_SECTION_IDS.HERO} />
       <ServiceCollectionsShowcase

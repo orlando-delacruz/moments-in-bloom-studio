@@ -1,7 +1,7 @@
 import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FiArrowLeft, FiEye, FiEyeOff, FiMail } from 'react-icons/fi'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { FiArrowLeft, FiEye, FiEyeOff } from 'react-icons/fi'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import logoPrimary from '../../../assets/images/logo-old-primary.png'
 import Button from '../../../components/Button/index.js'
 import {
@@ -13,14 +13,12 @@ import {
 } from '../../../components/FormField/index.js'
 import { adminLogin } from '../../../constants/admin.js'
 import useAuth from '../../../hooks/useAuth.js'
-import { isSupabaseConfigured } from '../../../services/supabaseClient.js'
 import { EMAIL_PATTERN } from '../../../utils/validation.js'
 import {
   LoginBackLink,
   LoginBrand,
   LoginBrandLogo,
   LoginCard,
-  LoginDemoNote,
   LoginError,
   LoginEyebrow,
   LoginForm,
@@ -140,14 +138,18 @@ function Login() {
             {isSubmitting ? adminLogin.loadingLabel : adminLogin.submitLabel}
           </Button>
 
-          <LoginDemoNote>
-            <FiMail aria-hidden="true" size={15} />
-            <span>
-              {isSupabaseConfigured()
-                ? adminLogin.supabaseHint
-                : adminLogin.demoHint}
-            </span>
-          </LoginDemoNote>
+          <div style={{ textAlign: 'right', marginTop: '0.75rem' }}>
+            <Link
+              to="/admin/forgot-password"
+              style={{
+                fontSize: '0.82rem',
+                color: 'var(--color-primary, #8b6f47)',
+                textDecoration: 'underline',
+              }}
+            >
+              {adminLogin.forgotPasswordLabel}
+            </Link>
+          </div>
         </LoginForm>
 
         <LoginBackLink to="/">

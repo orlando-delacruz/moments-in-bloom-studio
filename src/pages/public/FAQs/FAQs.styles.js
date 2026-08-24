@@ -64,3 +64,29 @@ export const FaqErrorMessage = styled.p`
   font-size: 0.95rem;
   line-height: 1.7;
 `
+
+export const FaqSearchWrap = styled.div`
+  max-width: 420px;
+  margin: 0 auto 1.25rem;
+`
+
+export const FaqSearchInput = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  font-family: ${({ theme }) => theme.typography.uiFont};
+  font-size: 0.9rem;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.textSecondary};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.focus};
+    box-shadow: ${({ theme }) => theme.shadows.focus};
+  }
+`

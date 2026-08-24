@@ -17,7 +17,7 @@ function FAQItem({ item, isOpen, onToggle, onKeyDown }) {
   const panelId = `${baseId}-panel`
 
   return (
-    <FaqItemRoot>
+    <FaqItemRoot id={item.id}>
       <FaqTrigger
         id={triggerId}
         type="button"

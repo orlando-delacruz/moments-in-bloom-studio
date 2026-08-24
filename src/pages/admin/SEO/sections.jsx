@@ -18,6 +18,12 @@ function SeoForm({ value, onChange }) {
         onChange={(event) => patch({ description: event.target.value })}
       />
       <TextField
+        label="Keywords"
+        value={value?.keywords ?? ''}
+        onChange={(event) => patch({ keywords: event.target.value })}
+        hint="Comma-separated, e.g. wedding styling Melbourne, florals"
+      />
+      <TextField
         label="URL"
         type="url"
         value={value?.url ?? ''}
@@ -72,6 +78,13 @@ export const seoSections = [
     key: 'contact',
     title: 'Contact',
     description: 'How the Contact page appears in search results.',
+    type: 'object',
+    form: SeoForm,
+  },
+  {
+    key: 'faqs',
+    title: 'FAQs',
+    description: 'How the FAQs page appears in search results.',
     type: 'object',
     form: SeoForm,
   },

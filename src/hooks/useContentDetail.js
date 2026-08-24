@@ -20,7 +20,7 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
   const item = useMemo(() => {
     if (listKey) {
       const items = values[listKey] ?? []
-      return items.find((entry) => entry.id === itemId)
+      return items.find((entry) => String(entry.id) === String(itemId))
     }
     return values[sectionKey]
   }, [values, listKey, sectionKey, itemId])
@@ -64,9 +64,9 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
     let result
     if (listKey) {
       const items = values[listKey] ?? []
-      const existsInList = items.some((entry) => entry.id === next.id)
+      const existsInList = items.some((entry) => String(entry.id) === String(next.id))
       const nextItems = existsInList
-        ? items.map((entry) => (entry.id === next.id ? next : entry))
+        ? items.map((entry) => (String(entry.id) === String(next.id) ? next : entry))
         : [...items, next]
       result = await persist(nextItems)
     } else {
@@ -88,7 +88,7 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
 
   const removeItem = () => {
     if (!listKey || creating) return
-    persist((values[listKey] ?? []).filter((entry) => entry.id !== itemId))
+    persist((values[listKey] ?? []).filter((entry) => String(entry.id) !== String(itemId)))
     setDirty(false)
   }
 

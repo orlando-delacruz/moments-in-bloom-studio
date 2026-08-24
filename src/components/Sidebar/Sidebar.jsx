@@ -11,6 +11,7 @@ import {
   FiSettings,
   FiGrid,
   FiUser,
+  FiUsers,
 } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import logoPrimary from '../../assets/images/logo-old-primary.png'
@@ -40,6 +41,7 @@ const navigationIcons = {
   enquiries: FiMail,
   seo: FiSearch,
   settings: FiSettings,
+  team: FiUsers,
 }
 
 function Sidebar({ open = false, onClose, collapsed = false, onToggleCollapse }) {

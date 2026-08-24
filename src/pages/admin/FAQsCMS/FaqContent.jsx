@@ -5,13 +5,13 @@ import { adminPageMeta } from '../../../constants/admin.js'
 import { fetchFaqPageAdmin, fetchFaqsAdmin } from '../../../services/faqs.js'
 import {
   FaqBackLink,
+  FaqEqualGrid,
   FaqHubAction,
   FaqHubArrow,
   FaqHubCard,
   FaqHubCardDescription,
   FaqHubCardTitle,
   FaqHubFooter,
-  FaqHubGrid,
   FaqHubSummary,
   FaqSkeletonBar,
   FAQsCMSPage,
@@ -94,7 +94,7 @@ function FaqContent() {
 
       <AdminPageHeader {...adminPageMeta.faqsContent} />
 
-      <FaqHubGrid>
+      <FaqEqualGrid>
         {cards.map((card) => (
           <FaqHubCard key={card.to} to={card.to}>
             <FaqHubCardTitle>{card.title}</FaqHubCardTitle>
@@ -110,7 +110,7 @@ function FaqContent() {
             </FaqHubFooter>
           </FaqHubCard>
         ))}
-      </FaqHubGrid>
+      </FaqEqualGrid>
     </FAQsCMSPage>
   )
 }

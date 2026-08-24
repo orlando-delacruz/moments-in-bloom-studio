@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { FiDownload, FiEye, FiInbox, FiMail, FiSearch, FiTrash2 } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
 import ConfirmDialog from '../../../components/admin/ConfirmDialog/index.js'
@@ -6,8 +6,8 @@ import DataTable from '../../../components/admin/DataTable/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
 import Modal from '../../../components/admin/Modal/index.js'
 import StatusBadge from '../../../components/admin/StatusBadge/index.js'
-import Toast from '../../../components/admin/Toast/index.js'
 import Button from '../../../components/Button/index.js'
+import { showError, showSuccess } from '../../../utils/sweetAlert.js'
 import { SelectField, TextField } from '../../../components/FormField/index.js'
 import { adminPageMeta, ENQUIRY_STATUSES, enquiryStatusLabels } from '../../../constants/admin.js'
 import { deleteEnquiry, listEnquiries, updateEnquiryStatus } from '../../../services/enquiries.js'
@@ -94,9 +94,6 @@ function Enquiries() {
   const [statusError, setStatusError] = useState(null)
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [feedback, setFeedback] = useState(null)
-  const [feedbackTone, setFeedbackTone] = useState('success')
-  const feedbackTimerRef = useRef(null)
 
   useEffect(() => {
     let mounted = true
@@ -114,12 +111,7 @@ function Enquiries() {
     }
   }, [])
 
-  const showFeedback = (message, tone = 'success') => {
-    setFeedbackTone(tone)
-    setFeedback(message)
-    window.clearTimeout(feedbackTimerRef.current)
-    feedbackTimerRef.current = window.setTimeout(() => setFeedback(null), 3200)
-  }
+
 
   const visible = useMemo(() => {
     const normalized = search.trim().toLowerCase()
@@ -148,12 +140,12 @@ function Enquiries() {
         current.map((enquiry) => (enquiry.id === id ? result.data : enquiry)),
       )
       setSelected((current) => (current?.id === id ? result.data : current))
+      showSuccess('Updated', `Enquiry marked as ${status}.`)
       return
     }
-    setStatusError(
-      result.error?.message ??
-        "We couldn't update the status. Please try again.",
-    )
+    const msg = result.error?.message ?? "We couldn't update the status. Please try again."
+    setStatusError(msg)
+    showError('Update failed', msg)
   }
 
   const handleDeleteConfirm = async () => {
@@ -164,14 +156,14 @@ function Enquiries() {
 
     if (result.error) {
       setDeleteTarget(null)
-      showFeedback(result.error.message, 'error')
+      showError('Delete failed', result.error.message)
       return
     }
 
     setEnquiries((current) => current.filter((enquiry) => enquiry.id !== deleteTarget.id))
     setSelected((current) => (current?.id === deleteTarget.id ? null : current))
     setDeleteTarget(null)
-    showFeedback('Enquiry deleted successfully.')
+    showSuccess('Deleted', 'Enquiry deleted successfully.')
   }
 
   const handleExport = () => {
@@ -432,8 +424,6 @@ function Enquiries() {
         onConfirm={handleDeleteConfirm}
         onCancel={() => setDeleteTarget(null)}
       />
-
-      <Toast visible={Boolean(feedback)} message={feedback} tone={feedbackTone} />
     </EnquiriesPage>
   )
 }

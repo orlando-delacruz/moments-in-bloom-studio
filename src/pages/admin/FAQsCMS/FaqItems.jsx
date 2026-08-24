@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FiArrowLeft, FiHelpCircle, FiPlus } from 'react-icons/fi'
 import AdminPageHeader from '../../../components/admin/AdminPageHeader/index.js'
 import ConfirmDialog from '../../../components/admin/ConfirmDialog/index.js'
 import ContentList from '../../../components/admin/ContentList/index.js'
 import ContentToolbar from '../../../components/admin/ContentToolbar/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
-import Toast from '../../../components/admin/Toast/index.js'
 import Button from '../../../components/Button/index.js'
+import { showError, showSuccess } from '../../../utils/sweetAlert.js'
 import { adminPageMeta } from '../../../constants/admin.js'
 import {
   archiveFaq,
@@ -34,18 +34,6 @@ function FaqItems() {
   const [categoryFilter, setCategoryFilter] = useState('')
   const [busy, setBusy] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
-  const [feedback, setFeedback] = useState(null)
-  const [feedbackTone, setFeedbackTone] = useState('success')
-  const feedbackTimer = useRef(null)
-
-  const showFeedback = useCallback((message, tone = 'success') => {
-    setFeedback(message)
-    setFeedbackTone(tone)
-    if (feedbackTimer.current) {
-      window.clearTimeout(feedbackTimer.current)
-    }
-    feedbackTimer.current = window.setTimeout(() => setFeedback(null), 3200)
-  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -76,14 +64,6 @@ function FaqItems() {
     setReloadKey((key) => key + 1)
   }, [])
 
-  useEffect(() => {
-    return () => {
-      if (feedbackTimer.current) {
-        window.clearTimeout(feedbackTimer.current)
-      }
-    }
-  }, [])
-
   const categories = useMemo(() => data?.categories ?? [], [data])
   const faqs = data?.faqs ?? []
   const activeCategories = useMemo(() => categories.filter(isActive), [categories])
@@ -91,6 +71,11 @@ function FaqItems() {
     (categoryId) =>
       categories.find((category) => category.id === categoryId)?.name ??
       'Uncategorised',
+    [categories],
+  )
+  const categorySlug = useCallback(
+    (categoryId) =>
+      categories.find((category) => category.id === categoryId)?.slug ?? null,
     [categories],
   )
 
@@ -125,11 +110,11 @@ function FaqItems() {
     ])
     setBusy(false)
     if (firstResult.error || secondResult.error) {
-      showFeedback(
+      showError(
+        'Reorder failed',
         firstResult.error?.message ??
           secondResult.error?.message ??
           "We couldn't reorder the items. Please try again.",
-        'error',
       )
       return false
     }
@@ -146,7 +131,7 @@ function FaqItems() {
     const neighbor = siblings[index + direction]
     if (!neighbor) return
     if (await runOrderSwap(faq, neighbor)) {
-      showFeedback('FAQ order updated.')
+      showSuccess('Moved', 'FAQ order updated.')
     }
   }
 
@@ -157,11 +142,11 @@ function FaqItems() {
     setBusy(false)
     setDeleteTarget(null)
     if (result.error) {
-      showFeedback(result.error.message, 'error')
+      showError('Archive failed', result.error.message)
       return
     }
     await loadData()
-    showFeedback('FAQ archived. It is now hidden from visitors.')
+    showSuccess('Archived', 'FAQ archived. It is now hidden from visitors.')
   }
 
   const handleRestoreFaq = async (faq) => {
@@ -170,11 +155,11 @@ function FaqItems() {
     const result = await restoreFaq(faq.id)
     setBusy(false)
     if (result.error) {
-      showFeedback(result.error.message, 'error')
+      showError('Restore failed', result.error.message)
       return
     }
     await loadData()
-    showFeedback('FAQ restored.')
+    showSuccess('Restored', 'FAQ restored.')
   }
 
   return (
@@ -289,6 +274,7 @@ function FaqItems() {
                   key={faq.id}
                   faq={faq}
                   categoryName={categoryName(faq.category_id)}
+                  categorySlug={categorySlug(faq.category_id)}
                   first={index === 0}
                   last={index === siblings.length - 1}
                   busy={busy}
@@ -304,15 +290,13 @@ function FaqItems() {
 
       <ConfirmDialog
         open={Boolean(deleteTarget)}
-        title="Delete FAQ?"
+        title="Archive FAQ?"
         description="This archives the question and hides it from visitors. You can restore it later from the FAQ editor."
-        confirmLabel="Delete FAQ"
+        confirmLabel="Archive FAQ"
         cancelLabel="Cancel"
         onConfirm={handleDeleteFaq}
         onCancel={() => setDeleteTarget(null)}
       />
-
-      <Toast visible={Boolean(feedback)} message={feedback} tone={feedbackTone} />
     </FAQsCMSPage>
   )
 }

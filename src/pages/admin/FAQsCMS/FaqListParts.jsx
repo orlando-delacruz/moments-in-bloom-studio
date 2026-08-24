@@ -1,4 +1,4 @@
-import { FiChevronDown, FiChevronUp, FiEdit2, FiRotateCcw, FiTrash2 } from 'react-icons/fi'
+import { FiChevronDown, FiChevronUp, FiEdit2, FiExternalLink, FiRotateCcw, FiTrash2 } from 'react-icons/fi'
 import ContentStatus from '../../../components/admin/ContentStatus/index.js'
 import Button from '../../../components/Button/index.js'
 import {
@@ -31,9 +31,10 @@ export function FaqStatus({ row }) {
   )
 }
 
-export function FaqRow({ faq, categoryName, first, last, busy, onMove, onDelete, onRestore }) {
+export function FaqRow({ faq, categoryName, categorySlug, first, last, busy, onMove, onDelete, onRestore }) {
   const label = faq.question || 'Untitled question'
   const archived = Boolean(faq.deleted_at)
+  const previewHref = categorySlug ? `/faqs?category=${categorySlug}#${faq.id}` : '/faqs'
   return (
     <FaqCard>
       <FaqCardMain>
@@ -91,10 +92,29 @@ export function FaqRow({ faq, categoryName, first, last, busy, onMove, onDelete,
           >
             <FiEdit2 aria-hidden="true" size={15} />
           </FaqActionLink>
+          <a
+            href={previewHref}
+            target="_blank"
+            rel="noreferrer"
+            title="View on site"
+            aria-label={`View ${label} on site`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '2rem',
+              height: '2rem',
+              borderRadius: '0.5rem',
+              color: '#6E6761',
+              textDecoration: 'none',
+            }}
+          >
+            <FiExternalLink aria-hidden="true" size={15} />
+          </a>
           <FaqActionDanger
             type="button"
-            title="Delete FAQ"
-            aria-label={`Delete ${label}`}
+            title="Archive FAQ"
+            aria-label={`Archive ${label}`}
             disabled={busy || archived}
             onClick={() => onDelete(faq)}
           >

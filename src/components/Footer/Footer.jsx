@@ -1,12 +1,8 @@
 import { FiArrowRight, FiFacebook, FiInstagram } from 'react-icons/fi'
 import { NavLink } from 'react-router-dom'
 import logoWhite from '../../assets/images/logo-old-white.png'
-import {
-  footerContact,
-  footerNavigationGroups,
-  footerSocialLinks,
-  routeMetadata,
-} from '../../constants/navigation.js'
+import { routeMetadata } from '../../constants/navigation.js'
+import { useContent } from '../../hooks/useContent.js'
 import Button from '../Button/index.js'
 import * as S from './Footer.styles.js'
 
@@ -16,6 +12,37 @@ const socialIcons = {
 }
 
 function Footer() {
+  const { values: settingsValues } = useContent('settings')
+  const footerContact = settingsValues.footerContact ?? {
+    location: 'Melbourne, Australia',
+    email: 'hello@momentsinblooms.com',
+    phone: '+61 3 0000 0000',
+  }
+  const footerNavigationGroups = settingsValues.footerGroups ?? [
+    {
+      title: 'Explore',
+      links: [
+        { label: 'About us', path: '/about' },
+        { label: 'Our services', path: '/services' },
+        { label: 'View gallery', path: '/gallery' },
+        { label: 'Contact us', path: '/contact' },
+      ],
+    },
+    {
+      title: 'Services',
+      links: [
+        { label: 'Event styling', path: '/services' },
+        { label: 'Floral design', path: '/services' },
+        { label: 'Tablescapes', path: '/services' },
+        { label: 'Private celebrations', path: '/services' },
+      ],
+    },
+  ]
+  const footerSocialLinks = settingsValues.footerSocialLinks ?? [
+    { label: 'Instagram', href: 'https://ig.me/m/momentsinblooms' },
+    { label: 'Facebook', href: 'https://m.me/61575145079420' },
+  ]
+
   return (
     <S.FooterShell>
       <S.FooterContainer>

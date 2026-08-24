@@ -33,12 +33,25 @@ export const FaqBackLink = styled(NavLink)`
 
 export const FaqHubGrid = styled.div`
   display: grid;
+  grid-template-columns: 1fr;
+  gap: ${({ theme }) => theme.spacing.md};
+  align-items: stretch;
+`
+
+export const FaqEqualGrid = styled.div`
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ theme }) => theme.spacing.md};
   align-items: stretch;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: 1fr;
+  }
+
+  /* Ensure equal card heights */
+  > a {
+    height: 100%;
+    min-height: 14rem;
   }
 `
 

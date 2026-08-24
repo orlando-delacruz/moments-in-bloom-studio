@@ -34,6 +34,7 @@ const CollectionDetailPage = lazy(() =>
 const CollectionSectionDetailPage = lazy(() =>
   import('../pages/admin/ServicesCMS/DetailPages.jsx').then((m) => ({ default: m.CollectionSectionDetailPage })))
 const GalleryCMS = lazy(() => import('../pages/admin/GalleryCMS/GalleryCMS.jsx'))
+const GalleryItemsPage = lazy(() => import('../pages/admin/GalleryCMS/GalleryItemsPage.jsx'))
 const GallerySectionDetail = lazy(() =>
   import('../pages/admin/GalleryCMS/DetailPages.jsx').then((m) => ({ default: m.GallerySectionDetail })))
 const GalleryItemDetail = lazy(() =>
@@ -61,7 +62,10 @@ const SeoSectionDetail = lazy(() =>
 const Settings = lazy(() => import('../pages/admin/Settings/Settings.jsx'))
 const SettingsSectionDetail = lazy(() =>
   import('../pages/admin/Settings/DetailPages.jsx').then((m) => ({ default: m.SettingsSectionDetail })))
+const AccountPage = lazy(() => import('../pages/admin/Settings/AccountPage.jsx'))
 const Login = lazy(() => import('../pages/admin/Login/Login.jsx'))
+const ForgotPassword = lazy(() => import('../pages/admin/ForgotPassword/ForgotPassword.jsx'))
+const ResetPassword = lazy(() => import('../pages/admin/ResetPassword/ResetPassword.jsx'))
 const NotFound = lazy(() => import('../pages/NotFound/NotFound.jsx'))
 
 function AppShell() {
@@ -92,6 +96,8 @@ const router = createBrowserRouter([
         ],
       },
       { path: 'admin/login', element: <Login /> },
+      { path: 'admin/forgot-password', element: <ForgotPassword /> },
+      { path: 'admin/reset-password', element: <ResetPassword /> },
       {
         path: 'admin',
         element: (
@@ -104,11 +110,9 @@ const router = createBrowserRouter([
           { path: 'dashboard', element: <Dashboard /> },
           { path: 'homepage', element: <HomepageCMS /> },
           { path: 'homepage/:sectionKey', element: <HomepageSectionDetail /> },
-          { path: 'homepage/:sectionKey/new', element: <HomepageItemDetail /> },
           { path: 'homepage/:sectionKey/:itemId', element: <HomepageItemDetail /> },
           { path: 'about', element: <AboutCMS /> },
           { path: 'about/:sectionKey', element: <AboutSectionDetail /> },
-          { path: 'about/:sectionKey/new', element: <AboutItemDetail /> },
           { path: 'about/:sectionKey/:itemId', element: <AboutItemDetail /> },
           { path: 'services', element: <ServicesCMS /> },
           {
@@ -120,14 +124,10 @@ const router = createBrowserRouter([
             element: <CollectionSectionDetailPage />,
           },
           { path: 'services/:sectionKey', element: <ServicesSectionDetail /> },
-          { path: 'services/:sectionKey/new', element: <ServicesItemDetail /> },
           { path: 'services/:sectionKey/:itemId', element: <ServicesItemDetail /> },
           { path: 'gallery', element: <GalleryCMS /> },
-          { path: 'gallery/items', element: <GalleryCMS /> },
-          { path: 'gallery/items/new', element: <GalleryItemDetail /> },
-          { path: 'gallery/items/:itemId', element: <GalleryItemDetail /> },
+          { path: 'gallery/items', element: <GalleryItemsPage /> },
           { path: 'gallery/:sectionKey', element: <GallerySectionDetail /> },
-          { path: 'gallery/:sectionKey/new', element: <GalleryItemDetail /> },
           { path: 'gallery/:sectionKey/:itemId', element: <GalleryItemDetail /> },
           { path: 'faqs', element: <FAQsCMS /> },
           { path: 'faqs/hero', element: <FaqPageDetail section="hero" /> },
@@ -165,6 +165,7 @@ const router = createBrowserRouter([
           { path: 'seo', element: <SEO /> },
           { path: 'seo/:sectionKey', element: <SeoSectionDetail /> },
           { path: 'settings', element: <Settings /> },
+          { path: 'settings/account', element: <AccountPage /> },
           { path: 'settings/:sectionKey', element: <SettingsSectionDetail /> },
           { path: '*', element: <NotFound /> },
         ],

@@ -7,8 +7,8 @@ import ContentDetailHeader from '../ContentDetailHeader/index.js'
 import ContentFormSection from '../ContentFormSection/index.js'
 import EmptyState from '../EmptyState/index.js'
 import SaveActions from '../SaveActions/index.js'
-import Toast from '../Toast/index.js'
 import { useContentDetail } from '../../../hooks/useContentDetail.js'
+import { showSuccess } from '../../../utils/sweetAlert.js'
 import { useContent } from '../../../hooks/useContent.js'
 import { useUnsavedGuard } from '../../../hooks/useUnsavedGuard.jsx'
 import { DetailPageShell } from './ItemDetailPage.styles.js'
@@ -23,12 +23,10 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
   const location = useLocation()
   const section = sections.find((entry) => entry.key === sectionKey)
 
-  const [notice, setNotice] = useState(() => location.state?.mibSaved === true)
-
   useEffect(() => {
-    if (!location.state?.mibSaved) return undefined
-    const timer = window.setTimeout(() => setNotice(false), 3200)
-    return () => window.clearTimeout(timer)
+    if (location.state?.mibSaved) {
+      showSuccess('Created', 'Changes saved successfully.')
+    }
   }, [location.state?.mibSaved])
 
   const { values } = useContent(pageKey)
@@ -109,6 +107,7 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
   const handleDelete = () => {
     setConfirmDelete(false)
     removeItem()
+    showSuccess('Deleted', `${section.itemLabel} deleted.`)
     navigate(`${basePath}/${sectionKey}`)
   }
 
@@ -173,7 +172,6 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
         onConfirm={handleDelete}
         onCancel={() => setConfirmDelete(false)}
       />
-      <Toast visible={notice} message="Changes saved successfully." />
       {guard}
     </DetailPageShell>
   )

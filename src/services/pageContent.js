@@ -27,7 +27,15 @@ import { isSupabaseConfigured, publicSupabase, supabase } from './supabaseClient
  */
 
 /** Page keys that read/write Supabase. Everything else stays on localStorage. */
-export const SUPABASE_CONTENT_PAGES = new Set(['homepage', 'about'])
+export const SUPABASE_CONTENT_PAGES = new Set([
+  'homepage',
+  'about',
+  'services',
+  'contact',
+  'gallery',
+  'seo',
+  'settings',
+])
 
 export const isSupabaseContentPage = (pageKey) =>
   SUPABASE_CONTENT_PAGES.has(pageKey)

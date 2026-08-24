@@ -1,9 +1,6 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
-import {
-  HOME_SECTION_IDS,
-  homepageSeo,
-} from '../../../constants/homepage.js'
+import { HOME_SECTION_IDS } from '../../../constants/homepage.js'
 import CTA from './CTA/CTA.jsx'
 import GalleryPreview from './GalleryPreview/GalleryPreview.jsx'
 import Hero from './Hero/Hero.jsx'
@@ -15,16 +12,19 @@ import TrustedBy from './TrustedBy/TrustedBy.jsx'
 import WhyChooseUs from './WhyChooseUs/WhyChooseUs.jsx'
 
 function Home() {
-  const { values } = useContent('homepage')
+  const { values, loading } = useContent('homepage')
+  const { values: seoValues } = useContent('seo')
+  const seo = seoValues.home ?? seoValues.site ?? {}
 
   return (
-    <HomePage>
+    <HomePage aria-busy={loading ? 'true' : undefined}>
       <SEO
-        title={homepageSeo.title}
-        description={homepageSeo.description}
-        canonical={homepageSeo.url}
-        image={homepageSeo.image}
-        url={homepageSeo.url}
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        image={seo.image}
+        keywords={seo.keywords}
+        url={seo.url}
       />
       <Hero content={values.hero} id={HOME_SECTION_IDS.HERO} />
       <TrustedBy marks={values.trustMarks} id={HOME_SECTION_IDS.TRUST} />

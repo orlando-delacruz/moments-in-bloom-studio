@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
-import { FiExternalLink, FiLogOut, FiMenu } from 'react-icons/fi'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { FiChevronDown, FiExternalLink, FiLogOut, FiMenu, FiSettings, FiUser } from 'react-icons/fi'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ConfirmDialog from '../admin/ConfirmDialog/index.js'
 import Toast from '../admin/Toast/index.js'
 import { adminLogin } from '../../constants/admin.js'
@@ -12,11 +12,14 @@ import {
   TopbarContext,
   TopbarMenuButton,
   TopbarShell,
-  TopbarSignOut,
   TopbarTitle,
-  TopbarUser,
   TopbarUserAvatar,
+  TopbarUserButton,
+  TopbarUserDropdown,
   TopbarUserEmail,
+  TopbarUserMenu,
+  TopbarUserMenuItem,
+  TopbarUserName,
   TopbarViewSite,
 } from './Topbar.styles.js'
 
@@ -27,6 +30,8 @@ function Topbar({ onMenuClick, menuOpen = false }) {
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
   const [signOutError, setSignOutError] = useState(null)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const userMenuRef = useRef(null)
   const errorTimerRef = useRef(null)
 
   const currentGroup = adminNavigationGroups.find((group) =>
@@ -75,13 +80,33 @@ function Topbar({ onMenuClick, menuOpen = false }) {
   }
 
   const email = session?.email ?? ''
-  const initials = email
+  const displayName = session?.displayName ?? ''
+  const initials = (displayName || email)
     .split('@')[0]
-    .split(/[._-]+/)
+    .split(/[ ._-]+/)
+    .filter(Boolean)
     .map((part) => part[0] ?? '')
     .join('')
     .slice(0, 2)
-    .toUpperCase()
+    .toUpperCase() || 'AD'
+
+  useEffect(() => {
+    if (!userMenuOpen) return undefined
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false)
+      }
+    }
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setUserMenuOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [userMenuOpen])
 
   return (
     <TopbarShell>
@@ -113,21 +138,54 @@ function Topbar({ onMenuClick, menuOpen = false }) {
             <span>View site</span>
           </TopbarViewSite>
           {session ? (
-            <TopbarUser title={email}>
-              <TopbarUserAvatar aria-hidden="true">{initials}</TopbarUserAvatar>
-              <TopbarUserEmail>{email}</TopbarUserEmail>
-            </TopbarUser>
+            <TopbarUserDropdown ref={userMenuRef}>
+              <TopbarUserButton
+                type="button"
+                onClick={() => setUserMenuOpen((open) => !open)}
+                aria-haspopup="menu"
+                aria-expanded={userMenuOpen}
+                aria-label="Account menu"
+              >
+                <TopbarUserAvatar aria-hidden="true">{initials}</TopbarUserAvatar>
+                <span style={{ display: 'grid', textAlign: 'left', lineHeight: 1.1 }}>
+                  {displayName ? <TopbarUserName>{displayName}</TopbarUserName> : null}
+                  <TopbarUserEmail>{email}</TopbarUserEmail>
+                </span>
+                <FiChevronDown aria-hidden="true" size={14} style={{ opacity: 0.7 }} />
+              </TopbarUserButton>
+              {userMenuOpen ? (
+                <TopbarUserMenu role="menu">
+                  <TopbarUserMenuItem
+                    as={Link}
+                    to="/admin/settings/account"
+                    role="menuitem"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    <FiUser aria-hidden="true" size={14} /> My account
+                  </TopbarUserMenuItem>
+                  <TopbarUserMenuItem
+                    as={Link}
+                    to="/admin/settings"
+                    role="menuitem"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    <FiSettings aria-hidden="true" size={14} /> Settings
+                  </TopbarUserMenuItem>
+                  <TopbarUserMenuItem
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setUserMenuOpen(false)
+                      handleSignOut()
+                    }}
+                    disabled={isSigningOut}
+                  >
+                    <FiLogOut aria-hidden="true" size={14} /> {adminLogin.signOutLabel}
+                  </TopbarUserMenuItem>
+                </TopbarUserMenu>
+              ) : null}
+            </TopbarUserDropdown>
           ) : null}
-          <TopbarSignOut
-            type="button"
-            onClick={handleSignOut}
-            disabled={isSigningOut}
-            aria-busy={isSigningOut}
-            aria-label={adminLogin.signOutLabel}
-            title={adminLogin.signOutLabel}
-          >
-            <FiLogOut aria-hidden="true" size={16} />
-          </TopbarSignOut>
         </TopbarActions>
       </TopbarContainer>
 

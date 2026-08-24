@@ -29,6 +29,7 @@ const HighlightBlock = styled.div`
   }
 `
 
+// Aligned to public Services page order: Hero → Collections Showcase (serviceCollections + photobooth/blissful sub-sections) → Experience → CTA → (legacy dormant at end)
 export const servicesSections = [
   {
     key: 'hero',
@@ -38,12 +39,47 @@ export const servicesSections = [
     form: HeroForm,
   },
   {
-    key: 'intro',
-    title: 'Introduction',
-    description:
-      'Legacy CMS-managed philosophy content — not currently rendered on the public services page.',
-    type: 'object',
-    form: IntroForm,
+    key: 'serviceCollections',
+    title: 'Collections',
+    description: 'The main service collections and everything inside them.',
+    type: 'collections',
+    itemLabel: 'collection',
+    createInitial: () => ({
+      id: `collection-${Date.now()}`,
+      type: 'collection',
+      brand: 'Moments in Blooms',
+      order: 1,
+      featured: true,
+      title: 'New collection',
+      navSub: '',
+      navMeta: '',
+      description: '',
+      tagline: '',
+      coverImage: { src: '', alt: '' },
+      sections: [],
+    }),
+    itemTitle: (item) => item.title || 'Untitled collection',
+    itemDescription: (item) => item.description,
+    itemMeta: (item) => [
+      item.type === 'sub-brand' ? 'Sub-brand' : 'Collection',
+      item.navMeta,
+    ].filter(Boolean),
+    itemThumb: (item) =>
+      item.coverImage?.src ? { src: item.coverImage.src, alt: item.coverImage.alt } : undefined,
+    itemStatus: (item) => (item.featured ? 'featured' : undefined),
+    validate: (draft) => {
+      const errors = {}
+      if (!draft?.title?.trim()) {
+        errors.title = 'A collection title is required.'
+      }
+      return errors
+    },
+    get collectionDetail() {
+      return CollectionDetailPage
+    },
+    get collectionSectionDetail() {
+      return CollectionSectionDetailPage
+    },
   },
   {
     key: 'photoboothPackages',
@@ -123,54 +159,27 @@ export const servicesSections = [
     itemForm: BlissfulNestPackageForm,
   },
   {
-    key: 'serviceCollections',
-    title: 'Collections',
-    description: 'The main service collections and everything inside them.',
-    type: 'collections',
-    itemLabel: 'collection',
-    createInitial: () => ({
-      id: `collection-${Date.now()}`,
-      type: 'collection',
-      brand: 'Moments in Blooms',
-      order: 1,
-      featured: true,
-      title: 'New collection',
-      navSub: '',
-      navMeta: '',
-      description: '',
-      tagline: '',
-      coverImage: { src: '', alt: '' },
-      sections: [],
-    }),
-    itemTitle: (item) => item.title || 'Untitled collection',
-    itemDescription: (item) => item.description,
-    itemMeta: (item) => [
-      item.type === 'sub-brand' ? 'Sub-brand' : 'Collection',
-      item.navMeta,
-    ].filter(Boolean),
-    itemThumb: (item) =>
-      item.coverImage?.src ? { src: item.coverImage.src, alt: item.coverImage.alt } : undefined,
-    itemStatus: (item) => (item.featured ? 'featured' : undefined),
-    validate: (draft) => {
-      const errors = {}
-      if (!draft?.title?.trim()) {
-        errors.title = 'A collection title is required.'
-      }
-      return errors
-    },
-    get collectionDetail() {
-      return CollectionDetailPage
-    },
-    get collectionSectionDetail() {
-      return CollectionSectionDetailPage
-    },
-  },
-  {
     key: 'experienceTimeline',
     title: 'Experience timeline',
     description: "The six-step journey clients move through.",
     type: 'object',
     form: ExperienceTimelineForm,
+  },
+  {
+    key: 'cta',
+    title: 'Call to action',
+    description: 'The closing invitation on the services page.',
+    type: 'object',
+    form: CtaForm,
+  },
+  // Legacy — not rendered on public Services page (kept for data preservation, shown at end)
+  {
+    key: 'intro',
+    title: 'Introduction',
+    description:
+      'Legacy CMS-managed philosophy content — not currently rendered on the public services page.',
+    type: 'object',
+    form: IntroForm,
   },
   {
     key: 'gallery',
@@ -231,13 +240,6 @@ export const servicesSections = [
       return errors
     },
     itemForm: ServicesTestimonialForm,
-  },
-  {
-    key: 'cta',
-    title: 'Call to action',
-    description: 'The closing invitation on the services page.',
-    type: 'object',
-    form: CtaForm,
   },
 ]
 
@@ -535,4 +537,3 @@ function CtaForm({ value, onChange }) {
     </>
   )
 }
-

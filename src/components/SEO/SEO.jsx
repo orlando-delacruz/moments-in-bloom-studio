@@ -7,6 +7,7 @@ function SEO({
   canonical,
   image,
   url,
+  keywords,
   type = 'website',
   siteName = routeMetadata.public.title,
   jsonLd,
@@ -19,6 +20,7 @@ function SEO({
     <Helmet>
       <title>{resolvedTitle}</title>
       <meta name="description" content={resolvedDescription} />
+      {keywords ? <meta name="keywords" content={keywords} /> : null}
       {canonical ? <link rel="canonical" href={canonical} /> : null}
       <meta property="og:title" content={resolvedTitle} />
       <meta property="og:description" content={resolvedDescription} />

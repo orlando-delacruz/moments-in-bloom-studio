@@ -4,7 +4,14 @@ import FAQItem from './FAQItem.jsx'
 import { ListGroup, ListHeading, ListRoot } from './FAQList.styles.js'
 
 function FAQList({ categories, selected }) {
-  const [openIds, setOpenIds] = useState(() => new Set())
+  const [openIds, setOpenIds] = useState(() => {
+    const initial = new Set()
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hashId = window.location.hash.slice(1)
+      if (hashId) initial.add(hashId)
+    }
+    return initial
+  })
   const triggerRefs = useRef({})
 
   const isFiltering = Boolean(selected)
@@ -15,7 +22,13 @@ function FAQList({ categories, selected }) {
   const [lastSelected, setLastSelected] = useState(selected)
   if (lastSelected !== selected) {
     setLastSelected(selected)
-    setOpenIds(new Set())
+    setOpenIds(() => {
+      if (typeof window !== 'undefined' && window.location.hash) {
+        const hashId = window.location.hash.slice(1)
+        if (hashId) return new Set([hashId])
+      }
+      return new Set()
+    })
   }
 
   const handleToggle = useCallback((itemId) => {

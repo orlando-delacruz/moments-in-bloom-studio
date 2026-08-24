@@ -88,6 +88,16 @@ const gallerySeoSeed = Object.freeze({
     'Browse recent celebrations styled by Moments in Blooms across weddings, private celebrations, brand events and more.',
   url: 'https://www.momentsinblooms.com.au/gallery',
   image: GALLERY_ITEMS[0]?.src ?? '',
+  keywords: '',
+})
+
+const faqsSeoSeed = Object.freeze({
+  title: 'Frequently Asked Questions',
+  description:
+    'Answers about our Melbourne event styling, florals, decor hire, Luxe Photobooth, Blissful Nest and the journey from first enquiry to your celebration.',
+  url: 'https://www.momentsinblooms.com.au/faqs',
+  image: GALLERY_ITEMS[0]?.src ?? '',
+  keywords: '',
 })
 
 export const contentSeeds = Object.freeze({
@@ -166,6 +176,7 @@ export const contentSeeds = Object.freeze({
     services: servicesSeo,
     gallery: gallerySeoSeed,
     contact: contactSeo,
+    faqs: faqsSeoSeed,
   }),
 })
 

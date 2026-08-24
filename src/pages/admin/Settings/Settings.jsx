@@ -26,6 +26,14 @@ function Settings() {
     <SettingsPage>
       <AdminPageHeader {...adminPageMeta.settings} />
 
+      <ContentList title="My account" description="Your display name, email and password for admin access.">
+        <ContentCard
+          to="/admin/settings/account"
+          title="My account"
+          description="Update your display name, email and password."
+        />
+      </ContentList>
+
       {SETTINGS_GROUPS.map((group) => {
         const sections = group.keys
           .map((key) => settingsSections.find((section) => section.key === key))

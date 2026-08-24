@@ -1,6 +1,6 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
-import { CONTACT_SECTION_IDS, contactSeo } from '../../../constants/contact.js'
+import { CONTACT_SECTION_IDS } from '../../../constants/contact.js'
 import ContactCTA from './ContactCTA/index.js'
 import ContactHero from './ContactHero/index.js'
 import ContactInformation from './ContactInformation/index.js'
@@ -8,16 +8,19 @@ import EnquiryForm from './EnquiryForm/index.js'
 import { ContactPage } from './Contact.styles.js'
 
 function Contact() {
-  const { values } = useContent('contact')
+  const { values, loading } = useContent('contact')
+  const { values: seoValues } = useContent('seo')
+  const seo = seoValues.contact ?? seoValues.site ?? {}
 
   return (
-    <ContactPage>
+    <ContactPage aria-busy={loading ? 'true' : undefined}>
       <SEO
-        title={contactSeo.title}
-        description={contactSeo.description}
-        canonical={contactSeo.url}
-        image={contactSeo.image}
-        url={contactSeo.url}
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        image={seo.image}
+        keywords={seo.keywords}
+        url={seo.url}
       />
 
       <ContactHero content={values.hero} id={CONTACT_SECTION_IDS.HERO} />

@@ -31,13 +31,47 @@ const StringsRepeater = ({ label, items, onChange, addLabel, placeholder }) => (
   />
 )
 
+// Aligned to public website order: Hero → Introduction → Gallery (categories + items) → Featured Stories (heading + stories) → Instagram (heading + posts) → CTA
 export const gallerySections = [
+  {
+    key: 'hero',
+    title: 'Hero section',
+    description: 'The opening of the gallery page.',
+    type: 'object',
+    form: HeroForm,
+  },
+  {
+    key: 'introduction',
+    title: 'Introduction section',
+    description: 'The philosophy text shown below the hero.',
+    type: 'object',
+    form: IntroductionForm,
+  },
+  {
+    key: 'categories',
+    title: 'Gallery categories',
+    description: 'The filters visitors use to browse the gallery.',
+    type: 'list',
+    itemLabel: 'category',
+    createInitial: () => ({ id: createCategoryId(), label: 'New category' }),
+    itemTitle: (item) => item.label || 'Unnamed category',
+    itemMeta: (item, values) => [
+      `${(values.items ?? []).filter((entry) => entry.category === item.id).length} images`,
+    ],
+    validate: (draft) => {
+      const errors = {}
+      if (!draft?.label?.trim()) {
+        errors.label = 'A category label is required.'
+      }
+      return errors
+    },
+    itemForm: GalleryCategoryForm,
+  },
   {
     key: 'items',
     title: 'Gallery items',
     description: 'The images in your gallery grid.',
     type: 'list',
-    hidden: true,
     itemLabel: 'image',
     createInitial: (values) => ({
       id: createItemId(),
@@ -64,25 +98,11 @@ export const gallerySections = [
     itemForm: GalleryItemForm,
   },
   {
-    key: 'categories',
-    title: 'Gallery categories',
-    description: 'The filters visitors use to browse the gallery.',
-    type: 'list',
-    hidden: true,
-    itemLabel: 'category',
-    createInitial: () => ({ id: createCategoryId(), label: 'New category' }),
-    itemTitle: (item) => item.label || 'Unnamed category',
-    itemMeta: (item, values) => [
-      `${(values.items ?? []).filter((entry) => entry.category === item.id).length} images`,
-    ],
-    validate: (draft) => {
-      const errors = {}
-      if (!draft?.label?.trim()) {
-        errors.label = 'A category label is required.'
-      }
-      return errors
-    },
-    itemForm: GalleryCategoryForm,
+    key: 'featuredStoriesSection',
+    title: 'Featured stories section',
+    description: 'The heading above the featured stories.',
+    type: 'object',
+    form: FeaturedStoriesSectionForm,
   },
   {
     key: 'featuredStories',
@@ -118,6 +138,13 @@ export const gallerySections = [
     itemForm: FeaturedStoryForm,
   },
   {
+    key: 'instagram',
+    title: 'Instagram section',
+    description: 'The follow-us heading.',
+    type: 'object',
+    form: InstagramSectionForm,
+  },
+  {
     key: 'instagramPosts',
     title: 'Instagram preview',
     description: 'The square posts in the follow-us strip.',
@@ -126,39 +153,11 @@ export const gallerySections = [
     form: InstagramPostsForm,
   },
   {
-    key: 'hero',
-    title: 'Hero section',
-    description: 'The opening of the gallery page.',
-    type: 'object',
-    form: HeroForm,
-  },
-  {
-    key: 'introduction',
-    title: 'Introduction section',
-    description: 'The philosophy text shown below the hero.',
-    type: 'object',
-    form: IntroductionForm,
-  },
-  {
-    key: 'instagram',
-    title: 'Instagram section',
-    description: 'The follow-us heading.',
-    type: 'object',
-    form: InstagramSectionForm,
-  },
-  {
     key: 'cta',
     title: 'Call to action',
     description: 'The closing invitation on the gallery page.',
     type: 'object',
     form: CtaForm,
-  },
-  {
-    key: 'featuredStoriesSection',
-    title: 'Featured stories section',
-    description: 'The heading above the featured stories.',
-    type: 'object',
-    form: FeaturedStoriesSectionForm,
   },
 ]
 

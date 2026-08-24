@@ -19,9 +19,7 @@ export const adminLogin = Object.freeze({
   passwordLabel: 'Password',
   submitLabel: 'Sign in',
   loadingLabel: 'Signing in…',
-  demoHint: `Demo mode is active. Sign in with ${ADMIN_DEMO_EMAIL} and password ${ADMIN_DEMO_PASSWORD}.`,
-  supabaseHint:
-    'Admin access is managed by Supabase. Sign in with the email and password set up for your admin account.',
+  forgotPasswordLabel: 'Forgot password?',
   backToSiteLabel: 'Back to the website',
   signOutLabel: 'Sign out',
 })

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Button from '../../../components/Button/index.js'
 import SEO from '../../../components/SEO/index.js'
 import { BUTTON_VARIANTS } from '../../../constants/ui.js'
+import { useContent } from '../../../hooks/useContent.js'
 import {
   fetchPublicFaqPage,
   getPublicPageFallback,
@@ -24,9 +25,11 @@ import {
   FaqFilterIntro,
   FaqFilterTitle,
   FaqPage,
+  FaqSearchInput,
+  FaqSearchWrap,
 } from './FAQs.styles.js'
 
-const faqsSeo = Object.freeze({
+const defaultFaqsSeo = Object.freeze({
   title: 'Frequently Asked Questions',
   description:
     'Answers about our Melbourne event styling, florals, decor hire, Luxe Photobooth, Blissful Nest and the journey from first enquiry to your celebration.',
@@ -55,6 +58,9 @@ function FAQs() {
   const [status, setStatus] = useState('loading')
   const [reloadKey, setReloadKey] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState(null)
+  const [search, setSearch] = useState('')
+  const { values: seoValues } = useContent('seo')
+  const faqsSeo = seoValues.faqs ?? seoValues.site ?? defaultFaqsSeo
 
   useEffect(() => {
     let cancelled = false
@@ -80,6 +86,35 @@ function FAQs() {
     () => (status === 'ready' ? pageData?.categories ?? [] : []),
     [status, pageData],
   )
+
+  // Deep-link support for admin preview: /faqs?category=slug
+  useEffect(() => {
+    if (status !== 'ready' || !categories.length) return
+    if (selectedCategory) return
+    const params = new URLSearchParams(window.location.search)
+    const slug = params.get('category')
+    if (slug) {
+      const match = categories.find((c) => c.slug === slug || c.id === slug)
+      if (match) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- external URL param sync
+        setSelectedCategory(match.id)
+      }
+    }
+  }, [status, categories, selectedCategory])
+
+  const normalizedSearch = search.trim().toLowerCase()
+  const filteredCategories = useMemo(() => {
+    if (!normalizedSearch) return categories
+    return categories
+      .map((category) => ({
+        ...category,
+        faqs: category.faqs.filter(
+          (faq) =>
+            `${faq.question ?? ''} ${faq.answer ?? ''}`.toLowerCase().includes(normalizedSearch),
+        ),
+      }))
+      .filter((category) => category.faqs.length > 0)
+  }, [categories, normalizedSearch])
   const fallback = useMemo(() => getPublicPageFallback(), [])
   const ready = status === 'ready'
   const failed = status === 'error'
@@ -89,15 +124,19 @@ function FAQs() {
     setReloadKey((key) => key + 1)
   }, [])
 
-  const activeCategory = categories.some(
-    (category) => category.id === selectedCategory,
-  )
-    ? selectedCategory
-    : categories[0]?.id ?? null
+  const displayCategories = normalizedSearch ? filteredCategories : categories
+
+  const activeCategory = normalizedSearch
+    ? null
+    : categories.some((category) => category.id === selectedCategory)
+      ? selectedCategory
+      : categories[0]?.id ?? null
 
   const handleSelectCategory = useCallback((categoryId) => {
     setSelectedCategory(categoryId)
   }, [])
+
+  const clearSearch = useCallback(() => setSearch(''), [])
 
   const heroContent = ready
     ? pageData.hero
@@ -118,6 +157,7 @@ function FAQs() {
         description={faqsSeo.description}
         canonical={faqsSeo.url}
         url={faqsSeo.url}
+        keywords={faqsSeo.keywords}
         jsonLd={ready ? buildFaqStructuredData(categories) : undefined}
       />
 
@@ -144,13 +184,32 @@ function FAQs() {
             ) : null}
           </FaqFilterIntro>
 
+          <FaqSearchWrap role="search" aria-label="Search FAQs">
+            <FaqSearchInput
+              type="search"
+              aria-label="Search questions and answers"
+              placeholder="Search questions…"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              disabled={status === 'loading'}
+            />
+          </FaqSearchWrap>
+
           {status === 'loading' ? <FaqNavSkeleton /> : null}
-          {ready && categories.length > 0 ? (
+          {ready && displayCategories.length > 0 ? (
             <FAQCategoryNav
-              categories={categories}
+              categories={displayCategories}
               selected={activeCategory}
               onSelect={handleSelectCategory}
             />
+          ) : null}
+          {ready && normalizedSearch && filteredCategories.length === 0 ? (
+            <FaqErrorBlock>
+              <FaqErrorMessage>No questions match your search.</FaqErrorMessage>
+              <Button type="button" variant={BUTTON_VARIANTS.OUTLINE} onClick={clearSearch}>
+                Clear search
+              </Button>
+            </FaqErrorBlock>
           ) : null}
           {failed ? (
             <FaqErrorBlock>
@@ -166,14 +225,29 @@ function FAQs() {
               </Button>
             </FaqErrorBlock>
           ) : null}
+          {ready && normalizedSearch ? (
+            <p aria-live="polite" style={{ textAlign: 'center', fontSize: '0.82rem', color: '#6E6761', marginTop: '1rem' }}>
+              {filteredCategories.reduce((count, category) => count + category.faqs.length, 0)} results
+            </p>
+          ) : null}
         </FaqContainer>
       </FaqCategorySection>
 
       <FaqContentSection>
         <FaqContainer>
           {status === 'loading' ? <FaqListSkeleton /> : null}
+          {failed ? (
+            <FaqErrorBlock>
+              <FaqErrorMessage>
+                We couldn't load the FAQs right now. Please try again shortly.
+              </FaqErrorMessage>
+              <Button type="button" variant={BUTTON_VARIANTS.OUTLINE} onClick={handleRetry}>
+                Try again
+              </Button>
+            </FaqErrorBlock>
+          ) : null}
           {ready ? (
-            <FAQList categories={categories} selected={activeCategory} />
+            <FAQList categories={filteredCategories} selected={activeCategory} />
           ) : null}
         </FaqContainer>
       </FaqContentSection>

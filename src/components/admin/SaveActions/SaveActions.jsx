@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { FiAlertCircle, FiCheckCircle, FiInfo } from 'react-icons/fi'
 import Button from '../../Button/index.js'
-import Toast from '../Toast/index.js'
 import { formatSavedAt } from '../../../utils/formatDate.js'
+import { showError as showSwalError, showSuccess } from '../../../utils/sweetAlert.js'
 import {
   SaveActionsError,
   SaveActionsRow,
@@ -25,27 +25,7 @@ function SaveActions({
   successMessage = 'Changes saved successfully.',
 }) {
   const [saving, setSaving] = useState(false)
-  const [feedback, setFeedback] = useState(null)
-  const [feedbackTone, setFeedbackTone] = useState('success')
   const [inlineError, setInlineError] = useState(null)
-  const hideTimer = useRef(null)
-
-  useEffect(() => {
-    return () => {
-      if (hideTimer.current) {
-        window.clearTimeout(hideTimer.current)
-      }
-    }
-  }, [])
-
-  const showFeedback = (message, tone = 'success') => {
-    setFeedback(message)
-    setFeedbackTone(tone)
-    if (hideTimer.current) {
-      window.clearTimeout(hideTimer.current)
-    }
-    hideTimer.current = window.setTimeout(() => setFeedback(null), 3200)
-  }
 
   const handleSave = async () => {
     if (!dirty || saving || savingProp) return
@@ -64,20 +44,20 @@ function SaveActions({
     }
     setSaving(false)
     if (result.ok) {
-      showFeedback(successMessage)
+      showSuccess('Saved', successMessage)
     } else {
       const message =
         result.message ??
         'Unable to save changes. Please review the highlighted fields.'
       setInlineError(message)
-      showFeedback(message, 'error')
+      showSwalError('Save failed', message)
     }
   }
 
   const handleReset = () => {
     setInlineError(null)
     onReset?.()
-    showFeedback('Changes discarded.')
+    showSuccess('Discarded', 'Changes discarded.')
   }
 
   const isSaving = saving || savingProp
@@ -145,12 +125,6 @@ function SaveActions({
           {isSaving ? 'Saving…' : submitLabel}
         </Button>
       </SaveActionsRow>
-      <Toast
-        visible={Boolean(feedback)}
-        message={feedback}
-        tone={feedbackTone}
-        position="fixed"
-      />
     </SaveBarShell>
   )
 }

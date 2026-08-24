@@ -1,18 +1,11 @@
+import { useContent } from '../../../hooks/useContent.js'
+import SEO from '../../../components/SEO/index.js'
 import { useGallery } from './hooks/index.js'
 import { useLightbox } from './hooks/index.js'
 
 import {
-  CTA_CONTENT,
-  GALLERY_CATEGORIES,
-  GALLERY_ITEMS,
-  HERO_CONTENT,
-  INSTAGRAM_CONTENT,
-  INSTAGRAM_POSTS,
-  INTRODUCTION_CONTENT,
-} from './constants/index.js'
-
-import {
   EditorialGallery,
+  FeaturedStory,
   GalleryCTA,
   GalleryHero,
   GalleryLightbox,
@@ -23,10 +16,21 @@ import {
 import * as S from './Gallery.styles.js'
 
 function Gallery() {
-  const { visibleItems, hasMore, loadMore } = useGallery(
-    GALLERY_ITEMS,
-    GALLERY_CATEGORIES,
-  )
+  const { values, loading } = useContent('gallery')
+  const { values: seoValues } = useContent('seo')
+  const seo = seoValues.gallery ?? seoValues.site ?? {}
+
+  const categories = values.categories ?? []
+  const items = values.items ?? []
+  const hero = values.hero ?? {}
+  const introduction = values.introduction ?? {}
+  const instagramContent = values.instagram ?? {}
+  const instagramPosts = values.instagramPosts ?? []
+  const cta = values.cta ?? {}
+  const featuredStories = values.featuredStories ?? []
+  const featuredStoriesSection = values.featuredStoriesSection ?? {}
+
+  const { visibleItems, hasMore, loadMore } = useGallery(items, categories)
 
   const {
     isOpen,
@@ -38,11 +42,29 @@ function Gallery() {
     totalItems,
   } = useLightbox(visibleItems)
 
-  return (
-    <S.GalleryPage>
-      <GalleryHero content={HERO_CONTENT} />
+  const featuredStoryContent =
+    featuredStories.length > 0
+      ? {
+          eyebrow: featuredStoriesSection.eyebrow,
+          title: featuredStoriesSection.title,
+          stories: featuredStories,
+        }
+      : null
 
-      <Introduction content={INTRODUCTION_CONTENT} />
+  return (
+    <S.GalleryPage aria-busy={loading ? 'true' : undefined}>
+      <SEO
+        title={seo.title}
+        description={seo.description}
+        canonical={seo.url}
+        image={seo.image}
+        keywords={seo.keywords}
+        url={seo.url}
+      />
+
+      <GalleryHero content={hero} />
+
+      <Introduction content={introduction} />
 
       <EditorialGallery
         items={visibleItems}
@@ -51,9 +73,11 @@ function Gallery() {
         onImageClick={openLightbox}
       />
 
-      <InstagramPreview content={INSTAGRAM_CONTENT} posts={INSTAGRAM_POSTS} />
+      {featuredStoryContent ? <FeaturedStory content={featuredStoryContent} /> : null}
 
-      <GalleryCTA content={CTA_CONTENT} />
+      <InstagramPreview content={instagramContent} posts={instagramPosts} />
+
+      <GalleryCTA content={cta} />
 
       <GalleryLightbox
         isOpen={isOpen}
