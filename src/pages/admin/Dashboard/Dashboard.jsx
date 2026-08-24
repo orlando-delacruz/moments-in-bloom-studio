@@ -8,8 +8,10 @@ import Button from '../../../components/Button/index.js'
 import { adminDashboard, adminPageMeta } from '../../../constants/admin.js'
 import { adminNavigationGroups } from '../../../constants/navigation.js'
 import { useContentOverview } from '../../../hooks/useContent.js'
+import usePwaInstall from '../../../hooks/usePwaInstall.js'
 import { isSupabaseConfigured } from '../../../services/supabaseClient.js'
 import { listEnquiries } from '../../../services/enquiries.js'
+import PwaInstallModal from '../../../components/admin/PwaInstallModal/index.js'
 import {
   ContentIcon,
   ContentLabel,
@@ -47,6 +49,21 @@ function Dashboard() {
   const [enquiries, setEnquiries] = useState([])
   const [newThisWeek, setNewThisWeek] = useState(0)
   const [enquiriesLoading, setEnquiriesLoading] = useState(true)
+  const [showPwaModal, setShowPwaModal] = useState(false)
+  const { deferredPrompt, isStandalone, promptInstall } = usePwaInstall()
+
+  useEffect(() => {
+    if (
+      !isStandalone &&
+      !window.localStorage.getItem('mib_pwa_modal_dismissed') &&
+      !window.sessionStorage.getItem('mib_pwa_modal_shown_session')
+    ) {
+      const timer = window.setTimeout(() => setShowPwaModal(true), 800)
+      window.sessionStorage.setItem('mib_pwa_modal_shown_session', '1')
+      return () => window.clearTimeout(timer)
+    }
+    return undefined
+  }, [isStandalone])
 
   useEffect(() => {
     let mounted = true
@@ -171,6 +188,14 @@ function Dashboard() {
           </Button>
         </PageSection>
       </PageGrid>
+
+      <PwaInstallModal
+        open={showPwaModal}
+        onClose={() => setShowPwaModal(false)}
+        deferredPrompt={deferredPrompt}
+        onInstall={promptInstall}
+        isStandalone={isStandalone}
+      />
     </DashboardPage>
   )
 }

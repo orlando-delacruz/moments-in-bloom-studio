@@ -41,6 +41,7 @@ export const DrawerOverlay = styled.div`
   display: none;
 
   ${mobileBreak} {
+    display: block;
     position: fixed;
     inset: 0;
     z-index: ${({ theme }) => theme.layers.menuBackdrop};
