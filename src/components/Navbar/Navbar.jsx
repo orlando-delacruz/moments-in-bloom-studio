@@ -86,7 +86,7 @@ function Navbar({ variant = NAVBAR_THEMES.LIGHT }) {
               <Button
                 as={NavLink}
                 to="/admin/dashboard"
-                variant={isDark ? BUTTON_VARIANTS.LIGHT : BUTTON_VARIANTS.PRIMARY}
+                variant={isDark ? BUTTON_VARIANTS.OUTLINE_LIGHT : BUTTON_VARIANTS.OUTLINE}
               >
                 Dashboard
               </Button>

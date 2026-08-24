@@ -112,7 +112,7 @@ function MobileMenu({ isOpen, onClose }) {
 
             <S.MenuFooter>
               {session ? (
-                <Button as={NavLink} to="/admin/dashboard" onClick={onClose}>
+                <Button as={NavLink} to="/admin/dashboard" onClick={onClose} variant="outline">
                   Dashboard
                 </Button>
               ) : null}

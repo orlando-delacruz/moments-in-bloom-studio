@@ -128,6 +128,7 @@ export const NavigationLink = styled.span`
 export const DesktopActions = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: ${({ theme }) => theme.spacing.md};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: none;
