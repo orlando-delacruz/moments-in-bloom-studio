@@ -33,7 +33,7 @@ function AdminLayout() {
         collapsed={collapsed}
         onToggleCollapse={() => setCollapsed((current) => !current)}
       />
-      <AdminWorkspace onClick={() => drawerOpen && setDrawerOpen(false)}>
+      <AdminWorkspace $drawerOpen={drawerOpen} onClick={() => drawerOpen && setDrawerOpen(false)}>
         <Topbar onMenuClick={() => setDrawerOpen((open) => !open)} menuOpen={drawerOpen} />
         <AdminMain id="admin-main-content" tabIndex={-1}>
           <Outlet />

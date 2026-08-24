@@ -16,6 +16,7 @@ export const AdminShell = styled.div`
 export const AdminWorkspace = styled.div`
   min-width: 0;
   padding-top: 4.5rem;
+  overflow: ${({ $drawerOpen }) => ($drawerOpen ? 'hidden' : 'visible')};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
     padding-top: ${({ theme }) => theme.layout.mobileHeaderHeight};
