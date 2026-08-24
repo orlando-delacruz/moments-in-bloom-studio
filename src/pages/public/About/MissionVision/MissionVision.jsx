@@ -11,7 +11,7 @@ import {
   StyledMissionCard,
 } from './MissionVision.styles.js'
 
-function MissionVision({ content, id }) {
+function MissionVision({ content = {}, id }) {
   const { subtitle, title, mission, vision } = content
 
   return (
@@ -24,17 +24,21 @@ function MissionVision({ content, id }) {
           viewport={VIEWPORT_DEFAULT}
         >
           <CardsGrid>
-            <StyledMissionCard variants={rise}>
-              <CardTag>{mission.tag}</CardTag>
-              <CardTitle>{mission.title}</CardTitle>
-              <CardDescription>{mission.description}</CardDescription>
-            </StyledMissionCard>
+            {mission ? (
+              <StyledMissionCard variants={rise}>
+                <CardTag>{mission.tag}</CardTag>
+                <CardTitle>{mission.title}</CardTitle>
+                <CardDescription>{mission.description}</CardDescription>
+              </StyledMissionCard>
+            ) : null}
 
-            <StyledMissionCard variants={rise}>
-              <CardTag>{vision.tag}</CardTag>
-              <CardTitle>{vision.title}</CardTitle>
-              <CardDescription>{vision.description}</CardDescription>
-            </StyledMissionCard>
+            {vision ? (
+              <StyledMissionCard variants={rise}>
+                <CardTag>{vision.tag}</CardTag>
+                <CardTitle>{vision.title}</CardTitle>
+                <CardDescription>{vision.description}</CardDescription>
+              </StyledMissionCard>
+            ) : null}
           </CardsGrid>
         </motion.div>
       </Container>

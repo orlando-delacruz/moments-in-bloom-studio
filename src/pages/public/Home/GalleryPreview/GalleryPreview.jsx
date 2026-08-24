@@ -18,7 +18,7 @@ import {
   GalleryTitle,
 } from './GalleryPreview.styles.js'
 
-function GalleryPreview({ items, id = 'home-gallery-preview' }) {
+function GalleryPreview({ items = [], id = 'home-gallery-preview' }) {
   const [feature, firstSide, secondSide] = items
 
   return (
@@ -40,21 +40,27 @@ function GalleryPreview({ items, id = 'home-gallery-preview' }) {
           </SafeReveal>
         </GalleryHeader>
         <GalleryCollage>
-          <GalleryFeature to="/gallery" aria-label="View featured floral installation in the gallery">
-            <ImageReveal>
-              <GalleryImage src={feature.image.src} alt={feature.image.alt} loading="lazy" />
-            </ImageReveal>
-          </GalleryFeature>
-          <GallerySide $overlap to="/gallery" aria-label="View couple walking through petals in the gallery">
-            <ImageReveal>
-              <GalleryImage src={firstSide.image.src} alt={firstSide.image.alt} loading="lazy" />
-            </ImageReveal>
-          </GallerySide>
-          <GallerySide to="/gallery" aria-label="View place card detail in the gallery">
-            <ImageReveal>
-              <GalleryImage src={secondSide.image.src} alt={secondSide.image.alt} loading="lazy" />
-            </ImageReveal>
-          </GallerySide>
+          {feature ? (
+            <GalleryFeature to="/gallery" aria-label="View featured floral installation in the gallery">
+              <ImageReveal>
+                <GalleryImage src={feature.image?.src} alt={feature.image?.alt} loading="lazy" />
+              </ImageReveal>
+            </GalleryFeature>
+          ) : null}
+          {firstSide ? (
+            <GallerySide $overlap to="/gallery" aria-label="View couple walking through petals in the gallery">
+              <ImageReveal>
+                <GalleryImage src={firstSide.image?.src} alt={firstSide.image?.alt} loading="lazy" />
+              </ImageReveal>
+            </GallerySide>
+          ) : null}
+          {secondSide ? (
+            <GallerySide to="/gallery" aria-label="View place card detail in the gallery">
+              <ImageReveal>
+                <GalleryImage src={secondSide.image?.src} alt={secondSide.image?.alt} loading="lazy" />
+              </ImageReveal>
+            </GallerySide>
+          ) : null}
           <GallerySpark
             aria-hidden="true"
             animate={{ rotate: [12, 22, 12], scale: [1, 1.06, 1] }}
@@ -64,7 +70,7 @@ function GalleryPreview({ items, id = 'home-gallery-preview' }) {
           </GallerySpark>
         </GalleryCollage>
         <span className="sr-only">
-          {items.map((item) => item.image.credit).join('. ')}
+          {items.map((item) => item.image?.credit).filter(Boolean).join('. ')}
         </span>
         <GalleryAction>
           <SafeReveal from={{ y: 14 }} duration={0.7}>

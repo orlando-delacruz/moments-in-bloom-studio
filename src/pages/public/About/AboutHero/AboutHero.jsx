@@ -16,7 +16,7 @@ import {
   HeroTitle,
 } from './AboutHero.styles.js'
 
-function AboutHero({ content }) {
+function AboutHero({ content = {} }) {
   const { eyebrow, title, description, primaryCta, secondaryCta, image } = content
   const shouldReduceMotion = useReducedMotion()
   const { scrollY } = useScroll()

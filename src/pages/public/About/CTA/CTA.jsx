@@ -13,7 +13,7 @@ import {
   CTATitle,
 } from './CTA.styles.js'
 
-function CTA({ content, id }) {
+function CTA({ content = {}, id }) {
   const { subtitle, title, description, primaryCta, secondaryCta } = content
 
   return (

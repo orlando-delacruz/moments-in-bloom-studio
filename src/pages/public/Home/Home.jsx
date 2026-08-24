@@ -1,15 +1,8 @@
+import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
 import {
   HOME_SECTION_IDS,
-  homepageCta,
-  homepageGalleryItems,
-  homepageHero,
-  homepageInstagramItems,
-  homepageReasons,
   homepageSeo,
-  homepageServices,
-  homepageTestimonials,
-  homepageTrustMarks,
 } from '../../../constants/homepage.js'
 import CTA from './CTA/CTA.jsx'
 import GalleryPreview from './GalleryPreview/GalleryPreview.jsx'
@@ -22,6 +15,8 @@ import TrustedBy from './TrustedBy/TrustedBy.jsx'
 import WhyChooseUs from './WhyChooseUs/WhyChooseUs.jsx'
 
 function Home() {
+  const { values } = useContent('homepage')
+
   return (
     <HomePage>
       <SEO
@@ -31,14 +26,14 @@ function Home() {
         image={homepageSeo.image}
         url={homepageSeo.url}
       />
-      <Hero content={homepageHero} id={HOME_SECTION_IDS.HERO} />
-      <TrustedBy marks={homepageTrustMarks} id={HOME_SECTION_IDS.TRUST} />
-      <Services items={homepageServices} id={HOME_SECTION_IDS.SERVICES} />
-      <GalleryPreview items={homepageGalleryItems} id={HOME_SECTION_IDS.GALLERY} />
-      <WhyChooseUs reasons={homepageReasons} id={HOME_SECTION_IDS.WHY_US} />
-      <Testimonials items={homepageTestimonials} id={HOME_SECTION_IDS.TESTIMONIALS} />
-      <InstagramPreview items={homepageInstagramItems} id={HOME_SECTION_IDS.INSTAGRAM} />
-      <CTA content={homepageCta} id={HOME_SECTION_IDS.CTA} />
+      <Hero content={values.hero} id={HOME_SECTION_IDS.HERO} />
+      <TrustedBy marks={values.trustMarks} id={HOME_SECTION_IDS.TRUST} />
+      <Services items={values.services} id={HOME_SECTION_IDS.SERVICES} />
+      <GalleryPreview items={values.galleryItems} id={HOME_SECTION_IDS.GALLERY} />
+      <WhyChooseUs reasons={values.reasons} id={HOME_SECTION_IDS.WHY_US} />
+      <Testimonials items={values.testimonials} id={HOME_SECTION_IDS.TESTIMONIALS} />
+      <InstagramPreview items={values.instagramItems} id={HOME_SECTION_IDS.INSTAGRAM} />
+      <CTA content={values.cta} id={HOME_SECTION_IDS.CTA} />
     </HomePage>
   )
 }

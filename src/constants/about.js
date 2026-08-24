@@ -216,7 +216,10 @@ export const aboutTestimonialHighlight = Object.freeze({
     'Working with Moments in Blooms was the single best decision we made for our wedding day. The floral installations were an absolute dream that elevated our entire reception. Elena and her team executed everything with grace and perfection.',
   author: 'Charlotte & James',
   role: 'Yarra Valley Vineyard Wedding',
-  image: imageUrl('https://images.unsplash.com/photo-1519741497674-611481863552', 800),
+  image: {
+    src: imageUrl('https://images.unsplash.com/photo-1519741497674-611481863552', 800),
+    alt: 'Charlotte and James at their Yarra Valley vineyard wedding',
+  },
 })
 
 export const aboutCta = Object.freeze({

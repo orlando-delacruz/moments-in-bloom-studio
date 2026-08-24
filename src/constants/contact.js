@@ -61,17 +61,14 @@ export const enquiryFormRail = Object.freeze({
   title: 'What happens after you send it?',
   steps: [
     {
-      number: '01',
       title: 'We review your enquiry',
       description: 'Your details are read by the team, not an automated system.',
     },
     {
-      number: '02',
       title: 'We respond thoughtfully',
       description: 'Expect considered ideas and a clear next step, tailored to your event.',
     },
     {
-      number: '03',
       title: 'You decide',
       description: 'Nothing is locked in until you choose to move forward.',
     },

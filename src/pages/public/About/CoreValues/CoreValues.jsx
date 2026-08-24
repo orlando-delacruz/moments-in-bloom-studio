@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FiAward, FiFeather, FiHeart, FiStar } from 'react-icons/fi'
+import { FiAward, FiFeather, FiGift, FiHeart, FiShield, FiStar, FiSun } from 'react-icons/fi'
 import Container from '../../../../components/Container/index.js'
 import Section from '../../../../components/Section/index.js'
 import { SECTION_TONES } from '../../../../constants/ui.js'
@@ -17,9 +17,12 @@ const iconMap = {
   FiAward: FiAward,
   FiFeather: FiFeather,
   FiHeart: FiHeart,
+  FiShield: FiShield,
+  FiGift: FiGift,
+  FiSun: FiSun,
 }
 
-function CoreValues({ items, id }) {
+function CoreValues({ items = [], id }) {
   return (
     <Section
       id={id}

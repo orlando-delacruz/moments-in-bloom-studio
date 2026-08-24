@@ -56,7 +56,6 @@ import {
   servicesIntro,
   servicesSeo,
   servicesTestimonials,
-  whatsIncluded,
 } from '../constants/services.js'
 import {
   CTA_CONTENT,
@@ -121,7 +120,6 @@ export const contentSeeds = Object.freeze({
     blissfulNestIntro,
     blissfulNestPackages,
     serviceCollections,
-    whatsIncluded,
     experienceTimeline: servicesExperienceTimeline,
     gallery: servicesGallery,
     testimonials: servicesTestimonials,

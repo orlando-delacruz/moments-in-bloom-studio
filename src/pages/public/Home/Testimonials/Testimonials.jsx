@@ -20,9 +20,15 @@ import {
   TestimonialEyebrow,
 } from './Testimonials.styles.js'
 
-function Testimonials({ items, id = 'home-testimonials' }) {
+function Testimonials({ items = [], id = 'home-testimonials' }) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const activeTestimonial = items[activeIndex]
+
+  if (items.length === 0) {
+    return null
+  }
+
+  const safeIndex = activeIndex < items.length ? activeIndex : 0
+  const activeTestimonial = items[safeIndex]
 
   const goTo = (nextIndex) => {
     setActiveIndex((nextIndex + items.length) % items.length)
@@ -30,9 +36,9 @@ function Testimonials({ items, id = 'home-testimonials' }) {
 
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowLeft') {
-      goTo(activeIndex - 1)
+      goTo(safeIndex - 1)
     } else if (e.key === 'ArrowRight') {
-      goTo(activeIndex + 1)
+      goTo(safeIndex + 1)
     }
   }
 
@@ -67,7 +73,7 @@ function Testimonials({ items, id = 'home-testimonials' }) {
             >
               <TestimonialQuote>“{activeTestimonial.quote}”</TestimonialQuote>
               <TestimonialMeta>
-                <TestimonialAvatar src={activeTestimonial.image.src} alt={activeTestimonial.image.alt} loading="lazy" />
+                <TestimonialAvatar src={activeTestimonial.image?.src} alt={activeTestimonial.image?.alt} loading="lazy" />
                 <TestimonialName>{activeTestimonial.name}</TestimonialName>
                 <TestimonialEvent>
                   {activeTestimonial.event} · {activeTestimonial.location}
@@ -80,7 +86,7 @@ function Testimonials({ items, id = 'home-testimonials' }) {
           <TestimonialArrow
             type="button"
             aria-label="Previous testimonial"
-            onClick={() => goTo(activeIndex - 1)}
+            onClick={() => goTo(safeIndex - 1)}
           >
             <FiArrowLeft aria-hidden="true" color="currentColor" size={16} />
           </TestimonialArrow>
@@ -89,9 +95,9 @@ function Testimonials({ items, id = 'home-testimonials' }) {
               <TestimonialDot
                 key={item.name}
                 type="button"
-                $active={index === activeIndex}
+                $active={index === safeIndex}
                 aria-label={`Show testimonial from ${item.name}`}
-                aria-current={index === activeIndex ? 'true' : undefined}
+                aria-current={index === safeIndex ? 'true' : undefined}
                 onClick={() => goTo(index)}
               />
             ))}
@@ -99,7 +105,7 @@ function Testimonials({ items, id = 'home-testimonials' }) {
           <TestimonialArrow
             type="button"
             aria-label="Next testimonial"
-            onClick={() => goTo(activeIndex + 1)}
+            onClick={() => goTo(safeIndex + 1)}
           >
             <FiArrowRight aria-hidden="true" color="currentColor" size={16} />
           </TestimonialArrow>

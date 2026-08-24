@@ -3,6 +3,7 @@ import { FiUpload } from 'react-icons/fi'
 import Button from '../../Button/index.js'
 import Modal from '../Modal/index.js'
 import readImageFile from './readImageFile.js'
+import { uploadDataUrl } from '../../../services/storage.js'
 import {
   HiddenInput,
   ModalCurrentRow,
@@ -30,6 +31,7 @@ function ImageFieldModal({
   const inputRef = useRef(null)
   const [dragging, setDragging] = useState(false)
   const [busy, setBusy] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [error, setError] = useState(null)
   const [pending, setPending] = useState(null)
   const [prevOpen, setPrevOpen] = useState(open)
@@ -39,6 +41,7 @@ function ImageFieldModal({
     if (open) {
       setDragging(false)
       setBusy(false)
+      setUploading(false)
       setError(null)
       setPending(null)
     }
@@ -55,6 +58,26 @@ function ImageFieldModal({
       setError(readError.message)
     } finally {
       setBusy(false)
+    }
+  }
+
+  const handleConfirm = async () => {
+    if (!pending) return
+    setUploading(true)
+    setError(null)
+    try {
+      const { data, error: uploadError } = await uploadDataUrl(pending.dataUrl, pending.name, {
+        prefix: 'cms',
+      })
+      if (uploadError) {
+        setError(uploadError.message)
+        return
+      }
+      onConfirm(data.publicUrl)
+    } catch (uploadError) {
+      setError(uploadError.message || "We couldn't upload the image.")
+    } finally {
+      setUploading(false)
     }
   }
 
@@ -78,16 +101,16 @@ function ImageFieldModal({
       onClose={onClose}
       footer={
         <>
-          <Button type="button" variant="outline" disabled={busy} onClick={onClose}>
+          <Button type="button" variant="outline" disabled={busy || uploading} onClick={onClose}>
             Cancel
           </Button>
           <Button
             type="button"
             variant="primary"
-            disabled={!pending || busy}
-            onClick={() => pending && onConfirm(pending.dataUrl)}
+            disabled={!pending || busy || uploading}
+            onClick={handleConfirm}
           >
-            {currentImage ? 'Replace image' : 'Add image'}
+            {uploading ? 'Uploading…' : currentImage ? 'Replace image' : 'Add image'}
           </Button>
         </>
       }
@@ -115,7 +138,7 @@ function ImageFieldModal({
           <ModalDropzone
             type="button"
             $dragging={dragging}
-            disabled={busy}
+            disabled={busy || uploading}
             onClick={() => inputRef.current?.click()}
             onDragEnter={(event) => {
               event.preventDefault()

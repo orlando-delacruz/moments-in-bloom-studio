@@ -10,8 +10,9 @@ import {
 
 import * as S from "./BlissfulNestShowcase.styles.js";
 
-function BlissfulNestShowcase({ collection }) {
+function BlissfulNestShowcase({ collection, intro, packages = [] }) {
   const productCategories = collection.productCategories || [];
+  const introText = intro?.paragraph ?? "";
 
   if (!productCategories.length) return null;
 
@@ -19,7 +20,7 @@ function BlissfulNestShowcase({ collection }) {
     <S.NestSection>
       <S.NestIntro>
         <S.NestBrandTitle>{collection.title}</S.NestBrandTitle>
-        <S.NestIntroText>{collection.intro}</S.NestIntroText>
+        <S.NestIntroText>{introText}</S.NestIntroText>
         <div>
           <Button to="/contact" variant="primary" size="large">
             <span>Enquire Now</span>
@@ -44,7 +45,7 @@ function BlissfulNestShowcase({ collection }) {
             whileInView="visible"
             viewport={VIEWPORT_DEFAULT}
           >
-            {category.packages.map((pkg) => (
+            {packages.map((pkg) => (
               <motion.div key={pkg.id} variants={rise}>
                 <S.PackageCard>
                   <S.PackageImageWrapper>
@@ -56,7 +57,7 @@ function BlissfulNestShowcase({ collection }) {
                     <S.PackageTagline>{pkg.tagline}</S.PackageTagline>
                     <S.PackageDesc>{pkg.description}</S.PackageDesc>
                     <S.PackageItems>
-                      {pkg.items.map((item) => (
+                      {(pkg.items ?? []).map((item) => (
                         <li key={item}>
                           <FiGift />
                           <span>{item}</span>

@@ -1,5 +1,3 @@
-import { faqItems } from "./faqs.js"
-
 const imageUrl = (source, width = 1600) =>
   `${source}?auto=format&fit=crop&w=${width}&q=85`;
 
@@ -18,7 +16,6 @@ export const SERVICES_SECTION_IDS = Object.freeze({
   HERO: "services-hero",
   INTRO: "services-intro",
   FEATURED: "services-featured",
-  INCLUDED: "services-included",
   EXPERIENCE: "services-experience",
   GALLERY: "services-gallery",
   WHY_US: "services-why-us",
@@ -291,6 +288,9 @@ export const blissfulNestPackages = Object.freeze([
   },
 ]);
 
+// NOTE: These three collections carry navigation and hero metadata only. The
+// Luxe Photobooth and Blissful Nest renderers read their packages, highlights,
+// and intro from the top-level sections above, not from the collection entry.
 export const serviceCollections = Object.freeze([
   {
     id: "decor-hire",
@@ -421,8 +421,6 @@ export const serviceCollections = Object.freeze([
       src: "https://images.pexels.com/photos/8602142/pexels-photo-8602142.jpeg?auto=compress&cs=tinysrgb&w=1200&q=85",
       alt: "Minimal luxury photobooth studio backdrop with soft lighting",
     },
-    highlights: photoboothHighlights,
-    packages: photoboothPackages,
   },
   {
     id: "blissful-nest",
@@ -440,7 +438,6 @@ export const serviceCollections = Object.freeze([
       src: "https://images.unsplash.com/photo-1763076703663-8d28a686612f?auto=format&fit=crop&w=1200&q=85",
       alt: "Pastel claw machines filled with plush toys and gifts",
     },
-    intro: blissfulNestIntro.paragraph,
     productCategories: [
       {
         id: "claw-machine-hire",
@@ -448,7 +445,6 @@ export const serviceCollections = Object.freeze([
         name: "Claw Machine Hire",
         description:
           "Beautifully presented claw machines filled with curated prizes — a playful yet polished highlight for your celebration.",
-        packages: blissfulNestPackages,
       },
     ],
   },
@@ -461,57 +457,6 @@ export const serviceCollectionsShowcase = Object.freeze({
     "Select a service category below to explore our decor hire catalogue, the Luxe Photobooth, and Blissful Nest claw machines.",
   subcategoryLabel: "Choose a Collection Here",
   allCollectionsLabel: "All Collections",
-});
-
-export const whatsIncluded = Object.freeze({
-  subtitle: "The Standard of Excellence",
-  title: "What every service experience includes",
-  description:
-    "Regardless of package size, every Moments in Blooms experience is backed by our white-glove commitment to quality.",
-  items: [
-    {
-      id: "inc-1",
-      iconName: "FiCompass",
-      title: "Creative Direction & Concept",
-      description:
-        "Bespoke color palettes, spatial layouts, and visual moodboards tailored specifically to your venue.",
-    },
-    {
-      id: "inc-2",
-      iconName: "FiClock",
-      title: "Precision On-Site Setup",
-      description:
-        "Early venue arrival and meticulous installation hours before your guests walk through the doors.",
-    },
-    {
-      id: "inc-3",
-      iconName: "FiFeather",
-      title: "Botanical & Prop Curation",
-      description:
-        "Fresh seasonal flowers hand-selected from Melbourne markets and pristine rental decor items.",
-    },
-    {
-      id: "inc-4",
-      iconName: "FiAward",
-      title: "Dedicated Lead Stylist",
-      description:
-        "A experienced styling lead overseeing every detail so you remain calm, present, and stress-free.",
-    },
-    {
-      id: "inc-5",
-      iconName: "FiHeart",
-      title: "Personalised Branding",
-      description:
-        "Custom monograms, custom photo print templates, and bespoke signage options available.",
-    },
-    {
-      id: "inc-6",
-      iconName: "FiLayers",
-      title: "Discreet Pack-Down",
-      description:
-        "Complete bump-out and venue restoration after the event concludes, executed quietly and efficiently.",
-    },
-  ],
 });
 
 export const servicesExperienceTimeline = Object.freeze({
@@ -682,12 +627,6 @@ export const servicesTestimonials = Object.freeze([
     },
   },
 ]);
-
-export const servicesFaqs = Object.freeze(
-  faqItems.filter((item) =>
-    ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"].includes(item.id),
-  ),
-);
 
 export const servicesCta = Object.freeze({
   eyebrow: "Reserve Your Celebration Date",

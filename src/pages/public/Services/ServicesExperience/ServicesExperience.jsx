@@ -31,7 +31,7 @@ function ServicesExperience({ content, id }) {
           viewport={VIEWPORT_DEFAULT}
         >
           <ProcessTimeline>
-            {content.steps.map((step, index) => (
+            {(content.steps ?? []).map((step, index) => (
               <StepCard
                 key={step.number || index}
                 variants={stepIn(index % 2 === 0 ? 'left' : 'right')}

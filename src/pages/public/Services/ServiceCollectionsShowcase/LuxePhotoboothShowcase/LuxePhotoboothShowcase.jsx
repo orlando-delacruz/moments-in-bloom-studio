@@ -4,9 +4,7 @@ import Button from "../../../../../components/Button/index.js";
 
 import * as S from "./LuxePhotoboothShowcase.styles.js";
 
-function LuxePhotoboothShowcase({ collection }) {
-  const { highlights, packages = [] } = collection;
-
+function LuxePhotoboothShowcase({ highlights, packages = [] }) {
   if (!highlights) return null;
 
   return (
@@ -41,16 +39,16 @@ function LuxePhotoboothShowcase({ collection }) {
       <S.ExclusiveFramesFeature>
         <div>
           <S.ExclusiveFramesBadge>
-            {highlights.framesFeature.badge}
+            {highlights.framesFeature?.badge}
           </S.ExclusiveFramesBadge>
           <S.ExclusiveFramesTitle>
-            {highlights.framesFeature.title}
+            {highlights.framesFeature?.title}
           </S.ExclusiveFramesTitle>
           <S.ExclusiveFramesDesc>
-            {highlights.framesFeature.description}
+            {highlights.framesFeature?.description}
           </S.ExclusiveFramesDesc>
           <S.HighlightList $onDark>
-            {highlights.framesFeature.highlights.map((item, index) => (
+            {(highlights.framesFeature?.highlights ?? []).map((item, index) => (
               <li key={index}>
                 <FiCheck />
                 <span>{item}</span>
@@ -60,8 +58,8 @@ function LuxePhotoboothShowcase({ collection }) {
         </div>
         <S.ExclusiveFramesImage>
           <img
-            src={highlights.framesFeature.image.src}
-            alt={highlights.framesFeature.image.alt}
+            src={highlights.framesFeature?.image?.src}
+            alt={highlights.framesFeature?.image?.alt || ""}
             loading="lazy"
           />
         </S.ExclusiveFramesImage>
@@ -69,13 +67,13 @@ function LuxePhotoboothShowcase({ collection }) {
 
       <div>
         <S.StudioHeader>
-          <S.TabTag>{highlights.studioGrade.badge}</S.TabTag>
-          <S.StudioTitle>{highlights.studioGrade.title}</S.StudioTitle>
-          <S.StudioDesc>{highlights.studioGrade.description}</S.StudioDesc>
+          <S.TabTag>{highlights.studioGrade?.badge}</S.TabTag>
+          <S.StudioTitle>{highlights.studioGrade?.title}</S.StudioTitle>
+          <S.StudioDesc>{highlights.studioGrade?.description}</S.StudioDesc>
         </S.StudioHeader>
 
         <S.StudioGradeGrid>
-          {highlights.studioGrade.features.map((feature, index) => (
+          {(highlights.studioGrade?.features ?? []).map((feature, index) => (
             <S.StudioFeatureCard key={index}>
               <h6>• {feature.title}</h6>
               <p>{feature.desc}</p>
@@ -113,7 +111,7 @@ function LuxePhotoboothShowcase({ collection }) {
               <S.InclusionsBlock>
                 <h6>Inclusions</h6>
                 <S.HighlightList $popular={pkg.popular}>
-                  {pkg.inclusions.map((inclusion, index) => (
+                  {(pkg.inclusions ?? []).map((inclusion, index) => (
                     <li key={index}>
                       <FiCheck />
                       <span>{inclusion}</span>
@@ -125,7 +123,7 @@ function LuxePhotoboothShowcase({ collection }) {
               <S.AddOnsBlock $popular={pkg.popular}>
                 <h6>Optional Add-Ons</h6>
                 <ul>
-                  {pkg.addOns.map((addOn, index) => (
+                  {(pkg.addOns ?? []).map((addOn, index) => (
                     <li key={index}>• {addOn}</li>
                   ))}
                 </ul>

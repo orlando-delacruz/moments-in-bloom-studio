@@ -1,14 +1,6 @@
+import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
-import {
-  ABOUT_SECTION_IDS,
-  aboutBrandStory,
-  aboutCoreValues,
-  aboutCta,
-  aboutHero,
-  aboutMissionVision,
-  aboutSeo,
-  aboutTestimonialHighlight,
-} from '../../../constants/about.js'
+import { ABOUT_SECTION_IDS, aboutSeo } from '../../../constants/about.js'
 import { AboutPage } from './About.styles.js'
 import AboutHero from './AboutHero/index.js'
 import BrandStory from './BrandStory/index.js'
@@ -18,6 +10,8 @@ import MissionVision from './MissionVision/index.js'
 import TestimonialHighlight from './TestimonialHighlight/index.js'
 
 function About() {
+  const { values } = useContent('about')
+
   return (
     <AboutPage>
       <SEO
@@ -27,15 +21,15 @@ function About() {
         image={aboutSeo.image}
         url={aboutSeo.url}
       />
-      <AboutHero content={aboutHero} id={ABOUT_SECTION_IDS.HERO} />
-      <BrandStory content={aboutBrandStory} id={ABOUT_SECTION_IDS.BRAND_STORY} />
-      <MissionVision content={aboutMissionVision} id={ABOUT_SECTION_IDS.MISSION_VISION} />
-      <CoreValues items={aboutCoreValues} id={ABOUT_SECTION_IDS.CORE_VALUES} />
+      <AboutHero content={values.hero} id={ABOUT_SECTION_IDS.HERO} />
+      <BrandStory content={values.brandStory} id={ABOUT_SECTION_IDS.BRAND_STORY} />
+      <MissionVision content={values.missionVision} id={ABOUT_SECTION_IDS.MISSION_VISION} />
+      <CoreValues items={values.coreValues} id={ABOUT_SECTION_IDS.CORE_VALUES} />
       <TestimonialHighlight
-        content={aboutTestimonialHighlight}
+        content={values.testimonialHighlight}
         id={ABOUT_SECTION_IDS.TESTIMONIAL}
       />
-      <CTA content={aboutCta} id={ABOUT_SECTION_IDS.CTA} />
+      <CTA content={values.cta} id={ABOUT_SECTION_IDS.CTA} />
     </AboutPage>
   )
 }

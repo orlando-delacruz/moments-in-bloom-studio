@@ -123,6 +123,7 @@ export const homepageReasons = Object.freeze([
 
 export const homepageTestimonials = Object.freeze([
   {
+    id: 'testimonial-amelia-james',
     quote:
       'Moments in Blooms understood the feeling we wanted before we could put it into words. Our reception felt intimate, generous and completely ours.',
     name: 'Amelia & James',
@@ -134,6 +135,7 @@ export const homepageTestimonials = Object.freeze([
     },
   },
   {
+    id: 'testimonial-sophie-m',
     quote:
       'Every detail was beautiful, but it was the calm and care behind the scenes that made the whole experience feel effortless.',
     name: 'Sophie M.',
@@ -145,6 +147,7 @@ export const homepageTestimonials = Object.freeze([
     },
   },
   {
+    id: 'testimonial-olivia-hart',
     quote:
       'The styling gave our launch a sense of occasion without ever feeling overdone. Guests are still talking about the floral details.',
     name: 'Olivia Hart',

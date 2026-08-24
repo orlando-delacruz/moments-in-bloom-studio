@@ -12,11 +12,13 @@ function useContent(pageKey) {
   const values = entry?.values ?? getSeedContent(pageKey)
   const savedAt = entry?.savedAt ?? null
   const dirty = context.dirtyPages.has(pageKey)
+  const loading = context.loadingPages?.has(pageKey) ?? false
 
   return {
     values,
     savedAt,
     dirty,
+    loading,
     update: (updater) => context.updatePage(pageKey, updater),
     save: () => context.savePage(pageKey),
     reset: () => context.resetPage(pageKey),
@@ -33,6 +35,7 @@ function useContentOverview() {
     pageKey,
     savedAt: context.stored[pageKey]?.savedAt ?? null,
     dirty: context.dirtyPages.has(pageKey),
+    loading: context.loadingPages?.has(pageKey) ?? false,
   }))
 }
 

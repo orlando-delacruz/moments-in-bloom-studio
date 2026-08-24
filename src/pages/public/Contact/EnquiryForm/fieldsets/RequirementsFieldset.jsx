@@ -1,8 +1,7 @@
 import { FiAlertCircle } from 'react-icons/fi'
-import { setupRequirementOptions } from '../../../../../constants/contact.js'
 import * as S from '../EnquiryForm.styles.js'
 
-function RequirementsFieldset({ register, errors, watch, titleId }) {
+function RequirementsFieldset({ register, errors, watch, titleId, setupRequirementOptions }) {
   const setupRequired = watch('setupRequired')
 
   return (

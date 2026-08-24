@@ -12,23 +12,47 @@ import LuxePhotoboothShowcase from "./LuxePhotoboothShowcase/LuxePhotoboothShowc
 
 import * as S from "./ServiceCollectionsShowcase.styles.js";
 
-function CollectionContent({ collection }) {
+function CollectionContent({
+  collection,
+  photoboothPackages,
+  photoboothHighlights,
+  blissfulNestIntro,
+  blissfulNestPackages,
+}) {
   if (collection.id === "decor-hire") {
     return <DecorHireCatalogue collection={collection} />;
   }
 
   if (collection.id === "luxe-photobooth") {
-    return <LuxePhotoboothShowcase collection={collection} />;
+    return (
+      <LuxePhotoboothShowcase
+        highlights={photoboothHighlights}
+        packages={photoboothPackages}
+      />
+    );
   }
 
   if (collection.type === "sub-brand") {
-    return <BlissfulNestShowcase collection={collection} />;
+    return (
+      <BlissfulNestShowcase
+        collection={collection}
+        intro={blissfulNestIntro}
+        packages={blissfulNestPackages}
+      />
+    );
   }
 
   return null;
 }
 
-function ServiceCollectionsShowcase({ collections = [], id }) {
+function ServiceCollectionsShowcase({
+  collections = [],
+  photoboothPackages = [],
+  photoboothHighlights = null,
+  blissfulNestIntro = null,
+  blissfulNestPackages = [],
+  id,
+}) {
   const [activeCollectionId, setActiveCollectionId] = useState(
     collections?.[0]?.id || "",
   );
@@ -88,7 +112,13 @@ function ServiceCollectionsShowcase({ collections = [], id }) {
                 </S.CollectionHeroImageWrapper>
               </S.ActiveCollectionHero>
 
-              <CollectionContent collection={collection} />
+              <CollectionContent
+                collection={collection}
+                photoboothPackages={photoboothPackages}
+                photoboothHighlights={photoboothHighlights}
+                blissfulNestIntro={blissfulNestIntro}
+                blissfulNestPackages={blissfulNestPackages}
+              />
             </S.CollectionPanel>
           ))}
         </S.ShowcaseSection>

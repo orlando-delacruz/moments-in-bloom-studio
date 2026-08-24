@@ -16,8 +16,8 @@ import {
   StoryVisual,
 } from './BrandStory.styles.js'
 
-function BrandStory({ content, id }) {
-  const { subtitle, title, paragraphs, quote, image } = content
+function BrandStory({ content = {}, id }) {
+  const { subtitle, title, paragraphs = [], quote, image } = content
 
   return (
     <Section id={id} subtitle={subtitle} title={title} tone={SECTION_TONES.SURFACE}>
@@ -48,7 +48,9 @@ function BrandStory({ content, id }) {
           <StoryVisual>
             <ImageFrame>
               <ImageReveal>
-                <img src={image.src} alt={image.alt} loading="lazy" />
+                {image?.src ? (
+                  <img src={image.src} alt={image.alt ?? ''} loading="lazy" />
+                ) : null}
               </ImageReveal>
             </ImageFrame>
             <SafeReveal as={DecorativeBadge} from={{ scale: 0.85 }} delay={0.3}>

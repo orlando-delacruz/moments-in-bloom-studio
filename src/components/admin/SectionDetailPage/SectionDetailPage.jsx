@@ -94,13 +94,13 @@ function SectionDetailPage({ pageKey, basePath, pageTitle, sections }) {
     )
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const errors = section.validate?.(draft) ?? {}
     if (Object.keys(errors).length > 0) {
       return { ok: false }
     }
-    saveDraft(draft)
-    return { ok: true }
+    const result = await saveDraft(draft)
+    return { ok: result?.ok ?? true, message: result?.message }
   }
 
   return (

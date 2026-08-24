@@ -1,12 +1,11 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
-import ConfirmDialog from '../../../components/admin/ConfirmDialog/index.js'
 import ContentCard from '../../../components/admin/ContentCard/index.js'
 import ContentDetailHeader from '../../../components/admin/ContentDetailHeader/index.js'
 import ContentFormSection from '../../../components/admin/ContentFormSection/index.js'
 import ContentList from '../../../components/admin/ContentList/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
-import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
+import { FieldRow, TextAreaField, TextField } from '../../../components/FormField/index.js'
 import ImageField from '../../../components/admin/ImageField/index.js'
 import SaveActions from '../../../components/admin/SaveActions/index.js'
 import ToggleSwitch from '../../../components/admin/ToggleSwitch/index.js'
@@ -14,10 +13,9 @@ import Toast from '../../../components/admin/Toast/index.js'
 import Button from '../../../components/Button/index.js'
 import { useContentDetail } from '../../../hooks/useContentDetail.js'
 import { useUnsavedGuard } from '../../../hooks/useUnsavedGuard.jsx'
+import { isFixedCollectionId } from './fixedCollections.js'
 import { servicesSections } from './sections.jsx'
 import { CollectionDetailStyles } from './CollectionDetailPage.styles.js'
-
-const COLLECTION_TYPES = ['collection', 'sub-brand']
 
 const managedElsewhere = {
   'luxe-photobooth': {
@@ -36,26 +34,48 @@ const managedElsewhere = {
   },
 }
 
-function CollectionDetailPage() {
-  const { collectionId } = useParams()
+function CollectionDetailPage({ itemId }) {
+  const params = useParams()
+  const collectionId = params.collectionId ?? itemId
   const navigate = useNavigate()
   const section = servicesSections.find((entry) => entry.key === 'serviceCollections')
   const initialValue = useMemo(() => section.createInitial?.(), [section])
-  const { draft, dirty, savedAt, creating, patch, saveDraft, removeItem } = useContentDetail(
+  const { draft, dirty, savedAt, exists, patch, saveDraft } = useContentDetail(
     'services',
     { listKey: 'serviceCollections', itemId: collectionId, initialValue },
   )
   const [errors, setErrors] = useState({})
   const [toast, setToast] = useState(null)
-  const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [saving, setSaving] = useState(false)
-  const { guard, bypass } = useUnsavedGuard({ active: dirty })
+  const { guard } = useUnsavedGuard({ active: dirty })
 
   useEffect(() => {
     if (!toast) return undefined
     const timer = window.setTimeout(() => setToast(null), 3200)
     return () => window.clearTimeout(timer)
   }, [toast])
+
+  // The public Services page only renders the three fixed collections, so any
+  // other id — including the "new" creation route — is not editable here.
+  if (!isFixedCollectionId(collectionId)) {
+    return <Navigate replace to="/admin/services" />
+  }
+
+  if (!exists) {
+    return (
+      <CollectionDetailStyles.Page>
+        <EmptyState
+          title="Collection not found"
+          description="This collection is missing from the saved Services content."
+          action={
+            <Button variant="outline" onClick={() => navigate('/admin/services')}>
+              Back to Services
+            </Button>
+          }
+        />
+      </CollectionDetailStyles.Page>
+    )
+  }
 
   const collection = draft
   const managedBy = collection?.id ? managedElsewhere[collection.id] : undefined
@@ -70,16 +90,6 @@ function CollectionDetailPage() {
     saveDraft()
     setSaving(false)
     setToast({ tone: 'success', message: 'Changes saved successfully.' })
-    if (creating) {
-      bypass()
-      navigate(`/admin/services/serviceCollections/${draft.id}`, { state: { mibSaved: true } })
-    }
-  }
-
-  const handleDelete = () => {
-    removeItem()
-    setConfirmingDelete(false)
-    navigate('/admin/services')
   }
 
   return (
@@ -88,38 +98,20 @@ function CollectionDetailPage() {
         backTo="/admin/services"
         backLabel="Back to Services"
         eyebrow="Collections"
-        title={creating ? 'New collection' : (collection?.title || 'Untitled collection')}
+        title={collection?.title || 'Untitled collection'}
         status={section.itemStatus?.(collection)}
-        lastUpdated={creating ? undefined : savedAt}
-        actions={
-          !creating ? (
-            <Button
-              variant="outline"
-              onClick={() => setConfirmingDelete(true)}
-            >
-              Delete collection
-            </Button>
-          ) : null
-        }
+        lastUpdated={savedAt}
       />
       <ContentFormSection
         title="Collection overview"
         description="How this collection appears in the services navigation and on its page."
       >
-        <FieldRow>
-          <SelectField
-            label="Type"
-            value={collection?.type ?? 'collection'}
-            onChange={(event) => patch({ ...collection, type: event.target.value })}
-            options={COLLECTION_TYPES}
-          />
-          <TextField
-            label="Order"
-            type="number"
-            value={collection?.order ?? 1}
-            onChange={(event) => patch({ ...collection, order: Number(event.target.value) })}
-          />
-        </FieldRow>
+        <TextField
+          label="Type"
+          value={collection?.type ?? 'collection'}
+          readOnly
+          hint="Set by the Services page layout — this collection type cannot be changed."
+        />
         <TextField
           label="Title"
           value={collection?.title ?? ''}
@@ -152,7 +144,7 @@ function CollectionDetailPage() {
         />
         <ToggleSwitch
           label="Featured"
-          hint="Shown as a featured collection across the site."
+          hint="Adds a Featured badge to this collection inside the admin content lists."
           checked={Boolean(collection?.featured)}
           onChange={(checked) => patch({ ...collection, featured: checked })}
         />
@@ -170,13 +162,6 @@ function CollectionDetailPage() {
         <ContentList
           title={`Sections within ${collection?.title ?? 'this collection'}`}
           description="Click a section to review and update its featured item and gallery."
-          actions={
-            <Button
-              onClick={() => navigate(`/admin/services/serviceCollections/${collection.id}/sections/new`)}
-            >
-              Add section
-            </Button>
-          }
         >
           {collection.sections.map((entry, index) => (
             <ContentCard
@@ -196,25 +181,13 @@ function CollectionDetailPage() {
           description={managedBy.note}
         >
           <EmptyState
-            title={collection?.type === 'sub-brand' ? 'Managed separately' : 'Add a section'}
-            description={
-              collection?.type === 'sub-brand'
-                ? 'This sub-brand keeps its experience content in dedicated page sections.'
-                : 'No sections yet — add the first one to start building this collection.'
-            }
-            actions={
-              collection?.type === 'sub-brand' ? (
-                managedBy.links.map((link) => (
-                  <Button key={link.to} variant="outline" as={Link} to={link.to}>
-                    {link.label}
-                  </Button>
-                ))
-              ) : (
-                <Button onClick={() => navigate(`/admin/services/serviceCollections/${collection.id}/sections/new`)}>
-                  Add section
-                </Button>
-              )
-            }
+            title="Managed separately"
+            description="This collection does not use collection sections — its content lives in dedicated page sections."
+            action={managedBy.links.map((link) => (
+              <Button key={link.to} variant="outline" as={Link} to={link.to}>
+                {link.label}
+              </Button>
+            ))}
           />
         </ContentFormSection>
       )}
@@ -231,15 +204,6 @@ function CollectionDetailPage() {
           message={toast.message}
         />
       )}
-      <ConfirmDialog
-        open={confirmingDelete}
-        title={`Delete ${collection?.title ?? 'this collection'}?`}
-        description="This cannot be undone."
-        confirmLabel="Delete collection"
-        tone="danger"
-        onConfirm={handleDelete}
-        onCancel={() => setConfirmingDelete(false)}
-      />
       {guard}
     </CollectionDetailStyles.Page>
   )

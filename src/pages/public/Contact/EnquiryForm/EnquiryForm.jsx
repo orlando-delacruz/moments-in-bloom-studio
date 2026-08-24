@@ -6,9 +6,6 @@ import { ButtonSpinner } from '../../../../components/Button/Button.styles.js'
 import Container from '../../../../components/Container/index.js'
 import SafeReveal from '../../../../components/Reveal/SafeReveal.jsx'
 import TitleReveal from '../../../../components/Reveal/TitleReveal.jsx'
-import {
-  serviceInterestOptions,
-} from '../../../../constants/contact.js'
 import { footerContact } from '../../../../constants/navigation.js'
 import { createEnquiry } from '../../../../services/enquiries.js'
 import EventDetails from './fieldsets/EventDetails.jsx'
@@ -41,7 +38,7 @@ const DEFAULT_VALUES = {
   message: '',
 }
 
-function EnquiryForm({ content, id }) {
+function EnquiryForm({ content, id, eventTypeOptions, serviceInterestOptions, guestCountOptions, setupRequirementOptions }) {
   const [step, setStep] = useState(0)
   const [status, setStatus] = useState('idle')
   const [submitError, setSubmitError] = useState(null)
@@ -171,9 +168,9 @@ function EnquiryForm({ content, id }) {
                 <TitleReveal>{content.title}</TitleReveal>
               </S.RailTitle>
               <S.RailSteps>
-                {content.steps.map((step) => (
-                  <S.RailStep key={step.number}>
-                    <S.RailStepNumber>{step.number}</S.RailStepNumber>
+                {content.steps.map((step, index) => (
+                  <S.RailStep key={index}>
+                    <S.RailStepNumber>{String(index + 1).padStart(2, '0')}</S.RailStepNumber>
                     <div>
                       <S.RailStepTitle>{step.title}</S.RailStepTitle>
                       <S.RailStepDescription>{step.description}</S.RailStepDescription>
@@ -235,6 +232,8 @@ function EnquiryForm({ content, id }) {
                       setValue={setValue}
                       errors={errors}
                       titleId="enquiry-step-heading-1"
+                      eventTypeOptions={eventTypeOptions}
+                      guestCountOptions={guestCountOptions}
                     />
                   </S.StepPanel>
 
@@ -242,6 +241,7 @@ function EnquiryForm({ content, id }) {
                     <ServiceSelection
                       control={control}
                       titleId="enquiry-step-heading-2"
+                      serviceInterestOptions={serviceInterestOptions}
                     />
                   </S.StepPanel>
 
@@ -251,6 +251,7 @@ function EnquiryForm({ content, id }) {
                       errors={errors}
                       watch={watch}
                       titleId="enquiry-step-heading-3"
+                      setupRequirementOptions={setupRequirementOptions}
                     />
                   </S.StepPanel>
 

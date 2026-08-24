@@ -26,7 +26,9 @@ function ServicesHero({ content, id }) {
         animate={{ scale: 1 }}
         transition={{ duration: 2.2, ease: EASE_LUXE }}
       >
-        <img src={content.image.src} alt={content.image.alt} loading="eager" />
+        {content.image?.src ? (
+          <img src={content.image.src} alt={content.image.alt || ''} loading="eager" />
+        ) : null}
       </HeroBackground>
 
       <Container>

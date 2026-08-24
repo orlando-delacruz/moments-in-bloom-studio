@@ -1,14 +1,10 @@
 import { FiAlertCircle } from 'react-icons/fi'
-import {
-  eventTypeOptions,
-  guestCountOptions,
-} from '../../../../../constants/contact.js'
 import { todayIsoDate } from '../../../../../utils/validation.js'
 import DatePicker from '../DatePicker/index.js'
 import Dropdown from '../Dropdown/index.js'
 import * as S from '../EnquiryForm.styles.js'
 
-function EventDetails({ register, watch, setValue, errors, titleId }) {
+function EventDetails({ register, watch, setValue, errors, titleId, eventTypeOptions, guestCountOptions }) {
   return (
     <S.Fieldset>
       <legend className="sr-only">Event Details</legend>

@@ -57,22 +57,28 @@ function useContentDetail(pageKey, { sectionKey, listKey, itemId, initialValue }
       }
       return { ...current, [sectionKey]: nextValue }
     })
-    save(pageKey)
+    return save()
   }
 
-  const saveDraft = (next = draft) => {
+  const saveDraft = async (next = draft) => {
+    let result
     if (listKey) {
       const items = values[listKey] ?? []
       const existsInList = items.some((entry) => entry.id === next.id)
       const nextItems = existsInList
         ? items.map((entry) => (entry.id === next.id ? next : entry))
         : [...items, next]
-      persist(nextItems)
+      result = await persist(nextItems)
     } else {
-      persist(next)
+      result = await persist(next)
     }
-    setDraft(clone(next))
-    setDirty(false)
+    // Only settle the draft as "saved" when the write actually succeeded, so a
+    // failed save keeps the page dirty and the editor can retry.
+    if (!result?.error) {
+      setDraft(clone(next))
+      setDirty(false)
+    }
+    return { ok: !result?.error, message: result?.error?.message }
   }
 
   const discardDraft = () => {

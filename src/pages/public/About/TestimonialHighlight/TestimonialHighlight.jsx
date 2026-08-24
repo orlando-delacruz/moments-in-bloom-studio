@@ -14,7 +14,7 @@ import {
   StarsRow,
 } from './TestimonialHighlight.styles.js'
 
-function TestimonialHighlight({ content, id }) {
+function TestimonialHighlight({ content = {}, id }) {
   const { subtitle, title, quote, author, role, image } = content
 
   return (
@@ -42,10 +42,14 @@ function TestimonialHighlight({ content, id }) {
             </SafeReveal>
           </ContentCol>
 
-          {image && (
+          {image?.src && (
             <ImageFrame>
               <ImageReveal>
-                <img src={image} alt={`Wedding celebration for ${author}`} loading="lazy" />
+                <img
+                  src={image.src}
+                  alt={image.alt || `Wedding celebration for ${author}`}
+                  loading="lazy"
+                />
               </ImageReveal>
             </ImageFrame>
           )}

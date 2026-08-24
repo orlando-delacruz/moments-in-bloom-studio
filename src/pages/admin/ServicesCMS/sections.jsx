@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import styled from 'styled-components'
-import { FieldRow, SelectField, TextAreaField, TextField } from '../../../components/FormField/index.js'
+import { FieldRow, TextAreaField, TextField } from '../../../components/FormField/index.js'
 import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 import {
@@ -11,8 +11,6 @@ import {
 } from './itemForms.jsx'
 import CollectionDetailPage from './CollectionDetailPage.jsx'
 import CollectionSectionDetailPage from './CollectionSectionDetailPage.jsx'
-
-const INCLUSION_ICONS = ['FiCompass', 'FiClock', 'FiFeather', 'FiAward', 'FiHeart', 'FiLayers', 'FiShield', 'FiSparkles', 'FiGift', 'FiSun']
 
 const HighlightBlock = styled.div`
   display: grid;
@@ -42,7 +40,8 @@ export const servicesSections = [
   {
     key: 'intro',
     title: 'Introduction',
-    description: 'The philosophy section with two images and a quote.',
+    description:
+      'Legacy CMS-managed philosophy content — not currently rendered on the public services page.',
     type: 'object',
     form: IntroForm,
   },
@@ -167,13 +166,6 @@ export const servicesSections = [
     },
   },
   {
-    key: 'whatsIncluded',
-    title: "What's included",
-    description: "The six white-glove commitments every experience includes.",
-    type: 'object',
-    form: WhatsIncludedForm,
-  },
-  {
     key: 'experienceTimeline',
     title: 'Experience timeline',
     description: "The six-step journey clients move through.",
@@ -183,7 +175,8 @@ export const servicesSections = [
   {
     key: 'gallery',
     title: 'Services gallery',
-    description: 'The curated images on the services page.',
+    description:
+      'Legacy CMS-managed images — not currently rendered on the public services page.',
     type: 'list',
     itemLabel: 'image',
     sectionMeta: (values) => [`${(values.gallery?.items ?? []).length} images`],
@@ -211,7 +204,8 @@ export const servicesSections = [
   {
     key: 'testimonials',
     title: 'Testimonials',
-    description: 'Client reviews shown on the services page.',
+    description:
+      'Legacy CMS-managed client reviews — not currently rendered on the public services page.',
     type: 'list',
     itemLabel: 'testimonial',
     sectionMeta: (values) => [`${(values.testimonials ?? []).length} testimonials`],
@@ -455,56 +449,6 @@ function BlissfulNestIntroForm({ value, onChange }) {
       value={value?.paragraph ?? ''}
       onChange={(event) => onChange({ ...value, paragraph: event.target.value })}
     />
-  )
-}
-
-function WhatsIncludedForm({ value, onChange }) {
-  const patch = (next) => onChange({ ...value, ...next })
-  return (
-    <>
-      <TextField
-        label="Eyebrow"
-        value={value?.subtitle ?? ''}
-        onChange={(event) => patch({ subtitle: event.target.value })}
-      />
-      <TextField
-        label="Title"
-        value={value?.title ?? ''}
-        onChange={(event) => patch({ title: event.target.value })}
-      />
-      <TextAreaField
-        label="Description"
-        value={value?.description ?? ''}
-        onChange={(event) => patch({ description: event.target.value })}
-      />
-      <Repeater
-        items={value?.items ?? []}
-        onChange={(items) => patch({ items })}
-        createItem={() => ({ id: `inc-${Date.now()}`, iconName: 'FiHeart', title: 'New commitment', description: '' })}
-        addLabel="Add commitment"
-        itemTitle={(item) => item.title || 'New commitment'}
-        renderItem={(item, index, { update: patchItem }) => (
-          <>
-            <SelectField
-              label="Icon"
-              value={item.iconName ?? 'FiHeart'}
-              onChange={(event) => patchItem({ iconName: event.target.value })}
-              options={INCLUSION_ICONS}
-            />
-            <TextField
-              label="Title"
-              value={item.title ?? ''}
-              onChange={(event) => patchItem({ title: event.target.value })}
-            />
-            <TextAreaField
-              label="Description"
-              value={item.description ?? ''}
-              onChange={(event) => patchItem({ description: event.target.value })}
-            />
-          </>
-        )}
-      />
-    </>
   )
 }
 

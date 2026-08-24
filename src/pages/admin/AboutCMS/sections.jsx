@@ -4,7 +4,7 @@ import { FieldRow, SelectField, TextAreaField, TextField } from '../../../compon
 import ImageField from '../../../components/admin/ImageField/index.js'
 import Repeater from '../../../components/admin/Repeater/index.js'
 
-const CORE_VALUE_ICONS = ['FiStar', 'FiAward', 'FiFeather', 'FiHeart', 'FiSparkles', 'FiShield', 'FiGift', 'FiSun']
+const CORE_VALUE_ICONS = ['FiStar', 'FiAward', 'FiFeather', 'FiHeart', 'FiShield', 'FiGift', 'FiSun']
 
 const PanelFieldset = styled.fieldset`
   display: grid;

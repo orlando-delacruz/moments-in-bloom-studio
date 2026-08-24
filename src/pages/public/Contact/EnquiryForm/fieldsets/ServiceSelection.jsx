@@ -1,9 +1,8 @@
 import { useController } from 'react-hook-form'
 import { FiAlertCircle } from 'react-icons/fi'
-import { serviceInterestOptions } from '../../../../../constants/contact.js'
 import * as S from '../EnquiryForm.styles.js'
 
-function ServiceSelection({ control, titleId }) {
+function ServiceSelection({ control, titleId, serviceInterestOptions }) {
   const {
     field,
     fieldState: { error },

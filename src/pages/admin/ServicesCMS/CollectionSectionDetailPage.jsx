@@ -1,6 +1,5 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import ConfirmDialog from '../../../components/admin/ConfirmDialog/index.js'
 import ContentDetailHeader from '../../../components/admin/ContentDetailHeader/index.js'
 import ContentFormSection from '../../../components/admin/ContentFormSection/index.js'
 import EmptyState from '../../../components/admin/EmptyState/index.js'
@@ -12,23 +11,10 @@ import Toast from '../../../components/admin/Toast/index.js'
 import Button from '../../../components/Button/index.js'
 import { useContent } from '../../../hooks/useContent.js'
 import { useUnsavedGuard } from '../../../hooks/useUnsavedGuard.jsx'
+import { isFixedCollectionId } from './fixedCollections.js'
 import { CollectionSectionDetailStyles } from './CollectionSectionDetailPage.styles.js'
 
 const clone = (value) => (value == null ? null : JSON.parse(JSON.stringify(value)))
-
-const createInitial = () => ({
-  id: `section-${Date.now()}`,
-  title: '',
-  subtitle: '',
-  description: '',
-  featuredItem: {
-    name: '',
-    tagline: '',
-    description: '',
-    options: [],
-    gallery: [],
-  },
-})
 
 function CollectionSectionDetailPage() {
   const { collectionId, sectionId } = useParams()
@@ -39,30 +25,28 @@ function CollectionSectionDetailPage() {
     () => (values.serviceCollections ?? []).find((entry) => entry.id === collectionId),
     [values, collectionId],
   )
-  const creating = sectionId === 'new'
   const existing = useMemo(
-    () => (creating ? undefined : collection?.sections?.find((entry) => entry.id === sectionId)),
-    [collection, sectionId, creating],
+    () => collection?.sections?.find((entry) => entry.id === sectionId),
+    [collection, sectionId],
   )
 
-  const [draft, setDraft] = useState(() => clone(creating ? createInitial() : existing ?? null))
+  const [draft, setDraft] = useState(() => clone(existing ?? null))
   const [dirty, setDirty] = useState(false)
-  const syncedRef = useRef({ existing, creating })
+  const syncedRef = useRef({ existing })
 
   useEffect(() => {
     const previous = syncedRef.current
-    if (previous.existing !== existing || previous.creating !== creating) {
-      syncedRef.current = { existing, creating }
-      setDraft(clone(creating ? createInitial() : existing ?? null))
+    if (previous.existing !== existing) {
+      syncedRef.current = { existing }
+      setDraft(clone(existing ?? null))
       setDirty(false)
     }
-  }, [existing, creating])
+  }, [existing])
 
   const [errors, setErrors] = useState({})
   const [toast, setToast] = useState(null)
-  const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [saving, setSaving] = useState(false)
-  const { guard, bypass } = useUnsavedGuard({ active: dirty })
+  const { guard } = useUnsavedGuard({ active: dirty })
 
   useEffect(() => {
     if (!toast) return undefined
@@ -87,11 +71,9 @@ function CollectionSectionDetailPage() {
     if (Object.keys(nextErrors).length > 0) return
     setSaving(true)
     await new Promise((resolve) => setTimeout(resolve, 350))
-    const sections = collection?.sections ?? []
-    const alreadyExists = sections.some((entry) => entry.id === draft.id)
-    const nextSections = alreadyExists
-      ? sections.map((entry) => (entry.id === draft.id ? draft : entry))
-      : [...sections, draft]
+    const nextSections = (collection?.sections ?? []).map((entry) =>
+      entry.id === draft.id ? draft : entry,
+    )
     const updatedCollections = (values.serviceCollections ?? []).map((entry) =>
       entry.id === collectionId ? { ...entry, sections: nextSections } : entry,
     )
@@ -100,31 +82,36 @@ function CollectionSectionDetailPage() {
     setDirty(false)
     setSaving(false)
     setToast({ tone: 'success', message: 'Changes saved successfully.' })
-    if (creating) {
-      bypass()
-      navigate(`${backPath}/sections/${draft.id}`, { state: { mibSaved: true } })
-    }
   }
 
-  const handleDelete = () => {
-    const nextSections = (collection?.sections ?? []).filter((entry) => entry.id !== sectionId)
-    const updatedCollections = (values.serviceCollections ?? []).map((entry) =>
-      entry.id === collectionId ? { ...entry, sections: nextSections } : entry,
-    )
-    update((current) => ({ ...current, serviceCollections: updatedCollections }))
-    save('services')
-    setConfirmingDelete(false)
-    navigate(backPath)
+  // Collection sections are rendered by the fixed Decor Hire catalogue, which
+  // only understands the section ids that ship with the page, so sections can
+  // be edited here but never created or removed.
+  if (!isFixedCollectionId(collectionId)) {
+    return <Navigate replace to="/admin/services" />
   }
 
-  if (!creating && !collection) {
+  if (sectionId === 'new') {
+    return <Navigate replace to={backPath} />
+  }
+
+  if (!collection || !existing) {
     return (
       <CollectionSectionDetailStyles.Page>
         <EmptyState
-          title="Collection not found"
-          description="The collection you are trying to edit no longer exists."
-          actions={
-            <Button onClick={() => navigate('/admin/services')}>Back to Services</Button>
+          title={collection ? 'Section not found' : 'Collection not found'}
+          description={
+            collection
+              ? 'The section you are trying to edit no longer exists.'
+              : 'The collection you are trying to edit no longer exists.'
+          }
+          action={
+            <Button
+              variant="outline"
+              onClick={() => navigate(collection ? backPath : '/admin/services')}
+            >
+              {collection ? 'Back to collection' : 'Back to Services'}
+            </Button>
           }
         />
       </CollectionSectionDetailStyles.Page>
@@ -137,15 +124,8 @@ function CollectionSectionDetailPage() {
         backTo={backPath}
         backLabel="Back to collection"
         eyebrow={collection?.title ?? 'Collection'}
-        title={creating ? 'New section' : (draft?.title || 'Untitled section')}
-        lastUpdated={creating ? undefined : savedAt}
-        actions={
-          !creating ? (
-            <Button variant="outline" onClick={() => setConfirmingDelete(true)}>
-              Delete section
-            </Button>
-          ) : null
-        }
+        title={draft?.title || 'Untitled section'}
+        lastUpdated={savedAt}
       />
       <ContentFormSection
         title="Section details"
@@ -278,15 +258,6 @@ function CollectionSectionDetailPage() {
           message={toast.message}
         />
       )}
-      <ConfirmDialog
-        open={confirmingDelete}
-        title={`Delete ${draft?.title || 'this section'}?`}
-        description="This cannot be undone."
-        confirmLabel="Delete section"
-        tone="danger"
-        onConfirm={handleDelete}
-        onCancel={() => setConfirmingDelete(false)}
-      />
       {guard}
     </CollectionSectionDetailStyles.Page>
   )

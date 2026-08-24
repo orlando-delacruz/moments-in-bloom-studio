@@ -92,18 +92,18 @@ function ItemDetailPage({ pageKey, basePath, pageTitle, sections }) {
 
   const errors = section.validate?.(draft) ?? {}
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (Object.keys(errors).length > 0) {
       return { ok: false }
     }
-    saveDraft(draft)
-    if (creating) {
+    const result = await saveDraft(draft)
+    if (result?.ok && creating) {
       bypass()
       navigate(`${basePath}/${sectionKey}/${draft.id}`, {
         state: { mibSaved: true },
       })
     }
-    return { ok: true }
+    return { ok: result?.ok ?? true, message: result?.message }
   }
 
   const handleDelete = () => {

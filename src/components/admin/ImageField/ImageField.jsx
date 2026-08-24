@@ -29,9 +29,9 @@ function ImageField({
 
   const hasImage = Boolean(value)
 
-  const handleConfirm = (dataUrl) => {
+  const handleConfirm = (publicUrl) => {
     setThumbError(false)
-    onChange?.(dataUrl)
+    onChange?.(publicUrl)
     setModalOpen(false)
   }
 
