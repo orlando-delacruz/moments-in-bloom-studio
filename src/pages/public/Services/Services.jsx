@@ -1,6 +1,7 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
 import { SERVICES_SECTION_IDS } from '../../../constants/services.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import FaqSection from './FaqSection/index.js'
 import ServiceCollectionsShowcase from './ServiceCollectionsShowcase/index.js'
 import { ServicesPage } from './Services.styles.js'
@@ -22,6 +23,7 @@ function Services() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
+        jsonLd={buildBreadcrumbJsonLd('/services')}
       />
       <ServicesHero content={values.hero} id={SERVICES_SECTION_IDS.HERO} />
       <ServiceCollectionsShowcase

@@ -224,7 +224,7 @@ export const homepageSeo = Object.freeze({
   title: 'Luxury Event Styling Melbourne',
   description:
     'Moments in Blooms creates luxury event styling, floral design, decor hire and joyful event details across Melbourne, Australia.',
-  url: 'https://www.momentsinblooms.com.au/',
+  url: 'https://momentsinblooms.vercel.app/',
   image: homepageHero.image.src,
 })
 

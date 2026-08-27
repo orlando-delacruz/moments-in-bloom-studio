@@ -3,6 +3,7 @@ import Button from '../../../components/Button/index.js'
 import SEO from '../../../components/SEO/index.js'
 import { BUTTON_VARIANTS } from '../../../constants/ui.js'
 import { useContent } from '../../../hooks/useContent.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import {
   fetchPublicFaqPage,
   getPublicPageFallback,
@@ -33,7 +34,7 @@ const defaultFaqsSeo = Object.freeze({
   title: 'Frequently Asked Questions',
   description:
     'Answers about our Melbourne event styling, florals, decor hire, Luxe Photobooth, Blissful Nest and the journey from first enquiry to your celebration.',
-  url: 'https://www.momentsinblooms.com.au/faqs',
+  url: 'https://momentsinblooms.vercel.app/faqs',
 })
 
 function buildFaqStructuredData(categories) {
@@ -158,7 +159,7 @@ function FAQs() {
         canonical={faqsSeo.url}
         url={faqsSeo.url}
         keywords={faqsSeo.keywords}
-        jsonLd={ready ? buildFaqStructuredData(categories) : undefined}
+        jsonLd={ready ? [buildFaqStructuredData(categories), buildBreadcrumbJsonLd('/faqs')] : buildBreadcrumbJsonLd('/faqs')}
       />
 
       <FAQHero

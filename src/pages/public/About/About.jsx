@@ -1,6 +1,7 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
 import { ABOUT_SECTION_IDS } from '../../../constants/about.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import { AboutPage } from './About.styles.js'
 import AboutHero from './AboutHero/index.js'
 import BehindExperience from './BehindExperience/index.js'
@@ -26,6 +27,7 @@ function About() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
+        jsonLd={buildBreadcrumbJsonLd('/about')}
       />
       <AboutHero content={values.hero} id={ABOUT_SECTION_IDS.HERO} />
       <BrandStory content={values.brandStory} id={ABOUT_SECTION_IDS.BRAND_STORY} />

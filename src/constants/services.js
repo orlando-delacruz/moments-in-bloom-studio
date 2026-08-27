@@ -5,7 +5,7 @@ export const servicesSeo = Object.freeze({
   title: "Event Decor Hire, Photobooth & Claw Machines Melbourne",
   description:
     "Discover Moments in Blooms services in Melbourne — event decor hire, the Luxe Photobooth, Blissful Nest claw machines, and professional setup and styling for hired items.",
-  url: "https://www.momentsinblooms.com.au/services",
+  url: "https://momentsinblooms.vercel.app/services",
   image: imageUrl(
     "https://images.unsplash.com/photo-1519741497674-611481863552",
     1800,

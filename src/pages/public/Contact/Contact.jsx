@@ -1,6 +1,7 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
 import { CONTACT_SECTION_IDS } from '../../../constants/contact.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import ContactCTA from './ContactCTA/index.js'
 import ContactHero from './ContactHero/index.js'
 import ContactInformation from './ContactInformation/index.js'
@@ -21,6 +22,7 @@ function Contact() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
+        jsonLd={buildBreadcrumbJsonLd('/contact')}
       />
 
       <ContactHero content={values.hero} id={CONTACT_SECTION_IDS.HERO} />

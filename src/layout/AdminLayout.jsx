@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar/index.js'
 import Topbar from '../components/Topbar/index.js'
@@ -35,6 +36,9 @@ function AdminLayout() {
 
   return (
     <AdminShell $collapsed={collapsed}>
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <AdminSkipLink href="#admin-main-content">Skip to content</AdminSkipLink>
       <Sidebar
         open={drawerOpen}

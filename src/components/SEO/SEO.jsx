@@ -1,5 +1,8 @@
 import { Helmet } from 'react-helmet-async'
+import { useLocation } from 'react-router-dom'
 import { routeMetadata } from '../../constants/navigation.js'
+
+const SITE_URL = 'https://momentsinblooms.vercel.app'
 
 function SEO({
   title,
@@ -11,23 +14,29 @@ function SEO({
   type = 'website',
   siteName = routeMetadata.public.title,
   jsonLd,
+  noIndex = false,
 }) {
+  const location = useLocation()
   const resolvedTitle = title ? `${title} | ${routeMetadata.public.title}` : routeMetadata.public.title
   const resolvedDescription = description || routeMetadata.public.description
-  const resolvedUrl = url || canonical
+  const canonicalPath = (canonical && canonical.startsWith('http'))
+    ? canonical
+    : `${SITE_URL}${canonical || location.pathname}`
+  const resolvedUrl = url || canonicalPath
 
   return (
     <Helmet>
       <title>{resolvedTitle}</title>
       <meta name="description" content={resolvedDescription} />
       {keywords ? <meta name="keywords" content={keywords} /> : null}
-      {canonical ? <link rel="canonical" href={canonical} /> : null}
+      {noIndex ? <meta name="robots" content="noindex, nofollow" /> : null}
+      <link rel="canonical" href={canonicalPath} />
       <meta property="og:title" content={resolvedTitle} />
       <meta property="og:description" content={resolvedDescription} />
       <meta property="og:type" content={type} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="en_AU" />
-      {resolvedUrl ? <meta property="og:url" content={resolvedUrl} /> : null}
+      <meta property="og:url" content={resolvedUrl} />
       {image ? <meta property="og:image" content={image} /> : null}
       {image ? <meta property="og:image:width" content="1200" /> : null}
       {image ? <meta property="og:image:height" content="630" /> : null}
@@ -35,9 +44,11 @@ function SEO({
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={resolvedDescription} />
       {image ? <meta name="twitter:image" content={image} /> : null}
-      {jsonLd ? (
+      {jsonLd ? (Array.isArray(jsonLd) ? jsonLd.map((item, i) => (
+        <script key={item['@type'] || i} type="application/ld+json">{JSON.stringify(item)}</script>
+      )) : (
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      ) : null}
+      )) : null}
     </Helmet>
   )
 }

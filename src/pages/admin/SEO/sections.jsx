@@ -34,7 +34,7 @@ function SeoForm({ value, onChange }) {
         type="url"
         value={value?.url ?? ''}
         onChange={(event) => patch({ url: event.target.value })}
-        hint="Canonical URL, e.g. https://www.momentsinblooms.com.au/about"
+        hint="Canonical URL, e.g. https://momentsinblooms.vercel.app/about"
       />
       <ImageField
         label="Share image"

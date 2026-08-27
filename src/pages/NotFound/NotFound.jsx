@@ -19,7 +19,7 @@ const notFoundImageUrl =
 function NotFound() {
   return (
     <NotFoundShell>
-      <SEO title="Page not found" description="The requested Moments in Blooms page could not be found." />
+      <SEO title="Page not found" description="The requested Moments in Blooms page could not be found." noIndex />
       <PageContainer>
         <NotFoundContent>
           <NotFoundNumber aria-hidden="true">404</NotFoundNumber>

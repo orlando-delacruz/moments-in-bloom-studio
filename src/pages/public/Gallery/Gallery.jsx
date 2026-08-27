@@ -1,5 +1,6 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import { useGallery } from './hooks/index.js'
 import { useLightbox } from './hooks/index.js'
 
@@ -60,6 +61,7 @@ function Gallery() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
+        jsonLd={buildBreadcrumbJsonLd('/gallery')}
       />
 
       <GalleryHero content={hero} />

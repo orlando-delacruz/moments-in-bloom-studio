@@ -1,6 +1,7 @@
 import { useContent } from '../../../hooks/useContent.js'
 import SEO from '../../../components/SEO/index.js'
 import { HOME_SECTION_IDS } from '../../../constants/homepage.js'
+import { buildBreadcrumbJsonLd } from '../../../utils/seo.js'
 import CTA from './CTA/CTA.jsx'
 import GalleryPreview from './GalleryPreview/GalleryPreview.jsx'
 import Hero from './Hero/Hero.jsx'
@@ -15,7 +16,8 @@ const localBusinessJsonLd = Object.freeze({
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: 'Moments in Blooms',
-  url: 'https://www.momentsinblooms.com.au/',
+  url: 'https://momentsinblooms.vercel.app',
+  image: 'https://momentsinblooms.vercel.app/pwa-512x512.png',
   telephone: '+61 3 0000 0000',
   address: {
     '@type': 'PostalAddress',
@@ -24,12 +26,19 @@ const localBusinessJsonLd = Object.freeze({
     addressCountry: 'AU',
   },
   areaServed: 'Melbourne',
+  priceRange: '$$',
+  sameAs: [
+    'https://ig.me/m/momentsinblooms',
+    'https://m.me/61575145079420',
+  ],
 })
 
 function Home() {
   const { values, loading } = useContent('homepage')
   const { values: seoValues } = useContent('seo')
   const seo = seoValues.home ?? seoValues.site ?? {}
+
+  const jsonLdArray = [localBusinessJsonLd, buildBreadcrumbJsonLd('/')]
 
   return (
     <HomePage aria-busy={loading ? 'true' : undefined}>
@@ -40,7 +49,7 @@ function Home() {
         image={seo.image}
         keywords={seo.keywords}
         url={seo.url}
-        jsonLd={localBusinessJsonLd}
+        jsonLd={jsonLdArray}
       />
       <Hero content={values.hero} id={HOME_SECTION_IDS.HERO} />
       <TrustedBy marks={values.trustMarks} id={HOME_SECTION_IDS.TRUST} />

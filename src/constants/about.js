@@ -13,10 +13,10 @@ export const ABOUT_SECTION_IDS = Object.freeze({
 })
 
 export const aboutSeo = Object.freeze({
-  title: 'About Us | Moments in Blooms - Event Decor Hire & Entertainment',
+  title: 'About Us',
   description:
-    'Meet Moments in Blooms, Melbourne’s studio for beautiful event decor hire, the Luxe Photobooth, and Blissful Nest claw machine entertainment — with professional setup and styling for hired pieces.',
-  url: '/about',
+    'Meet Moments in Blooms, Melbourne\'s studio for beautiful event decor hire, the Luxe Photobooth, and Blissful Nest claw machine entertainment — with professional setup and styling for hired pieces.',
+  url: 'https://momentsinblooms.vercel.app/about',
   image: imageUrl('https://images.unsplash.com/photo-1519225421980-715cb0215aed', 1200),
 })
 

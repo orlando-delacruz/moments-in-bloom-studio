@@ -11,7 +11,7 @@ export const contactSeo = Object.freeze({
   title: 'Get in Touch',
   description:
     'Enquire with Moments in Blooms about event decor hire, the Luxe Photobooth, Blissful Nest claw machines, and professional setup and styling of hired items across Melbourne.',
-  url: 'https://www.momentsinblooms.com.au/contact',
+  url: 'https://momentsinblooms.vercel.app/contact',
   image: imageUrl('https://images.unsplash.com/photo-1519741497674-611481863552', 1800),
 })
 
