@@ -24,13 +24,5 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.momentsinblooms.vercel.app" }],
-      "destination": "https://momentsinblooms.vercel.app/:path*",
-      "permanent": true
-    }
   ]
 }
